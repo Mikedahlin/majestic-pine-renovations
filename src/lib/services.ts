@@ -334,7 +334,7 @@ export const SERVICES: ServiceDefinition[] = [
         image: "/service-photos/addition-interior.jpg",
       },
       {
-        image: "/service-photos/kitchen-planning.jpg",
+        image: "/service-photos/woodland-cabin.jpg",
       },
     ],
     imagePosition: "center center",
@@ -370,7 +370,7 @@ export const SERVICES: ServiceDefinition[] = [
         image: "/service-photos/garage-workshop.jpg",
       },
       {
-        image: "/service-photos/client-walkthrough.jpg",
+        image: "/service-photos/rustic-wood-cabin.jpg",
       },
     ],
     imagePosition: "center center",
