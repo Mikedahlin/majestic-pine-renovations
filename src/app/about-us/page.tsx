@@ -45,8 +45,8 @@ export default function AboutPage() {
               <div
                 className="aspect-[4/5] bg-cover bg-center"
                 style={{
-                  backgroundImage:
-                    "url('https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&q=80&auto=format&fit=crop')",
+                  backgroundImage: "url('/jeremy-stoesz.png')",
+                  backgroundPosition: "center top",
                 }}
                 role="img"
                 aria-label="Jeremy Stoesz, founder of Majestic Pine Renovations, on a job site"
