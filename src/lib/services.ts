@@ -180,13 +180,13 @@ export const SERVICES: ServiceDefinition[] = [
       "Snow-load rated structural design",
     ],
     heroImage: "/service-photos/deck-hero.jpg",
-    galleryImage: "/service-photos/outdoor-covered.jpg",
+    galleryImage: "/service-photos/woodland-cabin.jpg",
     photos: [
       {
         image: "/service-photos/deck-hero.jpg",
       },
       {
-        image: "/service-photos/outdoor-covered.jpg",
+        image: "/service-photos/woodland-cabin.jpg",
       },
       {
         image: "/service-photos/outdoor-lifestyle.jpg",
@@ -252,11 +252,11 @@ export const SERVICES: ServiceDefinition[] = [
       "Insulated siding options",
       "Color-matched finishing",
     ],
-    heroImage: "/service-photos/siding-hero.jpg",
+    heroImage: "/service-photos/rustic-wood-cabin.jpg",
     galleryImage: "/service-photos/siding-exterior.jpg",
     photos: [
       {
-        image: "/service-photos/siding-hero.jpg",
+        image: "/service-photos/rustic-wood-cabin.jpg",
       },
       {
         image: "/service-photos/siding-exterior.jpg",
@@ -324,11 +324,11 @@ export const SERVICES: ServiceDefinition[] = [
       "Seamless exterior matching",
       "Full interior finish integration",
     ],
-    heroImage: "/service-photos/addition-hero.jpg",
+    heroImage: "/service-photos/modern-lakeside-cabin.jpg",
     galleryImage: "/service-photos/addition-interior.jpg",
     photos: [
       {
-        image: "/service-photos/addition-hero.jpg",
+        image: "/service-photos/modern-lakeside-cabin.jpg",
       },
       {
         image: "/service-photos/addition-interior.jpg",

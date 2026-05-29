@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { CONTACT } from "@/lib/constants";
 
 type Message = {
@@ -55,17 +55,49 @@ export function ContactChatbot() {
   );
   const [messages, setMessages] = useState<Message[]>([openingMessage]);
   const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  function sendMessage(text: string) {
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, loading]);
+
+  async function sendMessage(text: string) {
     const trimmed = text.trim();
-    if (!trimmed) return;
+    if (!trimmed || loading) return;
 
-    setMessages((current) => [
-      ...current,
-      { role: "visitor", text: trimmed },
-      { role: "assistant", text: getAssistantReply(trimmed) },
-    ]);
+    const visitorMessage: Message = { role: "visitor", text: trimmed };
+    const nextMessages = [...messages, visitorMessage];
+
+    setMessages(nextMessages);
     setInput("");
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/contact-chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: nextMessages }),
+      });
+
+      const data = await response.json();
+      const reply =
+        response.ok && typeof data.reply === "string"
+          ? data.reply
+          : getAssistantReply(trimmed);
+
+      setMessages((current) => [
+        ...current,
+        { role: "assistant", text: reply },
+      ]);
+    } catch {
+      setMessages((current) => [
+        ...current,
+        { role: "assistant", text: getAssistantReply(trimmed) },
+      ]);
+    } finally {
+      setLoading(false);
+    }
   }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -101,6 +133,14 @@ export function ContactChatbot() {
             </p>
           </div>
         ))}
+        {loading && (
+          <div className="flex justify-start">
+            <p className="max-w-[85%] bg-pine-green/5 px-4 py-3 text-sm leading-relaxed text-concrete">
+              Thinking...
+            </p>
+          </div>
+        )}
+        <div ref={messagesEndRef} />
       </div>
 
       <div className="border-t border-pine-green/10 p-5">
@@ -109,8 +149,9 @@ export function ContactChatbot() {
             <button
               key={reply}
               type="button"
+              disabled={loading}
               onClick={() => sendMessage(reply)}
-              className="border border-pine-green/20 px-3 py-2 text-xs uppercase tracking-wider text-pine-green transition-colors hover:border-bronze hover:text-bronze"
+              className="border border-pine-green/20 px-3 py-2 text-xs uppercase tracking-wider text-pine-green transition-colors hover:border-bronze hover:text-bronze disabled:cursor-not-allowed disabled:opacity-50"
             >
               {reply}
             </button>
@@ -131,9 +172,10 @@ export function ContactChatbot() {
           />
           <button
             type="submit"
-            className="bg-charcoal px-4 py-3 text-sm font-semibold uppercase tracking-wider text-warm-white transition-colors hover:bg-bronze"
+            disabled={loading}
+            className="bg-charcoal px-4 py-3 text-sm font-semibold uppercase tracking-wider text-warm-white transition-colors hover:bg-bronze disabled:cursor-not-allowed disabled:opacity-50"
           >
-            Send
+            {loading ? "Wait" : "Send"}
           </button>
         </form>
       </div>
