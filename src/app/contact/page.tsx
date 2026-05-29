@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { HeroSection } from "@/components/ui/HeroSection";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { LeadForm } from "@/components/ui/LeadForm";
+import { ContactChatbot } from "@/components/ui/ContactChatbot";
 import { FadeInUp } from "@/components/ui/FadeInUp";
 import { SchemaScript } from "@/components/ui/SchemaScript";
 import { buildMetadata, PAGE_META } from "@/lib/metadata";
@@ -80,8 +81,14 @@ export default function ContactPage() {
 
             <div className="lg:col-span-3">
               <FadeInUp delay={100}>
-                <SectionHeading title="Project Details Form" />
-                <LeadForm />
+                <ContactChatbot />
+              </FadeInUp>
+
+              <FadeInUp delay={180}>
+                <div id="project-details-form" className="mt-12">
+                  <SectionHeading title="Project Details Form" />
+                  <LeadForm />
+                </div>
               </FadeInUp>
             </div>
           </div>

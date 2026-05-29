@@ -34,6 +34,8 @@ export default function ServicesPage() {
               process={service.process}
               benefits={service.benefits}
               slug={service.slug}
+              image={service.galleryImage}
+              imagePosition={service.imagePosition}
               index={i}
             />
           ))}

@@ -25,10 +25,15 @@ export const TRUST_BADGES = [
   "Serving Greater Minnesota",
 ] as const;
 
+export const CUSTOM_BUDGET_RANGE = "Other / Custom";
+
 export const BUDGET_RANGES = [
-  "$50k–$100k",
-  "$100k–$250k",
+  "$10k-$25k",
+  "$25k-$50k",
+  "$50k-$100k",
+  "$100k-$250k",
   "$250k+",
+  CUSTOM_BUDGET_RANGE,
 ] as const;
 
 export const PROJECT_CATEGORIES = [

@@ -3,7 +3,11 @@ import {
   processLead,
   type LeadPayload,
 } from "@/lib/integrations/lead-handler";
-import { BUDGET_RANGES, PROJECT_CATEGORIES } from "@/lib/constants";
+import {
+  BUDGET_RANGES,
+  CUSTOM_BUDGET_RANGE,
+  PROJECT_CATEGORIES,
+} from "@/lib/constants";
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const MAX_FILES = 5;
@@ -28,6 +32,7 @@ export async function POST(request: Request) {
     const smsOptIn = formData.get("smsOptIn") === "true";
     const projectCategory = formData.get("projectCategory") as string;
     const budgetRange = formData.get("budgetRange") as string;
+    const customBudgetRange = (formData.get("customBudgetRange") as string)?.trim();
 
     const errors: string[] = [];
 
@@ -41,6 +46,9 @@ export async function POST(request: Request) {
     }
     if (!BUDGET_RANGES.includes(budgetRange as (typeof BUDGET_RANGES)[number])) {
       errors.push("Valid budget range is required");
+    }
+    if (budgetRange === CUSTOM_BUDGET_RANGE && !customBudgetRange) {
+      errors.push("Custom budget estimate is required");
     }
 
     const fileEntries = formData.getAll("files");
@@ -78,7 +86,10 @@ export async function POST(request: Request) {
       smsOptIn,
       email,
       projectCategory,
-      budgetRange,
+      budgetRange:
+        budgetRange === CUSTOM_BUDGET_RANGE
+          ? `${CUSTOM_BUDGET_RANGE}: ${customBudgetRange}`
+          : budgetRange,
       files: files.length > 0 ? files : undefined,
       submittedAt: new Date().toISOString(),
     };

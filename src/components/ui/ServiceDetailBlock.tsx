@@ -8,6 +8,8 @@ type ServiceDetailBlockProps = {
   process: string[];
   benefits: string[];
   slug: string;
+  image: string;
+  imagePosition?: string;
   index?: number;
 };
 
@@ -18,6 +20,8 @@ export function ServiceDetailBlock({
   process,
   benefits,
   slug,
+  image,
+  imagePosition = "center center",
   index = 0,
 }: ServiceDetailBlockProps) {
   return (
@@ -66,13 +70,14 @@ export function ServiceDetailBlock({
           </div>
 
           <div
-            className="aspect-video bg-gradient-to-br from-walnut/30 to-pine-green/20 flex items-center justify-center"
-            aria-label={`${title} project gallery placeholder`}
-          >
-            <span className="text-sm uppercase tracking-widest text-pine-green/50">
-              Project Gallery
-            </span>
-          </div>
+            className="aspect-video bg-cover bg-center"
+            style={{
+              backgroundImage: `url('${image}')`,
+              backgroundPosition: imagePosition,
+            }}
+            role="img"
+            aria-label={`${title} project example`}
+          />
         </div>
       </article>
     </FadeInUp>

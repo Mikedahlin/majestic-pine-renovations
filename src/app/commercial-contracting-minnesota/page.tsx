@@ -8,13 +8,28 @@ import { buildMetadata, PAGE_META } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata(PAGE_META.commercial);
 
+const commercialPhotos = [
+  {
+    image: "/service-photos/commercial-office.jpg",
+  },
+  {
+    image: "/service-photos/design-review.jpg",
+  },
+  {
+    image: "/service-photos/commercial-finished.jpg",
+  },
+];
+
 export default function CommercialPage() {
   return (
     <>
       <HeroSection
         title="Scalable Commercial Capability. Elite Execution."
         subtitle="Tenant Improvements | Medical Facilities | Retail Build-Outs | Corporate Offices"
-        backgroundClass="bg-[url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=80&auto=format&fit=crop')] bg-cover bg-center"
+        backgroundClass="bg-cover bg-center"
+        style={{
+          backgroundImage: "url('/service-photos/commercial-office.jpg')",
+        }}
         fullScreen={false}
       >
         <Button href="/contact">Schedule a Commercial Bid</Button>
@@ -32,6 +47,31 @@ export default function CommercialPage() {
               corporate-level project management to your build.
             </p>
           </FadeInUp>
+        </div>
+      </section>
+
+      <section className="py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <FadeInUp>
+            <SectionHeading
+              title="Commercial Examples"
+              subtitle="Examples of business spaces, planning meetings, and finished tenant improvements."
+            />
+          </FadeInUp>
+          <div className="grid gap-6 md:grid-cols-3">
+            {commercialPhotos.map((photo, i) => (
+              <FadeInUp key={photo.image} delay={i * 80}>
+                <article className="overflow-hidden border border-pine-green/10 bg-warm-white">
+                  <div
+                    className="aspect-[4/3] bg-cover bg-center"
+                    style={{ backgroundImage: `url('${photo.image}')` }}
+                    role="img"
+                    aria-label="Commercial project example"
+                  />
+                </article>
+              </FadeInUp>
+            ))}
+          </div>
         </div>
       </section>
 

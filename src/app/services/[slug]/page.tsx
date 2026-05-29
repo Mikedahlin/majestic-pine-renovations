@@ -56,7 +56,11 @@ export default async function ServiceSubpage({ params }: Props) {
       <HeroSection
         title={service.headline}
         subtitle={service.description}
-        backgroundClass="bg-[url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&q=80&auto=format&fit=crop')] bg-cover bg-center"
+        backgroundClass="bg-cover bg-center"
+        style={{
+          backgroundImage: `url('${service.heroImage}')`,
+          backgroundPosition: service.imagePosition ?? "center center",
+        }}
         fullScreen={false}
       >
         <Button href="/contact">Request a Consultation</Button>
@@ -91,14 +95,42 @@ export default async function ServiceSubpage({ params }: Props) {
               </ul>
 
               <div
-                className="mt-10 aspect-video bg-gradient-to-br from-walnut/20 to-pine-green/10 flex items-center justify-center"
-                aria-label={`${service.title} project gallery`}
-              >
-                <span className="text-sm uppercase tracking-widest text-pine-green/40">
-                  Project Gallery — Coming Soon
-                </span>
-              </div>
+                className="mt-10 aspect-video bg-cover bg-center"
+                style={{
+                  backgroundImage: `url('${service.galleryImage}')`,
+                  backgroundPosition: service.imagePosition ?? "center center",
+                }}
+                role="img"
+                aria-label={`${service.title} project example`}
+              />
             </FadeInUp>
+          </div>
+
+          <div className="mt-20">
+            <FadeInUp>
+              <SectionHeading
+                title="Project Examples"
+                subtitle="A closer look at the kinds of spaces, details, and planning moments clients ask us about most."
+              />
+            </FadeInUp>
+            <div className="grid gap-6 md:grid-cols-3">
+              {service.photos.map((photo, i) => (
+                <FadeInUp key={photo.image} delay={i * 80}>
+                  <article className="overflow-hidden border border-pine-green/10 bg-warm-white">
+                    <div
+                      className="aspect-[4/3] bg-cover bg-center"
+                      style={{
+                        backgroundImage: `url('${photo.image}')`,
+                        backgroundPosition:
+                          photo.position ?? service.imagePosition ?? "center center",
+                      }}
+                      role="img"
+                      aria-label={`${service.title} project example`}
+                    />
+                  </article>
+                </FadeInUp>
+              ))}
+            </div>
           </div>
 
           <div className="mt-20 border-t border-pine-green/10 pt-16">

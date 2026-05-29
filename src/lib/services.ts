@@ -5,6 +5,13 @@ export type ServiceDefinition = {
   description: string;
   process: string[];
   benefits: string[];
+  heroImage: string;
+  galleryImage: string;
+  photos: {
+    image: string;
+    position?: string;
+  }[];
+  imagePosition?: string;
   keyword: string;
   metaDescription: string;
   featured?: boolean;
@@ -60,6 +67,21 @@ export const SERVICES: ServiceDefinition[] = [
       "Lighting and electrical upgrades",
       "Seamless appliance integration",
     ],
+    heroImage: "/service-photos/kitchen-hero.jpg",
+    galleryImage: "/service-photos/kitchen-detail.jpg",
+    photos: [
+      {
+        image: "/service-photos/kitchen-hero.jpg",
+      },
+      {
+        image: "/service-photos/kitchen-detail.jpg",
+      },
+      {
+        image: "/service-photos/kitchen-planning.jpg",
+        position: "center center",
+      },
+    ],
+    imagePosition: "center center",
     keyword: "kitchen remodeling Minneapolis",
     metaDescription:
       "Luxury kitchen remodeling in Minneapolis and the Twin Cities. Custom cabinetry, premium finishes, and transparent project management.",
@@ -83,6 +105,20 @@ export const SERVICES: ServiceDefinition[] = [
       "Custom vanity and storage solutions",
       "Ventilation and moisture control",
     ],
+    heroImage: "/service-photos/bathroom-hero.jpg",
+    galleryImage: "/service-photos/bathroom-vanity.jpg",
+    photos: [
+      {
+        image: "/service-photos/bathroom-hero.jpg",
+      },
+      {
+        image: "/service-photos/bathroom-vanity.jpg",
+      },
+      {
+        image: "/service-photos/client-walkthrough.jpg",
+      },
+    ],
+    imagePosition: "center center",
     keyword: "bathroom remodeling Twin Cities",
     metaDescription:
       "Premium bathroom remodeling across Minneapolis, Buffalo, and the Twin Cities. Spa-quality finishes with rigorous waterproofing standards.",
@@ -106,6 +142,20 @@ export const SERVICES: ServiceDefinition[] = [
       "Wet bar and entertainment builds",
       "In-floor heat and humidity control",
     ],
+    heroImage: "/service-photos/basement-hero.jpg",
+    galleryImage: "/service-photos/basement-entertainment.jpg",
+    photos: [
+      {
+        image: "/service-photos/basement-hero.jpg",
+      },
+      {
+        image: "/service-photos/basement-entertainment.jpg",
+      },
+      {
+        image: "/service-photos/homeowner-planning.jpg",
+      },
+    ],
+    imagePosition: "center center",
     keyword: "basement finishing Minnesota",
     metaDescription:
       "Professional basement finishing in Minnesota. Egress-compliant builds, entertainment spaces, and guest suites with premium craftsmanship.",
@@ -129,6 +179,20 @@ export const SERVICES: ServiceDefinition[] = [
       "Outdoor kitchens and fire features",
       "Snow-load rated structural design",
     ],
+    heroImage: "/service-photos/deck-hero.jpg",
+    galleryImage: "/service-photos/outdoor-covered.jpg",
+    photos: [
+      {
+        image: "/service-photos/deck-hero.jpg",
+      },
+      {
+        image: "/service-photos/outdoor-covered.jpg",
+      },
+      {
+        image: "/service-photos/outdoor-lifestyle.jpg",
+      },
+    ],
+    imagePosition: "center center",
     keyword: "deck builder Twin Cities",
     metaDescription:
       "Premium deck and outdoor living construction in the Twin Cities. Built for Minnesota weather with composite, hardwood, and covered patio options.",
@@ -152,6 +216,20 @@ export const SERVICES: ServiceDefinition[] = [
       "Ice dam prevention systems",
       "Manufacturer-backed warranties",
     ],
+    heroImage: "/service-photos/roofing-hero.jpg",
+    galleryImage: "/service-photos/roofing-detail.jpg",
+    photos: [
+      {
+        image: "/service-photos/roofing-hero.jpg",
+      },
+      {
+        image: "/service-photos/roofing-detail.jpg",
+      },
+      {
+        image: "/service-photos/roofing-estimate.jpg",
+      },
+    ],
+    imagePosition: "center center",
     keyword: "roofing contractor Minnesota",
     metaDescription:
       "Expert roofing services in Minnesota. Architectural shingles, metal roofing, and ice-dam prevention for Twin Cities homes.",
@@ -174,6 +252,20 @@ export const SERVICES: ServiceDefinition[] = [
       "Insulated siding options",
       "Color-matched finishing",
     ],
+    heroImage: "/service-photos/siding-hero.jpg",
+    galleryImage: "/service-photos/siding-exterior.jpg",
+    photos: [
+      {
+        image: "/service-photos/siding-hero.jpg",
+      },
+      {
+        image: "/service-photos/siding-exterior.jpg",
+      },
+      {
+        image: "/service-photos/homeowner-planning.jpg",
+      },
+    ],
+    imagePosition: "center center",
     keyword: "siding installation Minneapolis",
     metaDescription:
       "Premium siding installation in Minneapolis and Buffalo, MN. Fiber cement, engineered wood, and custom trim for lasting curb appeal.",
@@ -196,6 +288,20 @@ export const SERVICES: ServiceDefinition[] = [
       "Staircase and railing fabrication",
       "Historic restoration carpentry",
     ],
+    heroImage: "/service-photos/carpentry-hero.jpg",
+    galleryImage: "/service-photos/carpentry-detail.jpg",
+    photos: [
+      {
+        image: "/service-photos/carpentry-hero.jpg",
+      },
+      {
+        image: "/service-photos/carpentry-detail.jpg",
+      },
+      {
+        image: "/service-photos/design-review.jpg",
+      },
+    ],
+    imagePosition: "center center",
     keyword: "custom carpentry Minnesota",
     metaDescription:
       "Custom carpentry and millwork in the Twin Cities. Built-ins, mantels, trim packages, and artisan woodwork for luxury homes.",
@@ -218,6 +324,20 @@ export const SERVICES: ServiceDefinition[] = [
       "Seamless exterior matching",
       "Full interior finish integration",
     ],
+    heroImage: "/service-photos/addition-hero.jpg",
+    galleryImage: "/service-photos/addition-interior.jpg",
+    photos: [
+      {
+        image: "/service-photos/addition-hero.jpg",
+      },
+      {
+        image: "/service-photos/addition-interior.jpg",
+      },
+      {
+        image: "/service-photos/kitchen-planning.jpg",
+      },
+    ],
+    imagePosition: "center center",
     keyword: "home additions Minneapolis",
     metaDescription:
       "Luxury home additions in Minneapolis and the Twin Cities. Second-story builds, bump-outs, and seamless architectural integration.",
@@ -240,6 +360,20 @@ export const SERVICES: ServiceDefinition[] = [
       "EV charger pre-wiring",
       "Overhead door and opener install",
     ],
+    heroImage: "/service-photos/garage-hero.jpg",
+    galleryImage: "/service-photos/garage-workshop.jpg",
+    photos: [
+      {
+        image: "/service-photos/garage-hero.jpg",
+      },
+      {
+        image: "/service-photos/garage-workshop.jpg",
+      },
+      {
+        image: "/service-photos/client-walkthrough.jpg",
+      },
+    ],
+    imagePosition: "center center",
     keyword: "garage builder Minnesota",
     metaDescription:
       "Custom garage construction in Minnesota. Heated floors, workshop layouts, and EV-ready builds for Twin Cities homeowners.",

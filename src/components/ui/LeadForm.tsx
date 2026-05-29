@@ -1,7 +1,11 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { BUDGET_RANGES, PROJECT_CATEGORIES } from "@/lib/constants";
+import {
+  BUDGET_RANGES,
+  CUSTOM_BUDGET_RANGE,
+  PROJECT_CATEGORIES,
+} from "@/lib/constants";
 import { Button } from "./Button";
 
 type LeadFormProps = {
@@ -13,6 +17,7 @@ type FormState = "idle" | "submitting" | "success" | "error";
 export function LeadForm({ compact = false }: LeadFormProps) {
   const [state, setState] = useState<FormState>("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [selectedBudgetRange, setSelectedBudgetRange] = useState("");
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -35,6 +40,7 @@ export function LeadForm({ compact = false }: LeadFormProps) {
       }
 
       setState("success");
+      setSelectedBudgetRange("");
       form.reset();
     } catch (err) {
       setState("error");
@@ -134,7 +140,14 @@ export function LeadForm({ compact = false }: LeadFormProps) {
           <label htmlFor="budgetRange" className="mb-1 block text-sm uppercase tracking-wider text-pine-green">
             Estimated Budget Range *
           </label>
-          <select id="budgetRange" name="budgetRange" required className={inputClass}>
+          <select
+            id="budgetRange"
+            name="budgetRange"
+            required
+            className={inputClass}
+            value={selectedBudgetRange}
+            onChange={(event) => setSelectedBudgetRange(event.target.value)}
+          >
             <option value="">Select range</option>
             {BUDGET_RANGES.map((range) => (
               <option key={range} value={range}>{range}</option>
@@ -142,6 +155,22 @@ export function LeadForm({ compact = false }: LeadFormProps) {
           </select>
         </div>
       </div>
+
+      {selectedBudgetRange === CUSTOM_BUDGET_RANGE && (
+        <div>
+          <label htmlFor="customBudgetRange" className="mb-1 block text-sm uppercase tracking-wider text-pine-green">
+            Custom Budget Estimate *
+          </label>
+          <input
+            id="customBudgetRange"
+            name="customBudgetRange"
+            type="text"
+            required
+            placeholder="Example: $35,000 or still deciding"
+            className={inputClass}
+          />
+        </div>
+      )}
 
       {!compact && (
         <div>

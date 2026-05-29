@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 type HeroSectionProps = {
   title: string;
@@ -8,6 +8,7 @@ type HeroSectionProps = {
   overlay?: boolean;
   fullScreen?: boolean;
   h1?: boolean;
+  style?: CSSProperties;
 };
 
 export function HeroSection({
@@ -18,12 +19,14 @@ export function HeroSection({
   overlay = true,
   fullScreen = false,
   h1 = true,
+  style,
 }: HeroSectionProps) {
   const Tag = h1 ? "h1" : "h2";
 
   return (
     <section
       className={`relative flex items-center justify-center overflow-hidden ${fullScreen ? "min-h-screen" : "min-h-[60vh]"} ${backgroundClass}`}
+      style={style}
     >
       {overlay && (
         <div className="absolute inset-0 bg-gradient-to-b from-charcoal/70 via-charcoal/50 to-charcoal/80" />
