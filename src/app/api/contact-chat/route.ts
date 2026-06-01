@@ -103,12 +103,12 @@ async function askGemini(messages: ChatMessage[]): Promise<string> {
 }
 
 async function askGroq(messages: ChatMessage[]): Promise<string> {
-  const apiKey = process.env.GROQ_API_KEY;
+  const apiKey = process.env.GROQ_API_KEY ?? process.env.GROQ_KEY;
   if (!apiKey) {
     throw new Error("Groq API key is not configured");
   }
 
-  const configuredModel = process.env.GROQ_MODEL ?? "llama-3.3-70b-versatile";
+  const configuredModel = process.env.GROQ_MODEL ?? process.env.GROQ_MODEL_ID ?? "llama-3.3-70b-versatile";
   const models = Array.from(
     new Set([configuredModel, "llama-3.3-70b-versatile", "llama-3.1-8b-instant"]),
   );
