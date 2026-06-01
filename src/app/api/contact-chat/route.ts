@@ -102,24 +102,26 @@ async function askGemini(messages: ChatMessage[]): Promise<string> {
   throw new Error(lastError);
 }
 
-async function askOpenAI(messages: ChatMessage[]): Promise<string> {
-  const apiKey = process.env.OPENAI_API_KEY;
+async function askGroq(messages: ChatMessage[]): Promise<string> {
+  const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
-    throw new Error("OpenAI API key is not configured");
+    throw new Error("Groq API key is not configured");
   }
 
-  const configuredModel = process.env.OPENAI_MODEL ?? "gpt-5-nano";
+  const configuredModel = process.env.GROQ_MODEL ?? "llama-3.3-70b-versatile";
   const models = Array.from(
-    new Set([configuredModel, "gpt-5-nano", "gpt-4.1-nano"]),
+    new Set([configuredModel, "llama-3.3-70b-versatile", "llama-3.1-8b-instant"]),
   );
-  const input = messages
-    .map((message) => `${message.role === "assistant" ? "Assistant" : "Visitor"}: ${message.text}`)
-    .join("\n");
 
-  let lastError = "OpenAI request failed";
+  const history = messages.map((message) => ({
+    role: message.role === "assistant" ? "assistant" : "user",
+    content: message.text,
+  }));
+
+  let lastError = "Groq request failed";
 
   for (const model of models) {
-    const response = await fetch("https://api.openai.com/v1/responses", {
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -127,9 +129,61 @@ async function askOpenAI(messages: ChatMessage[]): Promise<string> {
       },
       body: JSON.stringify({
         model,
-        instructions: systemPrompt,
-        input,
-        max_output_tokens: 180,
+        messages: [
+          { role: "system", content: systemPrompt },
+          ...history,
+        ],
+        temperature: 0.35,
+        max_tokens: 180,
+      }),
+    });
+
+    if (!response.ok) {
+      lastError = `Groq request failed with ${response.status}`;
+      continue;
+    }
+
+    const data = await response.json();
+    const text = data.choices?.[0]?.message?.content?.trim();
+
+    if (text) return text;
+  }
+
+  throw new Error(lastError);
+}
+
+async function askOpenAI(messages: ChatMessage[]): Promise<string> {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    throw new Error("OpenAI API key is not configured");
+  }
+
+  const configuredModel = process.env.OPENAI_MODEL ?? "gpt-4o-mini";
+  const models = Array.from(
+    new Set([configuredModel, "gpt-4o-mini", "gpt-4o"]),
+  );
+  const history = messages.map((message) => ({
+    role: message.role === "assistant" ? "assistant" : "user",
+    content: message.text,
+  }));
+
+  let lastError = "OpenAI request failed";
+
+  for (const model of models) {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model,
+        messages: [
+          { role: "system", content: systemPrompt },
+          ...history,
+        ],
+        temperature: 0.35,
+        max_tokens: 180,
       }),
     });
 
@@ -139,15 +193,7 @@ async function askOpenAI(messages: ChatMessage[]): Promise<string> {
     }
 
     const data = await response.json();
-    const text =
-      typeof data.output_text === "string"
-        ? data.output_text.trim()
-        : data.output
-            ?.flatMap((item: { content?: { text?: string }[] }) => item.content ?? [])
-            ?.map((content: { text?: string }) => content.text)
-            ?.filter(Boolean)
-            ?.join("\n")
-            ?.trim();
+    const text = data.choices?.[0]?.message?.content?.trim();
 
     if (text) return text;
   }
@@ -173,10 +219,15 @@ export async function POST(request: Request) {
     } catch (geminiError) {
       console.warn("[API /contact-chat] Gemini fallback:", geminiError);
       try {
-        reply = await askOpenAI(messages);
-      } catch (openAiError) {
-        console.warn("[API /contact-chat] OpenAI fallback:", openAiError);
-        reply = getBackupReply(messages[messages.length - 1].text);
+        reply = await askGroq(messages);
+      } catch (groqError) {
+        console.warn("[API /contact-chat] Groq fallback:", groqError);
+        try {
+          reply = await askOpenAI(messages);
+        } catch (openAiError) {
+          console.warn("[API /contact-chat] OpenAI fallback:", openAiError);
+          reply = getBackupReply(messages[messages.length - 1].text);
+        }
       }
     }
 

@@ -11,11 +11,6 @@ const nextConfig: NextConfig = {
     ],
   },
   output: "standalone",
-  turbopack: {
-    root: ".",
-  },
 };
 
 export default nextConfig;
-
-import('@opennextjs/cloudflare').then(m => m.initOpenNextCloudflareForDev());
