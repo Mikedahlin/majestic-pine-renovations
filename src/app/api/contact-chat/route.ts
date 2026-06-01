@@ -48,12 +48,12 @@ function getBackupReply(input: string): string {
 }
 
 async function askGemini(messages: ChatMessage[]): Promise<string> {
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY;
   if (!apiKey) {
     throw new Error("Gemini API key is not configured");
   }
 
-  const configuredModel = process.env.GEMINI_MODEL ?? "gemini-2.5-flash-lite";
+  const configuredModel = process.env.GEMINI_MODEL ?? process.env.GOOGLE_MODEL_ID ?? "gemini-2.5-flash-lite";
   const models = Array.from(
     new Set([configuredModel, "gemini-2.5-flash-lite", "gemini-2.0-flash-lite"]),
   );
@@ -158,7 +158,7 @@ async function askOpenAI(messages: ChatMessage[]): Promise<string> {
     throw new Error("OpenAI API key is not configured");
   }
 
-  const configuredModel = process.env.OPENAI_MODEL ?? "gpt-4o-mini";
+  const configuredModel = process.env.OPENAI_MODEL ?? process.env.OPENAI_MODEL_ID ?? "gpt-4o-mini";
   const models = Array.from(
     new Set([configuredModel, "gpt-4o-mini", "gpt-4o"]),
   );
