@@ -34,7 +34,8 @@ export default function AboutPage() {
     <>
       <HeroSection
         title="Our Foundation Is Built on Integrity."
-        backgroundClass="bg-[url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80&auto=format&fit=crop')] bg-cover bg-center"
+        backgroundClass="bg-cover bg-center"
+        style={{ backgroundImage: "url('/service-photos/modern-lakeside-cabin.jpg')" }}
         fullScreen={false}
       />
 

@@ -6,6 +6,11 @@ type ChatMessage = {
   text: string;
 };
 
+function stripLeadingAssistant(contents: { role: string; text: string }[]) {
+  const firstUser = contents.findIndex((m) => m.role === "user" || m.role === "visitor");
+  return firstUser < 0 ? contents : contents.slice(firstUser);
+}
+
 const systemPrompt = `You are the website chat assistant for Majestic Pine Renovations in Buffalo, Minnesota.
 Help homeowners and commercial clients understand what details to share before requesting a consultation.
 Keep answers warm, practical, and short: 2 to 4 sentences.
@@ -58,7 +63,7 @@ async function askGemini(messages: ChatMessage[]): Promise<string> {
     new Set([configuredModel, "gemini-2.5-flash-lite", "gemini-2.0-flash-lite"]),
   );
 
-  const contents = messages.map((message) => ({
+  const contents = stripLeadingAssistant(messages).map((message) => ({
     role: message.role === "assistant" ? "model" : "user",
     parts: [{ text: message.text }],
   }));
@@ -85,7 +90,8 @@ async function askGemini(messages: ChatMessage[]): Promise<string> {
     );
 
     if (!response.ok) {
-      lastError = `Gemini request failed with ${response.status}`;
+      const body = await response.text().catch(() => "");
+      lastError = `Gemini ${model} ${response.status}: ${body.slice(0, 200)}`;
       continue;
     }
 
@@ -113,7 +119,7 @@ async function askGroq(messages: ChatMessage[]): Promise<string> {
     new Set([configuredModel, "llama-3.3-70b-versatile", "llama-3.1-8b-instant"]),
   );
 
-  const history = messages.map((message) => ({
+  const history = stripLeadingAssistant(messages).map((message) => ({
     role: message.role === "assistant" ? "assistant" : "user",
     content: message.text,
   }));
@@ -139,7 +145,8 @@ async function askGroq(messages: ChatMessage[]): Promise<string> {
     });
 
     if (!response.ok) {
-      lastError = `Groq request failed with ${response.status}`;
+      const body = await response.text().catch(() => "");
+      lastError = `Groq ${model} ${response.status}: ${body.slice(0, 200)}`;
       continue;
     }
 
@@ -162,7 +169,7 @@ async function askOpenAI(messages: ChatMessage[]): Promise<string> {
   const models = Array.from(
     new Set([configuredModel, "gpt-4o-mini", "gpt-4o"]),
   );
-  const history = messages.map((message) => ({
+  const history = stripLeadingAssistant(messages).map((message) => ({
     role: message.role === "assistant" ? "assistant" : "user",
     content: message.text,
   }));
@@ -188,7 +195,8 @@ async function askOpenAI(messages: ChatMessage[]): Promise<string> {
     });
 
     if (!response.ok) {
-      lastError = `OpenAI request failed with ${response.status}`;
+      const body = await response.text().catch(() => "");
+      lastError = `OpenAI ${model} ${response.status}: ${body.slice(0, 200)}`;
       continue;
     }
 

@@ -17,13 +17,22 @@ export type ServiceDefinition = {
   featured?: boolean;
 };
 
-export const CORE_SERVICES = [
+export type CoreService = {
+  title: string;
+  description: string;
+  href: string;
+  icon: string;
+  image: string;
+};
+
+export const CORE_SERVICES: readonly CoreService[] = [
   {
     title: "Luxury Remodeling",
     description:
       "Kitchens, bathrooms, and whole-home transformations.",
     href: "/services/kitchen-remodeling",
     icon: "remodel",
+    image: "/service-photos/kitchen-hero.jpg",
   },
   {
     title: "Commercial Build-Outs",
@@ -31,6 +40,7 @@ export const CORE_SERVICES = [
       "Hospitals, retail, and office renovations engineered for operational flow.",
     href: "/commercial-contracting-minnesota",
     icon: "commercial",
+    image: "/service-photos/commercial-office.jpg",
   },
   {
     title: "Custom Additions & Garages",
@@ -38,6 +48,7 @@ export const CORE_SERVICES = [
       "Expanding your footprint with seamless architectural integration.",
     href: "/services/additions",
     icon: "addition",
+    image: "/service-photos/addition-hero.jpg",
   },
   {
     title: "Outdoor Living",
@@ -45,6 +56,7 @@ export const CORE_SERVICES = [
       "Premium decks, patios, and exterior renovations built for the Minnesota climate.",
     href: "/services/decks-outdoor-living",
     icon: "outdoor",
+    image: "/service-photos/deck-hero.jpg",
   },
 ] as const;
 
@@ -191,6 +203,9 @@ export const SERVICES: ServiceDefinition[] = [
       {
         image: "/service-photos/outdoor-lifestyle.jpg",
       },
+      {
+        image: "/service-photos/outdoor-covered.jpg",
+      },
     ],
     imagePosition: "center center",
     keyword: "deck builder Twin Cities",
@@ -252,7 +267,7 @@ export const SERVICES: ServiceDefinition[] = [
       "Insulated siding options",
       "Color-matched finishing",
     ],
-    heroImage: "/service-photos/rustic-wood-cabin.jpg",
+    heroImage: "/service-photos/siding-hero.jpg",
     galleryImage: "/service-photos/siding-exterior.jpg",
     photos: [
       {
@@ -324,11 +339,11 @@ export const SERVICES: ServiceDefinition[] = [
       "Seamless exterior matching",
       "Full interior finish integration",
     ],
-    heroImage: "/service-photos/modern-lakeside-cabin.jpg",
+    heroImage: "/service-photos/addition-hero.jpg",
     galleryImage: "/service-photos/addition-interior.jpg",
     photos: [
       {
-        image: "/service-photos/modern-lakeside-cabin.jpg",
+        image: "/service-photos/addition-hero.jpg",
       },
       {
         image: "/service-photos/addition-interior.jpg",

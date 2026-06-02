@@ -11,7 +11,7 @@ export function HomeHero() {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
         style={{
           backgroundImage:
-            "linear-gradient(135deg, rgba(18,18,18,0.85) 0%, rgba(26,54,38,0.7) 50%, rgba(18,18,18,0.9) 100%), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80&auto=format&fit=crop')",
+            "linear-gradient(135deg, rgba(18,18,18,0.85) 0%, rgba(26,54,38,0.7) 50%, rgba(18,18,18,0.9) 100%), url('/service-photos/kitchen-hero.jpg')",
           backgroundAttachment: "fixed",
         }}
         aria-hidden="true"

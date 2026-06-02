@@ -56,7 +56,7 @@ export default function HomePage() {
           className="min-h-[400px] bg-cover bg-center"
           style={{
             backgroundImage:
-              "url('https://images.unsplash.com/photo-1615529328331-f8917597711f?w=800&q=80&auto=format&fit=crop')",
+              "url('/service-photos/carpentry-detail.jpg')",
           }}
           aria-hidden="true"
         />
@@ -94,6 +94,7 @@ export default function HomePage() {
                 title={service.title}
                 description={service.description}
                 href={service.href}
+                image={service.image}
                 index={i}
               />
             ))}

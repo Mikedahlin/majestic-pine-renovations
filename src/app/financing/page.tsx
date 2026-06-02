@@ -48,7 +48,8 @@ export default function FinancingPage() {
       <HeroSection
         title="Luxury Remodeling, Intelligently Financed."
         subtitle="Your capital should work for you. Majestic Pine Renovations partners with elite lending institutions to provide flexible, high-limit financing options for both residential and commercial projects."
-        backgroundClass="bg-[url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1920&q=80&auto=format&fit=crop')] bg-cover bg-center"
+        backgroundClass="bg-cover bg-center"
+        style={{ backgroundImage: "url('/service-photos/outdoor-lifestyle.jpg')" }}
         fullScreen={false}
       />
 

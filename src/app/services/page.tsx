@@ -18,7 +18,8 @@ export default function ServicesPage() {
       <HeroSection
         title="Comprehensive Construction Solutions."
         subtitle="From structural overhauls to meticulous finish carpentry, view our specialized divisions below."
-        backgroundClass="bg-[url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1920&q=80&auto=format&fit=crop')] bg-cover bg-center"
+        backgroundClass="bg-cover bg-center"
+        style={{ backgroundImage: "url('/service-photos/commercial-office.jpg')" }}
         fullScreen={false}
         h1
       />
@@ -56,17 +57,21 @@ export default function ServicesPage() {
               <FadeInUp key={service.slug} delay={i * 60}>
                 <Link
                   href={`/services/${service.slug}`}
-                  className="group block border border-pine-green/20 bg-warm-white p-6 transition-all hover:border-bronze"
+                  className="group relative block min-h-[220px] overflow-hidden border border-pine-green/20 bg-cover bg-center transition-all hover:border-bronze"
+                  style={{ backgroundImage: `url('${service.heroImage}')` }}
                 >
-                  <h3 className="font-heading text-lg font-bold uppercase tracking-wide text-pine-green group-hover:text-bronze">
-                    {service.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-concrete line-clamp-2">
-                    {service.description}
-                  </p>
-                  <span className="mt-4 inline-block text-xs uppercase tracking-widest text-bronze">
-                    Learn More →
-                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/50 to-charcoal/30 transition-opacity group-hover:opacity-90" />
+                  <div className="relative z-10 flex h-full min-h-[220px] flex-col justify-end p-6">
+                    <h3 className="font-heading text-lg font-bold uppercase tracking-wide text-warm-white group-hover:text-bronze transition-colors">
+                      {service.title}
+                    </h3>
+                    <p className="mt-2 text-sm text-warm-white/80 line-clamp-2">
+                      {service.description}
+                    </p>
+                    <span className="mt-4 inline-block text-xs uppercase tracking-widest text-bronze">
+                      Learn More →
+                    </span>
+                  </div>
                 </Link>
               </FadeInUp>
             ))}
