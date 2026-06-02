@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { CONTACT } from "@/lib/constants";
 
 type Message = {
@@ -59,7 +59,7 @@ export function ContactChatbot() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }, [messages, loading]);
 
   async function sendMessage(text: string) {
@@ -100,9 +100,11 @@ export function ContactChatbot() {
     }
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    sendMessage(input);
+  function handleEnter(event: React.KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      sendMessage(input);
+    }
   }
 
   return (
@@ -158,7 +160,7 @@ export function ContactChatbot() {
           ))}
         </div>
 
-        <form onSubmit={handleSubmit} className="flex gap-2">
+        <div className="flex gap-2">
           <label htmlFor="contact-chat-message" className="sr-only">
             Message
           </label>
@@ -167,17 +169,19 @@ export function ContactChatbot() {
             type="text"
             value={input}
             onChange={(event) => setInput(event.target.value)}
+            onKeyDown={handleEnter}
             placeholder="Ask about your project"
             className="min-w-0 flex-1 border border-pine-green/20 bg-warm-white px-4 py-3 text-sm text-charcoal placeholder:text-concrete/60 focus:border-bronze focus:outline-none focus:ring-1 focus:ring-bronze"
           />
           <button
-            type="submit"
+            type="button"
             disabled={loading}
+            onClick={() => sendMessage(input)}
             className="bg-charcoal px-4 py-3 text-sm font-semibold uppercase tracking-wider text-warm-white transition-colors hover:bg-bronze disabled:cursor-not-allowed disabled:opacity-50"
           >
             {loading ? "Wait" : "Send"}
           </button>
-        </form>
+        </div>
       </div>
     </div>
   );
