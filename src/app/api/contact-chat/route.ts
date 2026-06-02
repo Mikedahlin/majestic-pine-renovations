@@ -237,7 +237,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ reply });
   } catch (error) {
     console.error("[API /contact-chat] Fatal error:", error);
-    const message = error instanceof Error ? error.stack ?? error.message : String(error);
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json({ error: "I am having trouble connecting right now. Please use the form below or call us directly." }, { status: 500 });
   }
 }
