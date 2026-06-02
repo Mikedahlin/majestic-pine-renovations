@@ -209,45 +209,35 @@ async function askOpenAI(messages: ChatMessage[]): Promise<string> {
   throw new Error(lastError);
 }
 
+async function tryProvider(name: string, fn: () => Promise<string>): Promise<string | null> {
+  try {
+    return await fn();
+  } catch (e) {
+    console.warn(`[API /contact-chat] ${name} failed:`, e instanceof Error ? e.message : e);
+    return null;
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
     const messages = cleanMessages(Array.isArray(body.messages) ? body.messages : []);
 
     if (messages.length === 0) {
-      return NextResponse.json(
-        { error: "A message is required" },
-        { status: 400 },
-      );
+      return NextResponse.json({ error: "A message is required" }, { status: 400 });
     }
 
-    let reply: string;
-    try {
-      reply = await askGemini(messages);
-    } catch (geminiError) {
-      console.warn("[API /contact-chat] Gemini fallback:", geminiError);
-      try {
-        reply = await askGroq(messages);
-      } catch (groqError) {
-        console.warn("[API /contact-chat] Groq fallback:", groqError);
-        try {
-          reply = await askOpenAI(messages);
-        } catch (openAiError) {
-          console.warn("[API /contact-chat] OpenAI fallback:", openAiError);
-          reply = getBackupReply(messages[messages.length - 1].text);
-        }
-      }
-    }
+    const lastInput = messages[messages.length - 1].text;
+    let reply =
+      (await tryProvider("Gemini", () => askGemini(messages))) ??
+      (await tryProvider("Groq", () => askGroq(messages))) ??
+      (await tryProvider("OpenAI", () => askOpenAI(messages))) ??
+      getBackupReply(lastInput);
 
     return NextResponse.json({ reply });
   } catch (error) {
-    console.error("[API /contact-chat] Error:", error);
-    return NextResponse.json(
-      {
-        error:
-          "I am having trouble connecting right now. Please use the form below or call us directly.",
-      },
-      { status: 500 },
-    );
+    console.error("[API /contact-chat] Fatal error:", error);
+    const message = error instanceof Error ? error.stack ?? error.message : String(error);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
