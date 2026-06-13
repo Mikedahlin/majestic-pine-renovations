@@ -5,6 +5,7 @@ import { HeroSection } from "@/components/ui/HeroSection";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { FadeInUp } from "@/components/ui/FadeInUp";
+import { ProjectPhoto } from "@/components/ui/ProjectPhoto";
 import { SchemaScript } from "@/components/ui/SchemaScript";
 import { serviceSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/metadata";
@@ -56,11 +57,8 @@ export default async function ServiceSubpage({ params }: Props) {
       <HeroSection
         title={service.headline}
         subtitle={service.description}
-        backgroundClass="bg-cover bg-center"
-        style={{
-          backgroundImage: `url('${service.heroImage}')`,
-          backgroundPosition: service.imagePosition ?? "center center",
-        }}
+        backgroundImage={service.heroImage}
+        backgroundPosition={service.imagePosition ?? "center center"}
         fullScreen={false}
       >
         <Button href="/contact">Request a Consultation</Button>
@@ -94,14 +92,11 @@ export default async function ServiceSubpage({ params }: Props) {
                 ))}
               </ul>
 
-              <div
-                className="mt-10 aspect-video bg-cover bg-center"
-                style={{
-                  backgroundImage: `url('${service.galleryImage}')`,
-                  backgroundPosition: service.imagePosition ?? "center center",
-                }}
-                role="img"
-                aria-label={`${service.title} project example`}
+              <ProjectPhoto
+                src={service.galleryImage}
+                alt={`${service.title} project example`}
+                className="mt-10 aspect-video"
+                position={service.imagePosition ?? "center center"}
               />
             </FadeInUp>
           </div>
@@ -117,15 +112,10 @@ export default async function ServiceSubpage({ params }: Props) {
               {service.photos.map((photo, i) => (
                 <FadeInUp key={photo.image} delay={i * 80}>
                   <article className="overflow-hidden border border-pine-green/10 bg-warm-white">
-                    <div
-                      className="aspect-[4/3] bg-cover bg-center"
-                      style={{
-                        backgroundImage: `url('${photo.image}')`,
-                        backgroundPosition:
-                          photo.position ?? service.imagePosition ?? "center center",
-                      }}
-                      role="img"
-                      aria-label={`${service.title} project example`}
+                    <ProjectPhoto
+                      src={photo.image}
+                      alt={`${service.title} project example`}
+                      position={photo.position ?? service.imagePosition ?? "center center"}
                     />
                   </article>
                 </FadeInUp>

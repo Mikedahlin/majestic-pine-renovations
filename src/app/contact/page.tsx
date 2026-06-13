@@ -18,8 +18,7 @@ export default function ContactPage() {
 
       <HeroSection
         title="Initiate Your Project."
-        backgroundClass="bg-cover bg-center"
-        style={{ backgroundImage: "url('/service-photos/client-walkthrough.jpg')" }}
+        backgroundImage="/service-photos/client-walkthrough.jpg"
         fullScreen={false}
       />
 

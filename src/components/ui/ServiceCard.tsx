@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { FadeInUp } from "./FadeInUp";
+import { BackgroundImage } from "./BackgroundImage";
 
 type ServiceCardProps = {
   title: string;
@@ -19,10 +20,10 @@ export function ServiceCard({ title, description, href, image, index = 0 }: Serv
         className="group block border border-pine-green/20 bg-warm-white transition-all duration-300 hover:border-bronze hover:shadow-lg"
       >
         {image && (
-          <div
-            className="aspect-[16/9] bg-cover bg-center"
-            style={{ backgroundImage: `url('${image}')` }}
-            aria-hidden="true"
+          <BackgroundImage
+            src={image}
+            alt=""
+            className="aspect-[16/9]"
           />
         )}
         <div className="p-8">

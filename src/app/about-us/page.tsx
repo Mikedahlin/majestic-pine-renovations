@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { HeroSection } from "@/components/ui/HeroSection";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { FadeInUp } from "@/components/ui/FadeInUp";
+import { ProjectPhoto } from "@/components/ui/ProjectPhoto";
 import { buildMetadata, PAGE_META } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata(PAGE_META.about);
@@ -34,8 +35,7 @@ export default function AboutPage() {
     <>
       <HeroSection
         title="Our Foundation Is Built on Integrity."
-        backgroundClass="bg-cover bg-center"
-        style={{ backgroundImage: "url('/service-photos/modern-lakeside-cabin.jpg')" }}
+        backgroundImage="/service-photos/modern-lakeside-cabin.jpg"
         fullScreen={false}
       />
 
@@ -43,14 +43,11 @@ export default function AboutPage() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <FadeInUp>
-              <div
-                className="aspect-[4/5] bg-cover bg-center"
-                style={{
-                  backgroundImage: "url('/jeremy-stoesz.png')",
-                  backgroundPosition: "center top",
-                }}
-                role="img"
-                aria-label="Jeremy Stoesz, founder of Majestic Pine Renovations, on a job site"
+              <ProjectPhoto
+                src="/jeremy-stoesz.jpg"
+                alt="Jeremy Stoesz, founder of Majestic Pine Renovations, on a job site"
+                className="aspect-[4/5]"
+                position="center top"
               />
             </FadeInUp>
             <FadeInUp delay={150}>

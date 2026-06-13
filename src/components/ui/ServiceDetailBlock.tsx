@@ -1,5 +1,6 @@
 import { FadeInUp } from "./FadeInUp";
 import { Button } from "./Button";
+import { ProjectPhoto } from "./ProjectPhoto";
 
 type ServiceDetailBlockProps = {
   title: string;
@@ -69,14 +70,11 @@ export function ServiceDetailBlock({
             </ul>
           </div>
 
-          <div
-            className="aspect-video bg-cover bg-center"
-            style={{
-              backgroundImage: `url('${image}')`,
-              backgroundPosition: imagePosition,
-            }}
-            role="img"
-            aria-label={`${title} project example`}
+          <ProjectPhoto
+            src={image}
+            alt={`${title} project example`}
+            className="aspect-video"
+            position={imagePosition}
           />
         </div>
       </article>

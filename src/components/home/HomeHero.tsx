@@ -1,25 +1,31 @@
 "use client";
 
+import { BackgroundImage } from "@/components/ui/BackgroundImage";
 import { Button } from "@/components/ui/Button";
 import { TrustBadges } from "@/components/ui/TrustBadges";
 
 export function HomeHero() {
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
-      {/* Cinematic background with parallax effect */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
-        style={{
-          backgroundImage:
-            "linear-gradient(135deg, rgba(18,18,18,0.85) 0%, rgba(26,54,38,0.7) 50%, rgba(18,18,18,0.9) 100%), url('/service-photos/kitchen-hero.jpg')",
-          backgroundAttachment: "fixed",
-        }}
-        aria-hidden="true"
-      />
-
-      {/* Glassmorphism overlay */}
-      <div className="absolute inset-0 bg-charcoal/30 backdrop-blur-[2px]" />
-
+    <BackgroundImage
+      src="/service-photos/kitchen-hero.jpg"
+      alt=""
+      className="flex min-h-screen items-center justify-center"
+      imageClassName="scale-105"
+      priority
+      overlay={
+        <>
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(18,18,18,0.85) 0%, rgba(26,54,38,0.7) 50%, rgba(18,18,18,0.9) 100%)",
+            }}
+            aria-hidden="true"
+          />
+          <div className="absolute inset-0 bg-charcoal/30 backdrop-blur-[2px]" aria-hidden="true" />
+        </>
+      }
+    >
       <div className="relative z-10 mx-auto max-w-5xl px-6 py-32 text-center lg:px-8">
         <h1 className="font-heading text-3xl md:text-5xl lg:text-6xl font-bold uppercase tracking-wide text-warm-white leading-tight">
           We Build Exceptional Spaces With Craftsmanship, Integrity, and Modern Innovation.
@@ -40,6 +46,6 @@ export function HomeHero() {
           <TrustBadges />
         </div>
       </div>
-    </section>
+    </BackgroundImage>
   );
 }

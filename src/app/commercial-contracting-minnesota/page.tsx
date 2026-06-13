@@ -4,6 +4,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectorCards } from "@/components/ui/SectorCards";
 import { Button } from "@/components/ui/Button";
 import { FadeInUp } from "@/components/ui/FadeInUp";
+import { ProjectPhoto } from "@/components/ui/ProjectPhoto";
 import { buildMetadata, PAGE_META } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata(PAGE_META.commercial);
@@ -26,10 +27,7 @@ export default function CommercialPage() {
       <HeroSection
         title="Scalable Commercial Capability. Elite Execution."
         subtitle="Tenant Improvements | Medical Facilities | Retail Build-Outs | Corporate Offices"
-        backgroundClass="bg-cover bg-center"
-        style={{
-          backgroundImage: "url('/service-photos/commercial-office.jpg')",
-        }}
+        backgroundImage="/service-photos/commercial-office.jpg"
         fullScreen={false}
       >
         <Button href="/contact">Schedule a Commercial Bid</Button>
@@ -62,11 +60,9 @@ export default function CommercialPage() {
             {commercialPhotos.map((photo, i) => (
               <FadeInUp key={photo.image} delay={i * 80}>
                 <article className="overflow-hidden border border-pine-green/10 bg-warm-white">
-                  <div
-                    className="aspect-[4/3] bg-cover bg-center"
-                    style={{ backgroundImage: `url('${photo.image}')` }}
-                    role="img"
-                    aria-label="Commercial project example"
+                  <ProjectPhoto
+                    src={photo.image}
+                    alt="Commercial project example"
                   />
                 </article>
               </FadeInUp>

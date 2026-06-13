@@ -20,6 +20,17 @@ Always guide serious project inquiries toward the contact form or phone number.
 Company phone: ${CONTACT.phone}.
 Service area: ${CONTACT.serviceArea}.`;
 
+const INVALID_MODEL_NAMES = new Set(["", "gemini", "gpt", "llama", "openai"]);
+
+function resolveModels(configured: string | undefined, defaults: string[]): string[] {
+  const candidates = [configured, ...defaults].filter(
+    (model): model is string =>
+      Boolean(model?.trim() && !INVALID_MODEL_NAMES.has(model.trim().toLowerCase())),
+  );
+
+  return Array.from(new Set(candidates));
+}
+
 function cleanMessages(messages: ChatMessage[]): ChatMessage[] {
   return messages
     .filter((message) => message.text.trim())
@@ -58,10 +69,12 @@ async function askGemini(messages: ChatMessage[]): Promise<string> {
     throw new Error("Gemini API key is not configured");
   }
 
-  const configuredModel = process.env.GEMINI_MODEL ?? process.env.GOOGLE_MODEL_ID ?? "gemini-2.5-flash-lite";
-  const models = Array.from(
-    new Set([configuredModel, "gemini-2.5-flash-lite", "gemini-2.0-flash-lite"]),
-  );
+  const configuredModel = process.env.GEMINI_MODEL ?? process.env.GOOGLE_MODEL_ID;
+  const models = resolveModels(configuredModel, [
+    "gemini-2.5-flash-lite",
+    "gemini-2.0-flash-lite",
+    "gemini-2.0-flash",
+  ]);
 
   const contents = stripLeadingAssistant(messages).map((message) => ({
     role: message.role === "assistant" ? "model" : "user",
@@ -114,10 +127,11 @@ async function askGroq(messages: ChatMessage[]): Promise<string> {
     throw new Error("Groq API key is not configured");
   }
 
-  const configuredModel = process.env.GROQ_MODEL ?? process.env.GROQ_MODEL_ID ?? "llama-3.3-70b-versatile";
-  const models = Array.from(
-    new Set([configuredModel, "llama-3.3-70b-versatile", "llama-3.1-8b-instant"]),
-  );
+  const configuredModel = process.env.GROQ_MODEL ?? process.env.GROQ_MODEL_ID;
+  const models = resolveModels(configuredModel, [
+    "llama-3.3-70b-versatile",
+    "llama-3.1-8b-instant",
+  ]);
 
   const history = stripLeadingAssistant(messages).map((message) => ({
     role: message.role === "assistant" ? "assistant" : "user",
@@ -165,10 +179,8 @@ async function askOpenAI(messages: ChatMessage[]): Promise<string> {
     throw new Error("OpenAI API key is not configured");
   }
 
-  const configuredModel = process.env.OPENAI_MODEL ?? process.env.OPENAI_MODEL_ID ?? "gpt-4o-mini";
-  const models = Array.from(
-    new Set([configuredModel, "gpt-4o-mini", "gpt-4o"]),
-  );
+  const configuredModel = process.env.OPENAI_MODEL ?? process.env.OPENAI_MODEL_ID;
+  const models = resolveModels(configuredModel, ["gpt-4o-mini", "gpt-4o"]);
   const history = stripLeadingAssistant(messages).map((message) => ({
     role: message.role === "assistant" ? "assistant" : "user",
     content: message.text,
@@ -228,7 +240,7 @@ export async function POST(request: Request) {
     }
 
     const lastInput = messages[messages.length - 1].text;
-    let reply =
+    const reply =
       (await tryProvider("Gemini", () => askGemini(messages))) ??
       (await tryProvider("Groq", () => askGroq(messages))) ??
       (await tryProvider("OpenAI", () => askOpenAI(messages))) ??

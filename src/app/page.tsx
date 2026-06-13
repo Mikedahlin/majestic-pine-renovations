@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { HomeHero } from "@/components/home/HomeHero";
+import { BackgroundImage } from "@/components/ui/BackgroundImage";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ServiceCard } from "@/components/ui/ServiceCard";
@@ -52,13 +53,10 @@ export default function HomePage() {
 
       {/* Brand Positioning */}
       <section className="grid lg:grid-cols-2">
-        <div
-          className="min-h-[400px] bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "url('/service-photos/carpentry-detail.jpg')",
-          }}
-          aria-hidden="true"
+        <BackgroundImage
+          src="/service-photos/carpentry-detail.jpg"
+          alt=""
+          className="min-h-[400px]"
         />
         <div className="flex items-center bg-warm-white px-8 py-16 lg:px-16">
           <FadeInUp>

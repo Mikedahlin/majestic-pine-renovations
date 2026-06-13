@@ -1,10 +1,13 @@
 import type { CSSProperties, ReactNode } from "react";
+import { BackgroundImage } from "./BackgroundImage";
 
 type HeroSectionProps = {
   title: string;
   subtitle?: string;
   children?: ReactNode;
   backgroundClass?: string;
+  backgroundImage?: string;
+  backgroundPosition?: string;
   overlay?: boolean;
   fullScreen?: boolean;
   h1?: boolean;
@@ -16,22 +19,23 @@ export function HeroSection({
   subtitle,
   children,
   backgroundClass = "bg-pine-green",
+  backgroundImage,
+  backgroundPosition = "center",
   overlay = true,
   fullScreen = false,
   h1 = true,
   style,
 }: HeroSectionProps) {
   const Tag = h1 ? "h1" : "h2";
+  const heightClass = fullScreen ? "min-h-screen" : "min-h-[60vh]";
+  const hasImage = Boolean(backgroundImage);
 
-  return (
-    <section
-      className={`relative flex items-center justify-center overflow-hidden ${fullScreen ? "min-h-screen" : "min-h-[60vh]"} ${backgroundClass}`}
-      style={style}
-    >
+  const content = (
+    <>
       {overlay && (
         <div className="absolute inset-0 bg-gradient-to-b from-charcoal/70 via-charcoal/50 to-charcoal/80" />
       )}
-      <div className="absolute inset-0 bg-[url('/textures/noise.png')] opacity-[0.03] mix-blend-overlay" />
+      <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay bg-[url('/textures/noise.png')]" />
 
       <div className="relative z-10 mx-auto max-w-5xl px-6 py-32 text-center lg:px-8">
         <Tag className="font-heading text-3xl md:text-5xl lg:text-6xl font-bold uppercase tracking-wide text-warm-white leading-tight">
@@ -44,6 +48,29 @@ export function HeroSection({
         )}
         {children && <div className="mt-10 flex flex-wrap justify-center gap-4">{children}</div>}
       </div>
+    </>
+  );
+
+  if (hasImage) {
+    return (
+      <BackgroundImage
+        src={backgroundImage!}
+        alt=""
+        className={`flex items-center justify-center ${heightClass} ${backgroundClass}`}
+        position={backgroundPosition}
+        style={style}
+        priority
+        overlay={content}
+      />
+    );
+  }
+
+  return (
+    <section
+      className={`relative flex items-center justify-center overflow-hidden ${heightClass} ${backgroundClass}`}
+      style={style}
+    >
+      {content}
     </section>
   );
 }
