@@ -32,7 +32,7 @@ export function buildMetadata({
       type: "website",
       images: [
         {
-          url: `${SITE_URL}/og-default.jpg`,
+          url: `${SITE_URL}/opengraph-image`,
           width: 1200,
           height: 630,
           alt: SITE_NAME,
@@ -43,7 +43,7 @@ export function buildMetadata({
       card: "summary_large_image",
       title: fullTitle,
       description,
-      images: [`${SITE_URL}/og-default.jpg`],
+      images: [`${SITE_URL}/twitter-image`],
     },
   };
 }

@@ -11,6 +11,54 @@ import {
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const MAX_FILES = 5;
+const ALLOWED_FILE_EXTENSIONS = new Set([
+  ".pdf",
+  ".dwg",
+  ".mp3",
+  ".wav",
+  ".m4a",
+  ".aac",
+  ".ogg",
+  ".webm",
+  ".flac",
+]);
+const ALLOWED_EXACT_MIME_TYPES = new Set([
+  "application/pdf",
+  "application/acad",
+  "application/dwg",
+  "application/x-autocad",
+  "application/x-dwg",
+  "image/vnd.dwg",
+  "audio/mpeg",
+  "audio/wav",
+  "audio/x-wav",
+  "audio/aac",
+  "audio/mp4",
+  "audio/x-m4a",
+  "audio/ogg",
+  "audio/webm",
+  "audio/flac",
+]);
+
+function getFileExtension(fileName: string): string {
+  const dotIndex = fileName.lastIndexOf(".");
+
+  return dotIndex >= 0 ? fileName.slice(dotIndex).toLowerCase() : "";
+}
+
+function isSupportedUpload(file: File): boolean {
+  const extension = getFileExtension(file.name);
+
+  if (extension && ALLOWED_FILE_EXTENSIONS.has(extension)) {
+    return true;
+  }
+
+  if (file.type.startsWith("image/") || file.type.startsWith("audio/")) {
+    return true;
+  }
+
+  return ALLOWED_EXACT_MIME_TYPES.has(file.type.toLowerCase());
+}
 
 function validatePhone(phone: string): boolean {
   return /^[\d\s\-().+]{10,}$/.test(phone);
@@ -59,6 +107,13 @@ export async function POST(request: Request) {
 
       if (entry.size > MAX_FILE_SIZE) {
         errors.push(`File "${entry.name}" exceeds 10MB limit`);
+        continue;
+      }
+
+      if (!isSupportedUpload(entry)) {
+        errors.push(
+          `File "${entry.name}" must be an image, audio note, PDF, or DWG file`,
+        );
         continue;
       }
 

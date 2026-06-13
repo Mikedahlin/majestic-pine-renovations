@@ -22,6 +22,12 @@ export function HeroSection({
   style,
 }: HeroSectionProps) {
   const Tag = h1 ? "h1" : "h2";
+  const textureStyle: CSSProperties = {
+    backgroundImage:
+      "radial-gradient(circle at 25% 25%, rgba(255,255,255,0.18) 0 1px, transparent 1px), radial-gradient(circle at 75% 55%, rgba(255,255,255,0.14) 0 1px, transparent 1px)",
+    backgroundSize: "26px 26px, 34px 34px",
+    backgroundPosition: "0 0, 10px 14px",
+  };
 
   return (
     <section
@@ -31,7 +37,7 @@ export function HeroSection({
       {overlay && (
         <div className="absolute inset-0 bg-gradient-to-b from-charcoal/70 via-charcoal/50 to-charcoal/80" />
       )}
-      <div className="absolute inset-0 bg-[url('/textures/noise.png')] opacity-[0.03] mix-blend-overlay" />
+      <div className="absolute inset-0 opacity-[0.04] mix-blend-overlay" style={textureStyle} />
 
       <div className="relative z-10 mx-auto max-w-5xl px-6 py-32 text-center lg:px-8">
         <Tag className="font-heading text-3xl md:text-5xl lg:text-6xl font-bold uppercase tracking-wide text-warm-white leading-tight">
