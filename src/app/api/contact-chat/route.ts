@@ -6,6 +6,13 @@ type ChatMessage = {
   text: string;
 };
 
+type RawChatMessage = {
+  role?: unknown;
+  text?: unknown;
+  content?: unknown;
+  parts?: unknown;
+};
+
 function stripLeadingAssistant(contents: { role: string; text: string }[]) {
   const firstUser = contents.findIndex((m) => m.role === "user" || m.role === "visitor");
   return firstUser < 0 ? contents : contents.slice(firstUser);
@@ -20,14 +27,101 @@ Always guide serious project inquiries toward the contact form or phone number.
 Company phone: ${CONTACT.phone}.
 Service area: ${CONTACT.serviceArea}.`;
 
-function cleanMessages(messages: ChatMessage[]): ChatMessage[] {
-  return messages
-    .filter((message) => message.text.trim())
-    .slice(-8)
-    .map((message) => ({
-      role: message.role,
-      text: message.text.slice(0, 1000),
-    }));
+function normalizeRole(role: unknown): ChatMessage["role"] {
+  if (role === "assistant" || role === "model") {
+    return "assistant";
+  }
+
+  return "visitor";
+}
+
+function isLikelyMediaPart(part: Record<string, unknown>): boolean {
+  const type = typeof part.type === "string" ? part.type.toLowerCase() : "";
+  if (type.includes("image") || type.includes("audio")) return true;
+  return Boolean(
+    part.image ||
+      part.image_url ||
+      part.inline_data ||
+      part.file_data ||
+      part.audio ||
+      part.input_audio ||
+      part.input_image,
+  );
+}
+
+function extractText(value: unknown): { text: string; hasMedia: boolean } {
+  if (typeof value === "string") {
+    return { text: value, hasMedia: false };
+  }
+
+  if (!Array.isArray(value)) {
+    return { text: "", hasMedia: false };
+  }
+
+  const chunks: string[] = [];
+  let hasMedia = false;
+
+  for (const entry of value) {
+    if (typeof entry === "string") {
+      chunks.push(entry);
+      continue;
+    }
+
+    if (!entry || typeof entry !== "object") {
+      continue;
+    }
+
+    const part = entry as Record<string, unknown>;
+    if (typeof part.text === "string") {
+      chunks.push(part.text);
+    }
+
+    if (typeof part.input_text === "string") {
+      chunks.push(part.input_text);
+    }
+
+    if (isLikelyMediaPart(part)) {
+      hasMedia = true;
+    }
+  }
+
+  return {
+    text: chunks.join("\n").trim(),
+    hasMedia,
+  };
+}
+
+function cleanMessages(messages: unknown[]): ChatMessage[] {
+  const normalized: ChatMessage[] = [];
+
+  for (const raw of messages) {
+    if (!raw || typeof raw !== "object") continue;
+    const message = raw as RawChatMessage;
+
+    const primary = extractText(message.text);
+    const content = extractText(message.content);
+    const parts = extractText(message.parts);
+
+    const mergedText = [primary.text, content.text, parts.text].filter(Boolean).join("\n").trim();
+    const hasMedia = primary.hasMedia || content.hasMedia || parts.hasMedia;
+
+    if (mergedText) {
+      normalized.push({
+        role: normalizeRole(message.role),
+        text: mergedText.slice(0, 1000),
+      });
+      continue;
+    }
+
+    if (hasMedia) {
+      normalized.push({
+        role: normalizeRole(message.role),
+        text: "Visitor shared media (image/audio) without text.",
+      });
+    }
+  }
+
+  return normalized.slice(-8);
 }
 
 function getBackupReply(input: string): string {
@@ -228,7 +322,7 @@ export async function POST(request: Request) {
     }
 
     const lastInput = messages[messages.length - 1].text;
-    let reply =
+    const reply =
       (await tryProvider("Gemini", () => askGemini(messages))) ??
       (await tryProvider("Groq", () => askGroq(messages))) ??
       (await tryProvider("OpenAI", () => askOpenAI(messages))) ??

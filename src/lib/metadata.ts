@@ -15,6 +15,7 @@ export function buildMetadata({
   path,
 }: PageMeta): Metadata {
   const url = `${SITE_URL}${path}`;
+  const defaultSocialImage = `${SITE_URL}/service-photos/kitchen-hero.jpg`;
   const fullTitle =
     path === "/" ? title : `${title} | ${SITE_NAME}`;
 
@@ -32,7 +33,7 @@ export function buildMetadata({
       type: "website",
       images: [
         {
-          url: `${SITE_URL}/og-default.jpg`,
+          url: defaultSocialImage,
           width: 1200,
           height: 630,
           alt: SITE_NAME,
@@ -43,7 +44,7 @@ export function buildMetadata({
       card: "summary_large_image",
       title: fullTitle,
       description,
-      images: [`${SITE_URL}/og-default.jpg`],
+      images: [defaultSocialImage],
     },
   };
 }
