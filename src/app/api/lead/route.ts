@@ -11,6 +11,33 @@ import {
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const MAX_FILES = 5;
+const ALLOWED_MIME_PREFIXES = ["image/", "audio/"] as const;
+const ALLOWED_MIME_TYPES = new Set([
+  "application/pdf",
+  "application/acad",
+  "application/x-acad",
+  "image/vnd.dwg",
+  "application/dwg",
+]);
+const ALLOWED_FILE_EXTENSIONS = new Set([
+  ".pdf",
+  ".dwg",
+  ".dxf",
+  ".jpg",
+  ".jpeg",
+  ".png",
+  ".webp",
+  ".gif",
+  ".heic",
+  ".heif",
+  ".mp3",
+  ".wav",
+  ".ogg",
+  ".m4a",
+  ".aac",
+  ".flac",
+  ".webm",
+]);
 
 function validatePhone(phone: string): boolean {
   return /^[\d\s\-().+]{10,}$/.test(phone);
@@ -18,6 +45,24 @@ function validatePhone(phone: string): boolean {
 
 function validateEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function hasAllowedExtension(filename: string): boolean {
+  const extension = filename.toLowerCase().match(/\.[^./\\]+$/)?.[0] ?? "";
+  return ALLOWED_FILE_EXTENSIONS.has(extension);
+}
+
+function isAllowedFileType(file: File): boolean {
+  const normalizedType = file.type.trim().toLowerCase();
+  if (
+    normalizedType &&
+    (ALLOWED_MIME_TYPES.has(normalizedType) ||
+      ALLOWED_MIME_PREFIXES.some((prefix) => normalizedType.startsWith(prefix)))
+  ) {
+    return true;
+  }
+
+  return hasAllowedExtension(file.name);
 }
 
 export async function POST(request: Request) {
@@ -59,6 +104,13 @@ export async function POST(request: Request) {
 
       if (entry.size > MAX_FILE_SIZE) {
         errors.push(`File "${entry.name}" exceeds 10MB limit`);
+        continue;
+      }
+
+      if (!isAllowedFileType(entry)) {
+        errors.push(
+          `File "${entry.name}" has an unsupported type. Allowed: images, audio, PDF, DWG, and DXF.`,
+        );
         continue;
       }
 

@@ -178,14 +178,14 @@ export function LeadForm({ compact = false }: LeadFormProps) {
             Upload Files
           </label>
           <p className="mb-2 text-xs text-concrete">
-            Blueprints, inspiration photos, or current space images (max 10MB each)
+            Blueprints, inspiration photos, or short voice notes (max 10MB each)
           </p>
           <input
             id="files"
             name="files"
             type="file"
             multiple
-            accept="image/*,.pdf,.dwg"
+            accept="image/*,audio/*,.pdf,.dwg,.dxf"
             className="w-full text-sm text-concrete file:mr-4 file:border-0 file:bg-charcoal file:px-4 file:py-2 file:text-sm file:uppercase file:tracking-wider file:text-warm-white hover:file:bg-bronze"
           />
         </div>
