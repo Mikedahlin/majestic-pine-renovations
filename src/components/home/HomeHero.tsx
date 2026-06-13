@@ -6,14 +6,15 @@ import { TrustBadges } from "@/components/ui/TrustBadges";
 export function HomeHero() {
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
-      {/* Cinematic background with parallax effect */}
+      <img
+        src="/service-photos/kitchen-hero.jpg"
+        alt=""
+        className="absolute inset-0 h-full w-full scale-105 object-cover"
+        aria-hidden="true"
+        fetchPriority="high"
+      />
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
-        style={{
-          backgroundImage:
-            "linear-gradient(135deg, rgba(18,18,18,0.85) 0%, rgba(26,54,38,0.7) 50%, rgba(18,18,18,0.9) 100%), url('/service-photos/kitchen-hero.jpg')",
-          backgroundAttachment: "fixed",
-        }}
+        className="absolute inset-0 bg-gradient-to-br from-charcoal/85 via-pine-green/70 to-charcoal/90"
         aria-hidden="true"
       />
 

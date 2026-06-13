@@ -3,10 +3,38 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CONTACT } from "@/lib/constants";
 
+type ChatImage = {
+  mimeType: string;
+  data: string;
+  previewUrl: string;
+};
+
 type Message = {
   role: "assistant" | "visitor";
   text: string;
+  image?: ChatImage;
 };
+
+type BrowserSpeechRecognition = {
+  lang: string;
+  interimResults: boolean;
+  maxAlternatives: number;
+  onresult: ((event: { results: Array<Array<{ transcript: string }>> }) => void) | null;
+  onerror: (() => void) | null;
+  onend: (() => void) | null;
+  start: () => void;
+  stop: () => void;
+  abort: () => void;
+};
+
+type SpeechRecognitionConstructor = new () => BrowserSpeechRecognition;
+
+declare global {
+  interface Window {
+    SpeechRecognition?: SpeechRecognitionConstructor;
+    webkitSpeechRecognition?: SpeechRecognitionConstructor;
+  }
+}
 
 const quickReplies = [
   "I want a remodel",
@@ -15,7 +43,13 @@ const quickReplies = [
   "How soon can we talk?",
 ] as const;
 
-function getAssistantReply(input: string): string {
+const MAX_IMAGE_BYTES = 4 * 1024 * 1024;
+
+function getAssistantReply(input: string, hasImage: boolean): string {
+  if (hasImage) {
+    return "Thanks for sharing that photo. Add your location, timeline, and budget in the form below so the team can review everything together.";
+  }
+
   const message = input.toLowerCase();
 
   if (message.includes("commercial") || message.includes("office") || message.includes("retail")) {
@@ -45,46 +79,186 @@ function getAssistantReply(input: string): string {
   return "That helps. The fastest way to move forward is to add your project details in the form below, including location, timeline, budget range, and any photos or plans.";
 }
 
+function fileToDataUrl(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = () => reject(new Error("Could not read image"));
+    reader.readAsDataURL(file);
+  });
+}
+
+function toApiImage(image: ChatImage) {
+  return {
+    mimeType: image.mimeType,
+    data: image.data,
+  };
+}
+
+function toApiMessages(messages: Message[]) {
+  return messages.map((message) => ({
+    role: message.role,
+    text: message.text,
+    image: message.image ? toApiImage(message.image) : undefined,
+  }));
+}
+
 export function ContactChatbot() {
   const openingMessage = useMemo<Message>(
     () => ({
       role: "assistant",
-      text: "Hi, I can help you figure out what details to send before the team reviews your project.",
+      text: "Hi, I can help you figure out what details to send before the team reviews your project. You can type, use the mic, or attach a project photo.",
     }),
     [],
   );
   const [messages, setMessages] = useState<Message[]>([openingMessage]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [listening, setListening] = useState(false);
+  const [speaking, setSpeaking] = useState(false);
+  const [attachedImage, setAttachedImage] = useState<ChatImage | null>(null);
+  const [errorMessage, setErrorMessage] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const recognitionRef = useRef<BrowserSpeechRecognition | null>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  }, [messages, loading]);
+  }, [messages, loading, attachedImage]);
+
+  useEffect(() => {
+    return () => {
+      recognitionRef.current?.abort();
+      window.speechSynthesis.cancel();
+    };
+  }, []);
+
+  function speak(text: string) {
+    if (!("speechSynthesis" in window)) {
+      setErrorMessage("Text-to-speech is not supported in this browser.");
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 1;
+    utterance.onstart = () => setSpeaking(true);
+    utterance.onend = () => setSpeaking(false);
+    utterance.onerror = () => setSpeaking(false);
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function stopSpeaking() {
+    window.speechSynthesis.cancel();
+    setSpeaking(false);
+  }
+
+  function getSpeechRecognition() {
+    const Recognition = window.SpeechRecognition ?? window.webkitSpeechRecognition;
+    if (!Recognition) return null;
+    return new Recognition();
+  }
+
+  function toggleListening() {
+    setErrorMessage("");
+
+    if (listening) {
+      recognitionRef.current?.stop();
+      setListening(false);
+      return;
+    }
+
+    const recognition = getSpeechRecognition();
+    if (!recognition) {
+      setErrorMessage("Voice input is not supported in this browser. Please type your message.");
+      return;
+    }
+
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+    recognition.onresult = (event) => {
+      const transcript = event.results[0]?.[0]?.transcript?.trim();
+      if (transcript) {
+        setInput((current) => (current ? `${current} ${transcript}` : transcript));
+      }
+    };
+    recognition.onerror = () => {
+      setErrorMessage("Could not capture audio. Please check microphone permissions and try again.");
+      setListening(false);
+    };
+    recognition.onend = () => setListening(false);
+
+    recognitionRef.current = recognition;
+    recognition.start();
+    setListening(true);
+  }
+
+  async function handleImageSelect(event: React.ChangeEvent<HTMLInputElement>) {
+    setErrorMessage("");
+    const file = event.target.files?.[0];
+    event.target.value = "";
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      setErrorMessage("Please choose an image file.");
+      return;
+    }
+
+    if (file.size > MAX_IMAGE_BYTES) {
+      setErrorMessage("Images must be 4MB or smaller.");
+      return;
+    }
+
+    try {
+      const dataUrl = await fileToDataUrl(file);
+      const [, base64 = ""] = dataUrl.split(",", 2);
+
+      setAttachedImage({
+        mimeType: file.type,
+        data: base64,
+        previewUrl: dataUrl,
+      });
+    } catch {
+      setErrorMessage("Could not load that image. Please try another file.");
+    }
+  }
+
+  function clearAttachedImage() {
+    setAttachedImage(null);
+  }
 
   async function sendMessage(text: string) {
     const trimmed = text.trim();
-    if (!trimmed || loading) return;
+    if ((!trimmed && !attachedImage) || loading) return;
 
-    const visitorMessage: Message = { role: "visitor", text: trimmed };
+    setErrorMessage("");
+
+    const visitorMessage: Message = {
+      role: "visitor",
+      text: trimmed || "Shared a project photo",
+      image: attachedImage ?? undefined,
+    };
     const nextMessages = [...messages, visitorMessage];
 
     setMessages(nextMessages);
     setInput("");
+    setAttachedImage(null);
     setLoading(true);
 
     try {
       const response = await fetch("/api/contact-chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: nextMessages }),
+        body: JSON.stringify({ messages: toApiMessages(nextMessages) }),
       });
 
       const data = await response.json();
       const reply =
         response.ok && typeof data.reply === "string"
           ? data.reply
-          : getAssistantReply(trimmed);
+          : getAssistantReply(trimmed, Boolean(visitorMessage.image));
 
       setMessages((current) => [
         ...current,
@@ -93,7 +267,7 @@ export function ContactChatbot() {
     } catch {
       setMessages((current) => [
         ...current,
-        { role: "assistant", text: getAssistantReply(trimmed) },
+        { role: "assistant", text: getAssistantReply(trimmed, Boolean(visitorMessage.image)) },
       ]);
     } finally {
       setLoading(false);
@@ -106,6 +280,8 @@ export function ContactChatbot() {
       sendMessage(input);
     }
   }
+
+  const lastAssistantMessage = [...messages].reverse().find((message) => message.role === "assistant");
 
   return (
     <div className="border border-pine-green/15 bg-warm-white">
@@ -124,15 +300,22 @@ export function ContactChatbot() {
             key={`${message.role}-${index}`}
             className={`flex ${message.role === "visitor" ? "justify-end" : "justify-start"}`}
           >
-            <p
+            <div
               className={`max-w-[85%] px-4 py-3 text-sm leading-relaxed ${
                 message.role === "visitor"
                   ? "bg-pine-green text-warm-white"
                   : "bg-pine-green/5 text-concrete"
               }`}
             >
-              {message.text}
-            </p>
+              {message.image && (
+                <img
+                  src={message.image.previewUrl}
+                  alt="Project photo shared in chat"
+                  className="mb-3 max-h-40 w-full rounded-sm object-cover"
+                />
+              )}
+              {message.text && <p>{message.text}</p>}
+            </div>
           </div>
         ))}
         {loading && (
@@ -160,6 +343,32 @@ export function ContactChatbot() {
           ))}
         </div>
 
+        {attachedImage && (
+          <div className="mb-4 flex items-center gap-3 border border-pine-green/10 p-3">
+            <img
+              src={attachedImage.previewUrl}
+              alt="Selected project photo"
+              className="h-16 w-16 object-cover"
+            />
+            <div className="min-w-0 flex-1 text-sm text-concrete">
+              Photo attached. Add a note or send it as-is.
+            </div>
+            <button
+              type="button"
+              onClick={clearAttachedImage}
+              className="text-xs uppercase tracking-wider text-bronze hover:text-pine-green"
+            >
+              Remove
+            </button>
+          </div>
+        )}
+
+        {errorMessage && (
+          <p className="mb-4 text-sm text-red-700" role="alert">
+            {errorMessage}
+          </p>
+        )}
+
         <div className="flex gap-2">
           <label htmlFor="contact-chat-message" className="sr-only">
             Message
@@ -173,6 +382,56 @@ export function ContactChatbot() {
             placeholder="Ask about your project"
             className="min-w-0 flex-1 border border-pine-green/20 bg-warm-white px-4 py-3 text-sm text-charcoal placeholder:text-concrete/60 focus:border-bronze focus:outline-none focus:ring-1 focus:ring-bronze"
           />
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleImageSelect}
+          />
+          <button
+            type="button"
+            disabled={loading}
+            onClick={() => fileInputRef.current?.click()}
+            aria-label="Attach project photo"
+            className="border border-pine-green/20 px-3 py-3 text-pine-green transition-colors hover:border-bronze hover:text-bronze disabled:cursor-not-allowed disabled:opacity-50"
+            title="Attach photo"
+          >
+            Img
+          </button>
+          <button
+            type="button"
+            disabled={loading}
+            onClick={toggleListening}
+            aria-label={listening ? "Stop voice input" : "Start voice input"}
+            aria-pressed={listening}
+            className={`border px-3 py-3 transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
+              listening
+                ? "border-bronze bg-bronze text-warm-white"
+                : "border-pine-green/20 text-pine-green hover:border-bronze hover:text-bronze"
+            }`}
+            title={listening ? "Stop listening" : "Use microphone"}
+          >
+            Mic
+          </button>
+          <button
+            type="button"
+            disabled={loading || !lastAssistantMessage}
+            onClick={() =>
+              speaking && lastAssistantMessage
+                ? stopSpeaking()
+                : lastAssistantMessage && speak(lastAssistantMessage.text)
+            }
+            aria-label={speaking ? "Stop reading reply" : "Read latest reply aloud"}
+            className={`border px-3 py-3 transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
+              speaking
+                ? "border-bronze bg-bronze text-warm-white"
+                : "border-pine-green/20 text-pine-green hover:border-bronze hover:text-bronze"
+            }`}
+            title={speaking ? "Stop audio" : "Read reply aloud"}
+          >
+            Audio
+          </button>
           <button
             type="button"
             disabled={loading}
