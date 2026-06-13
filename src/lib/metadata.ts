@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { SITE_NAME, SITE_URL } from "./constants";
 
+const DEFAULT_OG_IMAGE = "/service-photos/kitchen-hero.jpg";
+
 type PageMeta = {
   title: string;
   description: string;
@@ -32,7 +34,7 @@ export function buildMetadata({
       type: "website",
       images: [
         {
-          url: `${SITE_URL}/og-default.jpg`,
+          url: `${SITE_URL}${DEFAULT_OG_IMAGE}`,
           width: 1200,
           height: 630,
           alt: SITE_NAME,
@@ -43,7 +45,7 @@ export function buildMetadata({
       card: "summary_large_image",
       title: fullTitle,
       description,
-      images: [`${SITE_URL}/og-default.jpg`],
+      images: [`${SITE_URL}${DEFAULT_OG_IMAGE}`],
     },
   };
 }

@@ -228,7 +228,7 @@ export async function POST(request: Request) {
     }
 
     const lastInput = messages[messages.length - 1].text;
-    let reply =
+    const reply =
       (await tryProvider("Gemini", () => askGemini(messages))) ??
       (await tryProvider("Groq", () => askGroq(messages))) ??
       (await tryProvider("OpenAI", () => askOpenAI(messages))) ??
