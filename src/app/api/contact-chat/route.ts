@@ -116,9 +116,9 @@ async function askOpenAI(messages: ChatMessage[]): Promise<string> {
     throw new Error("OpenAI API key is not configured");
   }
 
-  const configuredModel = process.env.OPENAI_MODEL ?? "gpt-5-nano";
+  const configuredModel = process.env.OPENAI_MODEL ?? "gpt-4o-mini";
   const models = Array.from(
-    new Set([configuredModel, "gpt-5-nano", "gpt-4.1-nano"]),
+    new Set([configuredModel, "gpt-4o-mini", "gpt-4.1-nano"]),
   );
   const input = messages
     .map((message) => `${message.role === "assistant" ? "Assistant" : "Visitor"}: ${message.text}`)
