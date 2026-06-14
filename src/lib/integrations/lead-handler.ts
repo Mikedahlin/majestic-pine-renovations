@@ -92,7 +92,8 @@ async function hubSpotRequest(
 }
 
 async function sendToHubSpot(lead: LeadPayload): Promise<boolean> {
-  const token = process.env.HUBSPOT_ACCESS_TOKEN;
+  const token =
+    process.env.HUBSPOT_ACCESS_TOKEN ?? process.env.HUBSPOT_API_KEY;
   if (!token) return false;
 
   const properties = hubSpotProperties(lead);
