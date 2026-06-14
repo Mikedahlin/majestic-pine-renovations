@@ -43,7 +43,7 @@ export default async function ServiceSubpage({ params }: Props) {
   if (!service) notFound();
 
   const related = SERVICES.filter((s) => s.slug !== slug).slice(0, 3);
-  const projectPhotos = galleryForService(slug, 9).map((image) => ({ image }));
+  const projectPhotos = galleryForService(slug).map((image) => ({ image }));
 
   return (
     <>
@@ -112,7 +112,7 @@ export default async function ServiceSubpage({ params }: Props) {
             <FadeInUp>
               <SectionHeading
                 title="Project Examples"
-                subtitle="A closer look at the kinds of spaces, details, and planning moments clients ask us about most."
+                subtitle={`${projectPhotos.length} photos from real Majestic Pine jobs in this category.`}
               />
             </FadeInUp>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

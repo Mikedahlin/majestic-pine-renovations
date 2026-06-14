@@ -5,6 +5,8 @@ export const SITE_IMAGES = {
   homeHero: FEATURED_IMAGES.kitchenHero,
   homeBrand: FEATURED_IMAGES.kitchenAccent,
   aboutHero: FEATURED_IMAGES.livingRoomHero,
+  /** Real project photography — no stock headshots */
+  aboutStory: FEATURED_IMAGES.additionDetail,
   contactHero: FEATURED_IMAGES.contactHero,
   servicesHero: FEATURED_IMAGES.deckHero,
   financingHero: FEATURED_IMAGES.commercialDetail,

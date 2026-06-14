@@ -6,6 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
     "",
     "/about-us",
+    "/our-work",
     "/commercial-contracting-minnesota",
     "/services",
     "/financing",

@@ -47,11 +47,10 @@ export default function AboutPage() {
               <div
                 className="aspect-[4/5] bg-cover bg-center"
                 style={{
-                  backgroundImage: "url('/jeremy-stoesz.png')",
-                  backgroundPosition: "center top",
+                  backgroundImage: `url('${SITE_IMAGES.aboutStory}')`,
                 }}
                 role="img"
-                aria-label="Jeremy Stoesz, founder of Majestic Pine Renovations, on a job site"
+                aria-label="Majestic Pine Renovations home addition and finish work"
               />
             </FadeInUp>
             <FadeInUp delay={150}>

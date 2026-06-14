@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { FadeInUp } from "@/components/ui/FadeInUp";
-import { FEATURED_IMAGES } from "@/lib/project-gallery";
+import { Button } from "@/components/ui/Button";
+import { FEATURED_IMAGES, totalUniquePhotos } from "@/lib/project-gallery";
 
 const FEATURED = [
   {
@@ -15,6 +16,12 @@ const FEATURED = [
     href: "/services/bathroom-remodeling",
     image: FEATURED_IMAGES.bathroomHero,
     alt: "Updated bathroom with modern fixtures",
+  },
+  {
+    title: "Basements",
+    href: "/services/basement-finishing",
+    image: FEATURED_IMAGES.basementHero,
+    alt: "Finished basement living space",
   },
   {
     title: "Decks & Outdoor",
@@ -40,20 +47,28 @@ const FEATURED = [
     image: FEATURED_IMAGES.sidingHero,
     alt: "Siding before and after transformation",
   },
+  {
+    title: "Cabinetry",
+    href: "/services/custom-carpentry",
+    image: FEATURED_IMAGES.cabinetryHero,
+    alt: "Custom cabinetry and built-ins",
+  },
 ] as const;
 
 export function RecentProjects() {
+  const total = totalUniquePhotos();
+
   return (
     <section className="bg-warm-white py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <FadeInUp>
           <SectionHeading
             title="Recent Project Work"
-            subtitle="Real Minnesota remodels, additions, and exterior upgrades from our crews — not stock photography."
+            subtitle={`${total} unique photos from our crews across Minnesota — not stock photography.`}
             align="center"
           />
         </FadeInUp>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {FEATURED.map((item, i) => (
             <FadeInUp key={item.title} delay={i * 60}>
               <Link
@@ -77,6 +92,9 @@ export function RecentProjects() {
               </Link>
             </FadeInUp>
           ))}
+        </div>
+        <div className="mt-12 text-center">
+          <Button href="/our-work">View All {total} Project Photos</Button>
         </div>
       </div>
     </section>

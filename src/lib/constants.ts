@@ -17,6 +17,7 @@ export const FACEBOOK_URL =
 
 export const NAV_ITEMS = [
   { label: "Home", href: "/" },
+  { label: "Our Work", href: "/our-work" },
   { label: "About", href: "/about-us" },
   { label: "Commercial", href: "/commercial-contracting-minnesota" },
   { label: "Services", href: "/services" },

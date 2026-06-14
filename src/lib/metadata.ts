@@ -70,6 +70,13 @@ export const PAGE_META = {
     keyword: "Commercial contractor Minnesota",
     path: "/commercial-contracting-minnesota",
   },
+  ourWork: {
+    title: "Our Project Gallery",
+    description:
+      "Browse real Majestic Pine Renovations project photos — kitchens, bathrooms, basements, decks, lake homes, roofing, siding, and more across Minnesota.",
+    keyword: "Majestic Pine project gallery",
+    path: "/our-work",
+  },
   services: {
     title: "Comprehensive Construction Solutions",
     description:

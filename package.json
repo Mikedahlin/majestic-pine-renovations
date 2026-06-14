@@ -7,6 +7,7 @@
     "dev": "next dev",
     "start": "next start",
     "lint": "eslint",
+    "sync-gallery": "node scripts/sync-project-gallery.mjs",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
