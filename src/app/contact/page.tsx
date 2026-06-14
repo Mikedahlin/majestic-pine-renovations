@@ -17,9 +17,9 @@ export default function ContactPage() {
       <SchemaScript data={contactPageSchema()} />
 
       <HeroSection
-        title="Initiate Your Project."
-        backgroundClass="bg-cover bg-center"
-        style={{ backgroundImage: "url('/service-photos/client-walkthrough.jpg')" }}
+        title="Talk Directly With an Experienced Minnesota Contractor."
+        subtitle="Tell us what the property needs. You will get straight answers backed by more than 30 years of hands-on experience."
+        backgroundClass="bg-gradient-to-br from-pine-green via-walnut to-charcoal"
         fullScreen={false}
       />
 
@@ -72,9 +72,9 @@ export default function ContactPage() {
 
                 <div className="mt-10 border-l-2 border-bronze pl-4">
                   <p className="text-sm text-concrete leading-relaxed">
-                    For active commercial accounts or immediate structural
-                    stabilization inquiries, please utilize our 24/7 priority
-                    dispatch number provided in your client portal.
+                    If your job is time-sensitive, include the property location,
+                    timeline, and the kind of work you need so we can respond with
+                    the right next step.
                   </p>
                 </div>
               </FadeInUp>

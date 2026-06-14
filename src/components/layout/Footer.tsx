@@ -9,13 +9,13 @@ export function Footer() {
   return (
     <footer className="bg-charcoal text-warm-white">
       <div className="border-b border-white/10 bg-pine-green py-16">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold uppercase tracking-wide">
-            Ready to Build With Confidence?
+        <div className="mx-auto max-w-7xl px-6 text-center lg:px-8">
+          <h2 className="font-heading text-3xl font-bold uppercase tracking-wide md:text-4xl">
+            Ready to Talk Through the Project?
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-warm-white/80">
-            Secure your spot on our production calendar. Connect with our team
-            for an instant estimate.
+            Tell us what you want to build, repair, or remodel, and we will help
+            you figure out the right next step.
           </p>
           <div className="mt-8">
             <Button href="/contact">Request Your Free Consultation</Button>
@@ -32,9 +32,9 @@ export function Footer() {
             <p className="mt-1 text-xs uppercase tracking-[0.3em] text-bronze">
               Renovations
             </p>
-            <p className="mt-4 text-sm text-warm-white/70 leading-relaxed">
-              Premier residential and commercial general contracting for
-              Minneapolis, Buffalo, and the Twin Cities Metro.
+            <p className="mt-4 text-sm leading-relaxed text-warm-white/70">
+              More than 30 years of hands-on experience you can trust for
+              Minnesota homes, cabins, shops, and commercial spaces.
             </p>
           </div>
 
@@ -47,7 +47,7 @@ export function Footer() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm text-warm-white/70 hover:text-bronze transition-colors"
+                    className="text-sm text-warm-white/70 transition-colors hover:text-bronze"
                   >
                     {item.label}
                   </Link>
@@ -65,7 +65,7 @@ export function Footer() {
                 <li key={service.slug}>
                   <Link
                     href={`/services/${service.slug}`}
-                    className="text-sm text-warm-white/70 hover:text-bronze transition-colors"
+                    className="text-sm text-warm-white/70 transition-colors hover:text-bronze"
                   >
                     {service.title}
                   </Link>
@@ -74,9 +74,9 @@ export function Footer() {
               <li>
                 <Link
                   href="/services"
-                  className="text-sm text-bronze hover:text-warm-white transition-colors"
+                  className="text-sm text-bronze transition-colors hover:text-warm-white"
                 >
-                  View All Services →
+                  View All Services -&gt;
                 </Link>
               </li>
             </ul>
@@ -86,7 +86,7 @@ export function Footer() {
             <h3 className="text-sm font-semibold uppercase tracking-widest text-bronze">
               Contact
             </h3>
-            <address className="mt-4 space-y-2 not-italic text-sm text-warm-white/70">
+            <address className="mt-4 space-y-2 text-sm not-italic text-warm-white/70">
               <p>Headquarters: {CONTACT.headquarters}</p>
               <p>Service Area: {CONTACT.serviceArea}</p>
               <p>
@@ -105,13 +105,20 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 md:flex-row">
           <p className="text-xs text-warm-white/50">
-            © {new Date().getFullYear()} Majestic Pine Renovations. All rights reserved.
+            Copyright {new Date().getFullYear()} Majestic Pine Renovations. All rights reserved.
           </p>
-          <div className="flex gap-6 text-xs text-warm-white/50">
-            <span>Privacy Policy</span>
-            <span>Terms of Service</span>
-            <span>Licensing</span>
-          </div>
+          <p className="text-xs text-warm-white/50">
+            Buffalo, Minnesota | Residential and commercial construction
+          </p>
+        </div>
+        <div className="mt-6 flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] text-warm-white/70">
+          <span
+            className="relative h-4 w-6 overflow-hidden border border-white/30 bg-[repeating-linear-gradient(to_bottom,#b22234_0,#b22234_1.23px,#fff_1.23px,#fff_2.46px)]"
+            aria-hidden="true"
+          >
+            <span className="absolute left-0 top-0 h-[54%] w-[42%] bg-[#3c3b6e]" />
+          </span>
+          Made in America
         </div>
       </div>
     </footer>

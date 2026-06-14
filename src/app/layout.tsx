@@ -35,7 +35,8 @@ export const metadata: Metadata = {
     default: SITE_NAME,
     template: `%s | ${SITE_NAME}`,
   },
-  description: "Luxury General Contractor in Minneapolis",
+  description:
+    "Remodeling and construction for homes, cabins, and commercial spaces across Buffalo, the Twin Cities, and the Whitefish Chain area.",
   robots: { index: true, follow: true },
 };
 

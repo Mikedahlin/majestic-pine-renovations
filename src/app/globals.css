@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --pine-green: #1a3626;
-  --charcoal: #121212;
-  --warm-white: #f9f9f6;
-  --walnut: #4a3728;
-  --bronze: #cd7f32;
-  --concrete: #8c8c8c;
+  --pine-green: #4f5d50;
+  --charcoal: #241d19;
+  --warm-white: #f4efe6;
+  --walnut: #694a36;
+  --bronze: #b86f45;
+  --concrete: #756b63;
 }
 
 @theme inline {

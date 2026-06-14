@@ -2,24 +2,24 @@ import { FadeInUp } from "./FadeInUp";
 
 const advantages = [
   {
-    title: "Elite Reliability",
+    title: "Reliable Planning",
     description:
-      "Commercial-grade scheduling, daily progress reporting, and on-time delivery backed by rigorous project controls.",
+      "Clear scopes, realistic timelines, and a process that helps customers know what is happening next.",
   },
   {
-    title: "Uncompromising Craftsmanship",
+    title: "Work Built to Last",
     description:
-      "Artisan finish work, precision joinery, and materials selected for longevity in Minnesota's demanding climate.",
+      "Materials and construction choices that make sense for Minnesota weather, wear, and long-term use.",
   },
   {
-    title: "Scalable Capability",
+    title: "Residential and Commercial Experience",
     description:
-      "From single-room remodels to multi-phase commercial build-outs — one team, one standard of excellence.",
+      "From home remodels and garages to shop spaces and commercial updates, the same standards apply across the board.",
   },
   {
     title: "Transparent Pricing",
     description:
-      "Detailed estimates, staged draw schedules, and zero surprise change orders. You always know where your investment goes.",
+      "Detailed estimates, direct conversations, and fewer surprises when it comes to cost and scope.",
   },
 ];
 

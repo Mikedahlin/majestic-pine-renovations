@@ -74,6 +74,10 @@ export function LeadForm({ compact = false }: LeadFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+      <div className="hidden" aria-hidden="true">
+        <label htmlFor="website">Website</label>
+        <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
       <div className={`grid gap-5 ${compact ? "md:grid-cols-2" : "md:grid-cols-2"}`}>
         <div>
           <label htmlFor="firstName" className="mb-1 block text-sm uppercase tracking-wider text-pine-green">
@@ -109,19 +113,6 @@ export function LeadForm({ compact = false }: LeadFormProps) {
           </label>
           <input id="email" name="email" type="email" required className={inputClass} />
         </div>
-      </div>
-
-      <div className="flex items-start gap-3">
-        <input
-          id="smsOptIn"
-          name="smsOptIn"
-          type="checkbox"
-          value="true"
-          className="mt-1 h-4 w-4 accent-bronze"
-        />
-        <label htmlFor="smsOptIn" className="text-sm text-concrete leading-relaxed">
-          I agree to receive SMS updates about my project. Message and data rates may apply.
-        </label>
       </div>
 
       <div className={`grid gap-5 ${compact ? "md:grid-cols-2" : "md:grid-cols-2"}`}>
@@ -172,20 +163,35 @@ export function LeadForm({ compact = false }: LeadFormProps) {
         </div>
       )}
 
+      <div>
+        <label htmlFor="projectDetails" className="mb-1 block text-sm uppercase tracking-wider text-pine-green">
+          Tell Us About the Project *
+        </label>
+        <textarea
+          id="projectDetails"
+          name="projectDetails"
+          required
+          minLength={20}
+          rows={compact ? 4 : 6}
+          placeholder="What would you like built, repaired, or remodeled? Include your timeline and anything important about the property."
+          className={inputClass}
+        />
+      </div>
+
       {!compact && (
         <div>
           <label htmlFor="files" className="mb-1 block text-sm uppercase tracking-wider text-pine-green">
             Upload Files
           </label>
           <p className="mb-2 text-xs text-concrete">
-            Blueprints, inspiration photos, or current space images (max 10MB each)
+            Images or PDFs (up to 5 files, 10MB each and 20MB combined)
           </p>
           <input
             id="files"
             name="files"
             type="file"
             multiple
-            accept="image/*,.pdf,.dwg"
+            accept="image/jpeg,image/png,image/webp,image/avif,.pdf"
             className="w-full text-sm text-concrete file:mr-4 file:border-0 file:bg-charcoal file:px-4 file:py-2 file:text-sm file:uppercase file:tracking-wider file:text-warm-white hover:file:bg-bronze"
           />
         </div>

@@ -8,7 +8,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/about-us",
     "/commercial-contracting-minnesota",
     "/services",
-    "/financing",
     "/contact",
   ];
 

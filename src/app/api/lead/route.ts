@@ -10,7 +10,15 @@ import {
 } from "@/lib/constants";
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+const MAX_TOTAL_FILE_SIZE = 20 * 1024 * 1024; // 20MB
 const MAX_FILES = 5;
+const ALLOWED_FILE_TYPES = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/avif",
+  "application/pdf",
+]);
 
 function validatePhone(phone: string): boolean {
   return /^[\d\s\-().+]{10,}$/.test(phone);
@@ -23,6 +31,11 @@ function validateEmail(email: string): boolean {
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
+    const website = (formData.get("website") as string)?.trim();
+
+    if (website) {
+      return NextResponse.json({ success: true }, { status: 200 });
+    }
 
     const firstName = (formData.get("firstName") as string)?.trim();
     const lastName = (formData.get("lastName") as string)?.trim();
@@ -33,6 +46,7 @@ export async function POST(request: Request) {
     const projectCategory = formData.get("projectCategory") as string;
     const budgetRange = formData.get("budgetRange") as string;
     const customBudgetRange = (formData.get("customBudgetRange") as string)?.trim();
+    const projectDetails = (formData.get("projectDetails") as string)?.trim();
 
     const errors: string[] = [];
 
@@ -50,9 +64,13 @@ export async function POST(request: Request) {
     if (budgetRange === CUSTOM_BUDGET_RANGE && !customBudgetRange) {
       errors.push("Custom budget estimate is required");
     }
+    if (!projectDetails || projectDetails.length < 20) {
+      errors.push("Please include a short project description");
+    }
 
     const fileEntries = formData.getAll("files");
     const files: LeadPayload["files"] = [];
+    let totalFileSize = 0;
 
     for (const entry of fileEntries) {
       if (!(entry instanceof File) || entry.size === 0) continue;
@@ -61,9 +79,18 @@ export async function POST(request: Request) {
         errors.push(`File "${entry.name}" exceeds 10MB limit`);
         continue;
       }
+      if (!ALLOWED_FILE_TYPES.has(entry.type)) {
+        errors.push(`File "${entry.name}" must be an image or PDF`);
+        continue;
+      }
 
       if (files.length >= MAX_FILES) {
         errors.push("Maximum 5 files allowed");
+        break;
+      }
+      totalFileSize += entry.size;
+      if (totalFileSize > MAX_TOTAL_FILE_SIZE) {
+        errors.push("Combined file size cannot exceed 20MB");
         break;
       }
 
@@ -71,6 +98,7 @@ export async function POST(request: Request) {
         name: entry.name,
         size: entry.size,
         type: entry.type,
+        content: Buffer.from(await entry.arrayBuffer()).toString("base64"),
       });
     }
 
@@ -86,6 +114,7 @@ export async function POST(request: Request) {
       smsOptIn,
       email,
       projectCategory,
+      projectDetails,
       budgetRange:
         budgetRange === CUSTOM_BUDGET_RANGE
           ? `${CUSTOM_BUDGET_RANGE}: ${customBudgetRange}`
@@ -100,8 +129,11 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("[API /lead] Error:", error);
     return NextResponse.json(
-      { error: "Internal server error. Please try again or call us directly." },
-      { status: 500 },
+      {
+        error:
+          "The online form is not connected yet. Please call (612) 363-2614 or email majesticpinerenovations@gmail.com.",
+      },
+      { status: 503 },
     );
   }
 }

@@ -34,8 +34,10 @@ Copy `.env.example` to `.env.local` and configure:
 | Variable | Description |
 |---|---|
 | `NEXT_PUBLIC_SITE_URL` | Production site URL (canonical, OG, sitemap) |
-| `CRM_PROVIDER` | `hubspot` or `buildertrend` |
-| `HUBSPOT_API_KEY` | HubSpot API key (server-only) |
+| `HUBSPOT_ACCESS_TOKEN` | HubSpot private-app token with contact read/write scopes |
+| `HUBSPOT_PROJECT_CATEGORY_PROPERTY` | Optional custom contact property internal name |
+| `HUBSPOT_BUDGET_PROPERTY` | Optional custom contact property internal name |
+| `HUBSPOT_PROJECT_DETAILS_PROPERTY` | Optional custom contact property internal name |
 | `DISPATCH_WEBHOOK_URL` | Internal dispatch webhook |
 | `LEAD_NOTIFICATION_EMAIL` | Email for new lead alerts |
 | `SMS_PROVIDER` | SMS confirmation provider |
@@ -49,7 +51,6 @@ Copy `.env.example` to `.env.local` and configure:
 | `/commercial-contracting-minnesota` | Commercial services |
 | `/services` | Services overview |
 | `/services/[slug]` | Individual service pages (9 subpages) |
-| `/financing` | Financing options |
 | `/contact` | Contact form & info |
 
 ## Lead Capture API

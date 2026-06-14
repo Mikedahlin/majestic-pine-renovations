@@ -8,24 +8,24 @@ export const metadata: Metadata = buildMetadata(PAGE_META.about);
 
 const values = [
   {
-    title: "Precision",
+    title: "Craftsmanship",
     description:
-      "Every measurement, cut, and finish meets commercial-grade tolerances — because details define legacy.",
+      "Clean work, durable materials, and details that still matter years after the job is done.",
   },
   {
-    title: "Transparency",
+    title: "Straight Communication",
     description:
-      "Open books, clear timelines, and honest communication from first consultation to final walkthrough.",
+      "Clear estimates, honest updates, and realistic conversations from the first call to the final walkthrough.",
   },
   {
-    title: "Safety",
+    title: "Dependability",
     description:
-      "OSHA-compliant job sites, rigorous training, and proactive hazard management on every project.",
+      "Showing up, doing the work right, and building with Minnesota weather, schedules, and real-life use in mind.",
   },
   {
-    title: "Legacy",
+    title: "Respect for the Property",
     description:
-      "We build environments designed to serve families and businesses for generations, not just seasons.",
+      "Whether it is a family home, a cabin, or a commercial space, the job should fit the place and the people using it.",
   },
 ];
 
@@ -33,9 +33,9 @@ export default function AboutPage() {
   return (
     <>
       <HeroSection
-        title="Our Foundation Is Built on Integrity."
-        backgroundClass="bg-cover bg-center"
-        style={{ backgroundImage: "url('/service-photos/modern-lakeside-cabin.jpg')" }}
+        title="30+ Years of Experience You Can Trust."
+        subtitle="Hands-on construction knowledge, straight communication, and craftsmanship built for Minnesota."
+        backgroundClass="bg-gradient-to-br from-pine-green via-walnut to-charcoal"
         fullScreen={false}
       />
 
@@ -56,14 +56,12 @@ export default function AboutPage() {
             <FadeInUp delay={150}>
               <SectionHeading title="Meet Jeremy Stoesz" />
               <p className="text-concrete leading-relaxed">
-                Majestic Pine Renovations was founded on a singular principle: the
-                construction industry needed a higher standard. Jeremy Stoesz built
-                this company to bridge the gap between rugged Minnesota
-                craftsmanship and modern, high-tech project execution. Born and
-                raised with a deep respect for hard work and architectural beauty,
-                Jeremy oversees a team that refuses to cut corners. We are not just
-                building structures; we are engineering environments that elevate
-                how you live and work.
+                Jeremy Stoesz brings more than 30 years of hands-on construction
+                experience to Majestic Pine Renovations. That experience means
+                practical advice, honest expectations, and work built to hold up
+                in Minnesota. The promise is simple: listen first, build it
+                right, and leave every customer with something solid, useful,
+                and worth being proud of.
               </p>
             </FadeInUp>
           </div>

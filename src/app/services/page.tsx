@@ -16,10 +16,9 @@ export default function ServicesPage() {
   return (
     <>
       <HeroSection
-        title="Comprehensive Construction Solutions."
-        subtitle="From structural overhauls to meticulous finish carpentry, view our specialized divisions below."
-        backgroundClass="bg-cover bg-center"
-        style={{ backgroundImage: "url('/service-photos/commercial-office.jpg')" }}
+        title="Straightforward Construction. Work Built to Last."
+        subtitle="More than 30 years of hands-on experience helping Minnesota property owners repair, improve, and make better use of their spaces."
+        backgroundClass="bg-gradient-to-br from-pine-green via-walnut to-charcoal"
         fullScreen={false}
         h1
       />
@@ -57,8 +56,16 @@ export default function ServicesPage() {
               <FadeInUp key={service.slug} delay={i * 60}>
                 <Link
                   href={`/services/${service.slug}`}
-                  className="group relative block min-h-[220px] overflow-hidden border border-pine-green/20 bg-cover bg-center transition-all hover:border-bronze"
-                  style={{ backgroundImage: `url('${service.heroImage}')` }}
+                  className={`group relative block min-h-[220px] overflow-hidden border border-pine-green/20 bg-cover bg-center transition-all hover:border-bronze ${
+                    service.heroImage
+                      ? ""
+                      : "bg-gradient-to-br from-pine-green via-walnut to-charcoal"
+                  }`}
+                  style={
+                    service.heroImage
+                      ? { backgroundImage: `url('${service.heroImage}')` }
+                      : undefined
+                  }
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/50 to-charcoal/30 transition-opacity group-hover:opacity-90" />
                   <div className="relative z-10 flex h-full min-h-[220px] flex-col justify-end p-6">

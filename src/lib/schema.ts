@@ -10,24 +10,20 @@ export function localBusinessSchema() {
     email: CONTACT.email,
     address: {
       "@type": "PostalAddress",
+      streetAddress: "196 Carling Ave SE",
       addressLocality: "Buffalo",
       addressRegion: "MN",
+      postalCode: "55313",
       addressCountry: "US",
     },
     areaServed: [
       "Minneapolis",
       "Saint Paul",
       "Buffalo",
+      "Whitefish Chain of Lakes",
       "Twin Cities Metro",
-      "Greater Minnesota",
     ],
-    priceRange: "$$$$",
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "5",
-      reviewCount: "47",
-      bestRating: "5",
-    },
+    priceRange: "$$-$$$$",
     sameAs: [],
   };
 }
@@ -66,32 +62,6 @@ export function faqSchema(
       },
     })),
   };
-}
-
-export function reviewSchema(
-  reviews: {
-    author: string;
-    rating: number;
-    text: string;
-    date: string;
-  }[],
-) {
-  return reviews.map((review) => ({
-    "@context": "https://schema.org",
-    "@type": "Review",
-    author: { "@type": "Person", name: review.author },
-    reviewRating: {
-      "@type": "Rating",
-      ratingValue: review.rating,
-      bestRating: 5,
-    },
-    reviewBody: review.text,
-    datePublished: review.date,
-    itemReviewed: {
-      "@type": "ConstructionCompany",
-      name: SITE_NAME,
-    },
-  }));
 }
 
 export function contactPageSchema() {

@@ -3,11 +3,10 @@ export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://majesticpinerenovations.com";
 
 export const CONTACT = {
-  headquarters: "Buffalo, MN",
-  serviceArea:
-    "Minneapolis, Saint Paul, Twin Cities Metro, Greater Minnesota",
-  phone: "(612) 555-0147",
-  email: "hello@majesticpinerenovations.com",
+  headquarters: "196 Carling Ave SE, Buffalo, MN 55313",
+  serviceArea: "Buffalo, the Twin Cities, and the Whitefish Chain area",
+  phone: "(612) 363-2614",
+  email: "majesticpinerenovations@gmail.com",
 } as const;
 
 export const NAV_ITEMS = [
@@ -15,14 +14,13 @@ export const NAV_ITEMS = [
   { label: "About", href: "/about-us" },
   { label: "Commercial", href: "/commercial-contracting-minnesota" },
   { label: "Services", href: "/services" },
-  { label: "Financing", href: "/financing" },
   { label: "Contact", href: "/contact" },
 ] as const;
 
 export const TRUST_BADGES = [
-  "Fully Licensed & Insured",
-  "5-Star Google Rated",
-  "Serving Greater Minnesota",
+  "30+ Years of Hands-On Experience",
+  "Experience You Can Trust",
+  "Built for Minnesota Weather",
 ] as const;
 
 export const CUSTOM_BUDGET_RANGE = "Other / Custom";
@@ -40,4 +38,5 @@ export const PROJECT_CATEGORIES = [
   "Residential",
   "Commercial",
   "Exterior",
+  "Cabin / Lake Home",
 ] as const;

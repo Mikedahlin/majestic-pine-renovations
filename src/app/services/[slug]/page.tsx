@@ -42,6 +42,20 @@ export default async function ServiceSubpage({ params }: Props) {
   if (!service) notFound();
 
   const related = SERVICES.filter((s) => s.slug !== slug).slice(0, 3);
+  const premiumGallery = service.galleryVariant === "premium";
+  const premiumSpans = [
+    "lg:col-span-7",
+    "lg:col-span-5",
+    "lg:col-span-12",
+    "lg:col-span-5",
+    "lg:col-span-7",
+    "lg:col-span-6",
+    "lg:col-span-6",
+  ];
+  const projectNumber = (caption: string | undefined, fallback: number) => {
+    const number = caption?.match(/\d+$/)?.[0];
+    return number ?? String(fallback).padStart(2, "0");
+  };
 
   return (
     <>
@@ -56,11 +70,15 @@ export default async function ServiceSubpage({ params }: Props) {
       <HeroSection
         title={service.headline}
         subtitle={service.description}
-        backgroundClass="bg-cover bg-center"
-        style={{
-          backgroundImage: `url('${service.heroImage}')`,
-          backgroundPosition: service.imagePosition ?? "center center",
-        }}
+        backgroundClass={service.heroImage ? "bg-cover bg-center" : "bg-walnut"}
+        style={
+          service.heroImage
+            ? {
+                backgroundImage: `url('${service.heroImage}')`,
+                backgroundPosition: service.imagePosition ?? "center center",
+              }
+            : undefined
+        }
         fullScreen={false}
       >
         <Button href="/contact">Request a Consultation</Button>
@@ -94,53 +112,113 @@ export default async function ServiceSubpage({ params }: Props) {
                 ))}
               </ul>
 
-              <div
-                className="mt-10 aspect-video bg-cover bg-center"
-                style={{
-                  backgroundImage: `url('${service.galleryImage}')`,
-                  backgroundPosition: service.imagePosition ?? "center center",
-                }}
-                role="img"
-                aria-label={`${service.title} project example`}
-              />
+              {service.galleryImage && (
+                <div
+                  className="mt-10 aspect-video bg-cover bg-center"
+                  style={{
+                    backgroundImage: `url('${service.galleryImage}')`,
+                    backgroundPosition: service.imagePosition ?? "center center",
+                  }}
+                  role="img"
+                  aria-label={`${service.title} photo`}
+                />
+              )}
             </FadeInUp>
           </div>
 
-          <div className="mt-20">
-            <FadeInUp>
-              <SectionHeading
-                title="Project Examples"
-                subtitle="A closer look at the kinds of spaces, details, and planning moments clients ask us about most."
-              />
-            </FadeInUp>
-            <div className="grid gap-6 md:grid-cols-3">
-              {service.photos.map((photo, i) => (
-                <FadeInUp key={photo.image} delay={i * 80}>
-                  <article className="overflow-hidden border border-pine-green/10 bg-warm-white">
-                    <div
-                      className="aspect-[4/3] bg-cover bg-center"
-                      style={{
-                        backgroundImage: `url('${photo.image}')`,
-                        backgroundPosition:
-                          photo.position ?? service.imagePosition ?? "center center",
-                      }}
-                      role="img"
-                      aria-label={`${service.title} project example`}
-                    />
-                  </article>
-                </FadeInUp>
-              ))}
+          {service.photos.length > 0 && (
+            <div
+              className={`mt-20 ${
+                premiumGallery
+                  ? "border-y border-bronze/40 bg-charcoal px-6 py-16 shadow-2xl lg:px-10"
+                  : ""
+              }`}
+            >
+              <FadeInUp>
+                {premiumGallery && (
+                  <p className="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-bronze">
+                    Real Project Transformations
+                  </p>
+                )}
+                <SectionHeading
+                  title={service.galleryTitle ?? `${service.title} Gallery`}
+                  subtitle={
+                    service.gallerySubtitle
+                  }
+                  light={premiumGallery}
+                />
+              </FadeInUp>
+              <div
+                className={
+                  premiumGallery
+                    ? "grid gap-6 lg:grid-cols-12"
+                    : "grid gap-6 md:grid-cols-3"
+                }
+              >
+                {service.photos.map((photo, i) => (
+                  <FadeInUp
+                    key={photo.image}
+                    delay={i * 80}
+                    className={premiumGallery ? premiumSpans[i] : ""}
+                  >
+                    <article
+                      className={`group overflow-hidden bg-warm-white ${
+                        premiumGallery
+                          ? "border border-white/10 shadow-[0_24px_60px_rgba(0,0,0,0.28)]"
+                          : "border border-pine-green/10"
+                      }`}
+                    >
+                      <div className="relative">
+                      <div
+                        className={`bg-center bg-no-repeat transition-transform duration-700 group-hover:scale-[1.015] ${
+                          premiumGallery
+                            ? i === 2
+                              ? "aspect-[2/1]"
+                              : "aspect-[16/10]"
+                            : "aspect-[4/3]"
+                        } ${
+                          photo.fit === "contain" ? "bg-contain" : "bg-cover"
+                        }`}
+                        style={{
+                          backgroundImage: `url('${photo.image}')`,
+                          backgroundPosition:
+                            photo.position ?? service.imagePosition ?? "center center",
+                        }}
+                        role="img"
+                        aria-label={photo.caption ?? `${service.title} photo`}
+                      />
+                        {premiumGallery && (
+                          <span className="absolute left-4 top-4 bg-charcoal/90 px-3 py-2 text-xs font-bold uppercase tracking-[0.22em] text-warm-white backdrop-blur-sm">
+                            Project {projectNumber(photo.caption, i + 1).padStart(2, "0")}
+                          </span>
+                        )}
+                      </div>
+                      {photo.caption && (
+                        <p
+                          className={`border-t px-5 py-4 text-sm font-semibold uppercase tracking-wider ${
+                            premiumGallery
+                              ? "border-charcoal/10 text-charcoal"
+                              : "border-pine-green/10 text-walnut"
+                          }`}
+                        >
+                          {photo.caption}
+                        </p>
+                      )}
+                    </article>
+                  </FadeInUp>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="mt-20 border-t border-pine-green/10 pt-16">
             <FadeInUp>
               <SectionHeading title="Trust Indicators" />
               <div className="grid gap-6 md:grid-cols-3">
                 {[
-                  "Fully Licensed & Insured in Minnesota",
-                  "5-Star Google Rated Contractor",
-                  "Transparent Pricing & Staged Draws",
+                  "Clear Project Scope and Planning",
+                  "Materials Selected for Minnesota Conditions",
+                  "Direct Communication From Start to Finish",
                 ].map((indicator) => (
                   <div
                     key={indicator}

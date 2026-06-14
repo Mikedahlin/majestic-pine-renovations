@@ -5,13 +5,18 @@ export type ServiceDefinition = {
   description: string;
   process: string[];
   benefits: string[];
-  heroImage: string;
-  galleryImage: string;
+  heroImage?: string;
+  galleryImage?: string;
   photos: {
     image: string;
     position?: string;
+    fit?: "cover" | "contain";
+    caption?: string;
   }[];
   imagePosition?: string;
+  galleryTitle?: string;
+  gallerySubtitle?: string;
+  galleryVariant?: "standard" | "premium";
   keyword: string;
   metaDescription: string;
   featured?: boolean;
@@ -22,41 +27,38 @@ export type CoreService = {
   description: string;
   href: string;
   icon: string;
-  image: string;
+  image?: string;
 };
 
 export const CORE_SERVICES: readonly CoreService[] = [
   {
-    title: "Luxury Remodeling",
+    title: "Home Remodeling",
     description:
-      "Kitchens, bathrooms, and whole-home transformations.",
+      "Kitchens, bathrooms, and practical whole-home improvements.",
     href: "/services/kitchen-remodeling",
     icon: "remodel",
-    image: "/service-photos/kitchen-hero.jpg",
+    image: "/homepage-kitchen.jpg",
   },
   {
     title: "Commercial Build-Outs",
     description:
-      "Hospitals, retail, and office renovations engineered for operational flow.",
+      "Medical, retail, office, and workspaces planned around daily operations.",
     href: "/commercial-contracting-minnesota",
     icon: "commercial",
-    image: "/service-photos/commercial-office.jpg",
   },
   {
     title: "Custom Additions & Garages",
     description:
-      "Expanding your footprint with seamless architectural integration.",
+      "More room for living, storage, vehicles, tools, and work.",
     href: "/services/additions",
     icon: "addition",
-    image: "/service-photos/addition-hero.jpg",
   },
   {
     title: "Outdoor Living",
     description:
-      "Premium decks, patios, and exterior renovations built for the Minnesota climate.",
+      "Decks, covered spaces, and exterior improvements built for Minnesota weather.",
     href: "/services/decks-outdoor-living",
     icon: "outdoor",
-    image: "/service-photos/deck-hero.jpg",
   },
 ] as const;
 
@@ -66,10 +68,10 @@ export const SERVICES: ServiceDefinition[] = [
     title: "Kitchen Remodeling",
     headline: "KITCHENS DESIGNED FOR HOW YOU LIVE.",
     description:
-      "From custom cabinetry to premium appliance integration, we transform kitchens into the heart of your home with commercial-grade precision and artisan finish work.",
+      "From cabinets and countertops to lighting and appliance layouts, we build kitchens around how your household cooks, gathers, and uses the space every day.",
     process: [
       "In-home consultation and spatial assessment",
-      "3D design visualization and material selection",
+      "Layout planning and material selection",
       "Permitting, demolition, and structural coordination",
       "Custom build, inspection, and final walkthrough",
     ],
@@ -79,32 +81,34 @@ export const SERVICES: ServiceDefinition[] = [
       "Lighting and electrical upgrades",
       "Seamless appliance integration",
     ],
-    heroImage: "/service-photos/kitchen-hero.jpg",
-    galleryImage: "/service-photos/kitchen-detail.jpg",
+    heroImage: "/homepage-kitchen.jpg",
+    galleryImage: "/project-photos/real-projects/kitchen-open-concept-island-remodel.webp",
     photos: [
       {
-        image: "/service-photos/kitchen-hero.jpg",
+        image: "/project-photos/real-projects/kitchen-white-cabinets-blue-island.webp",
+        caption: "White cabinetry with a contrasting island",
       },
       {
-        image: "/service-photos/kitchen-detail.jpg",
+        image: "/project-photos/real-projects/kitchen-dark-cabinetry-custom-hood.webp",
+        caption: "Custom cabinetry and range hood",
       },
       {
-        image: "/service-photos/kitchen-planning.jpg",
-        position: "center center",
+        image: "/project-photos/real-projects/kitchen-gray-island-window-shelves.webp",
+        caption: "Kitchen island, storage, and natural light",
       },
     ],
     imagePosition: "center center",
     keyword: "kitchen remodeling Minneapolis",
     metaDescription:
-      "Luxury kitchen remodeling in Minneapolis and the Twin Cities. Custom cabinetry, premium finishes, and transparent project management.",
+      "Kitchen remodeling for Buffalo, the Twin Cities, and the Whitefish Chain area, with practical layouts, durable finishes, and clear project planning.",
     featured: true,
   },
   {
     slug: "bathroom-remodeling",
     title: "Bathroom Remodeling",
-    headline: "SPA-QUALITY BATHROOMS, ENGINEERED TO LAST.",
+    headline: "BATHROOMS BUILT FOR COMFORT AND DAILY USE.",
     description:
-      "We deliver watertight, code-compliant bathroom renovations with heated floors, custom tile, and fixtures selected for both beauty and durability in Minnesota climates.",
+      "We renovate bathrooms with careful waterproofing, practical storage, durable finishes, and fixture options that fit the household and the space.",
     process: [
       "Scope definition and moisture assessment",
       "Design layout and fixture specification",
@@ -117,23 +121,26 @@ export const SERVICES: ServiceDefinition[] = [
       "Custom vanity and storage solutions",
       "Ventilation and moisture control",
     ],
-    heroImage: "/service-photos/bathroom-hero.jpg",
-    galleryImage: "/service-photos/bathroom-vanity.jpg",
+    heroImage: "/project-photos/real-projects/bathroom-herringbone-tile-walk-in-shower.webp",
+    galleryImage: "/project-photos/real-projects/bathroom-blue-tub-vanity-wide.webp",
     photos: [
       {
-        image: "/service-photos/bathroom-hero.jpg",
+        image: "/project-photos/real-projects/bathroom-herringbone-tile-vanity-detail.webp",
+        caption: "Herringbone tile and vanity detail",
       },
       {
-        image: "/service-photos/bathroom-vanity.jpg",
+        image: "/project-photos/real-projects/bathroom-glass-shower-pebble-floor.webp",
+        caption: "Glass shower and pebble floor",
       },
       {
-        image: "/service-photos/client-walkthrough.jpg",
+        image: "/project-photos/real-projects/bathroom-white-double-vanity-storage.webp",
+        caption: "Double vanity with built-in storage",
       },
     ],
     imagePosition: "center center",
     keyword: "bathroom remodeling Twin Cities",
     metaDescription:
-      "Premium bathroom remodeling across Minneapolis, Buffalo, and the Twin Cities. Spa-quality finishes with rigorous waterproofing standards.",
+      "Bathroom remodeling in Buffalo, the Twin Cities, and the Whitefish Chain area, including showers, tile, vanities, ventilation, and moisture protection.",
     featured: true,
   },
   {
@@ -154,23 +161,53 @@ export const SERVICES: ServiceDefinition[] = [
       "Wet bar and entertainment builds",
       "In-floor heat and humidity control",
     ],
-    heroImage: "/service-photos/basement-hero.jpg",
-    galleryImage: "/service-photos/basement-entertainment.jpg",
+    heroImage: "/project-photos/basement/basement-before-after-05.png",
+    galleryImage: "/project-photos/basement/basement-before-after-02.png",
     photos: [
       {
-        image: "/service-photos/basement-hero.jpg",
+        image: "/project-photos/basement/basement-before-after-01.png",
+        fit: "contain",
+        caption: "Basement Before & After 1",
       },
       {
-        image: "/service-photos/basement-entertainment.jpg",
+        image: "/project-photos/basement/basement-before-after-03.png",
+        fit: "contain",
+        caption: "Basement Before & After 3",
       },
       {
-        image: "/service-photos/homeowner-planning.jpg",
+        image: "/project-photos/basement/basement-before-after-04.png",
+        fit: "contain",
+        caption: "Basement Before & After 4",
+      },
+      {
+        image: "/project-photos/basement/basement-before-after-06.png",
+        fit: "contain",
+        caption: "Basement Before & After 6",
+      },
+      {
+        image: "/project-photos/basement/basement-before-after-07.png",
+        fit: "contain",
+        caption: "Basement Before & After 7",
+      },
+      {
+        image: "/project-photos/basement/basement-before-after-09.png",
+        fit: "contain",
+        caption: "Basement Before & After 9",
+      },
+      {
+        image: "/project-photos/basement/basement-before-after-10.png",
+        fit: "contain",
+        caption: "Basement Before & After 10",
       },
     ],
     imagePosition: "center center",
+    galleryTitle: "Basement Before & After Projects",
+    gallerySubtitle:
+      "Real basement transformations showing unfinished or outdated spaces beside the completed work.",
+    galleryVariant: "premium",
     keyword: "basement finishing Minnesota",
     metaDescription:
-      "Professional basement finishing in Minnesota. Egress-compliant builds, entertainment spaces, and guest suites with premium craftsmanship.",
+      "Basement finishing in Minnesota for family rooms, guest spaces, storage, entertainment areas, insulation, and egress planning.",
     featured: true,
   },
   {
@@ -191,26 +228,21 @@ export const SERVICES: ServiceDefinition[] = [
       "Outdoor kitchens and fire features",
       "Snow-load rated structural design",
     ],
-    heroImage: "/service-photos/deck-hero.jpg",
-    galleryImage: "/service-photos/woodland-cabin.jpg",
+    heroImage: "/project-photos/exteriors/decks/decks-04.webp",
+    galleryImage: "/project-photos/exteriors/decks/decks-01.jpeg",
     photos: [
-      {
-        image: "/service-photos/deck-hero.jpg",
-      },
-      {
-        image: "/service-photos/woodland-cabin.jpg",
-      },
-      {
-        image: "/service-photos/outdoor-lifestyle.jpg",
-      },
-      {
-        image: "/service-photos/outdoor-covered.jpg",
-      },
+      { image: "/project-photos/exteriors/decks/decks-02.jpeg" },
+      { image: "/project-photos/exteriors/decks/decks-03.jpeg" },
+      { image: "/project-photos/exteriors/decks/decks-05.jpeg" },
+      { image: "/project-photos/exteriors/docks/docks-01.avif" },
+      { image: "/project-photos/exteriors/docks/docks-02.webp" },
+      { image: "/project-photos/exteriors/docks/docks-03.webp" },
+      { image: "/project-photos/exteriors/docks/docks-04.jpeg" },
     ],
     imagePosition: "center center",
     keyword: "deck builder Twin Cities",
     metaDescription:
-      "Premium deck and outdoor living construction in the Twin Cities. Built for Minnesota weather with composite, hardwood, and covered patio options.",
+      "Deck and outdoor living construction for Buffalo, the Twin Cities, and the Whitefish Chain area, with materials selected for Minnesota weather.",
     featured: true,
   },
   {
@@ -231,18 +263,12 @@ export const SERVICES: ServiceDefinition[] = [
       "Ice dam prevention systems",
       "Manufacturer-backed warranties",
     ],
-    heroImage: "/service-photos/roofing-hero.jpg",
-    galleryImage: "/service-photos/roofing-detail.jpg",
+    heroImage: "/project-photos/exteriors/roofing/roofing-01.jpg",
+    galleryImage: "/project-photos/exteriors/roofing/roofing-03.jpg",
     photos: [
-      {
-        image: "/service-photos/roofing-hero.jpg",
-      },
-      {
-        image: "/service-photos/roofing-detail.jpg",
-      },
-      {
-        image: "/service-photos/roofing-estimate.jpg",
-      },
+      { image: "/project-photos/exteriors/roofing/roofing-02.jpg" },
+      { image: "/project-photos/exteriors/roofing/roofing-04.jpg" },
+      { image: "/project-photos/exteriors/roofing/roofing-05.jpeg" },
     ],
     imagePosition: "center center",
     keyword: "roofing contractor Minnesota",
@@ -267,30 +293,25 @@ export const SERVICES: ServiceDefinition[] = [
       "Insulated siding options",
       "Color-matched finishing",
     ],
-    heroImage: "/service-photos/siding-hero.jpg",
-    galleryImage: "/service-photos/siding-exterior.jpg",
+    heroImage: "/project-photos/exteriors/siding/siding-02.webp",
+    galleryImage: "/project-photos/exteriors/siding/siding-03.jpg",
     photos: [
-      {
-        image: "/service-photos/rustic-wood-cabin.jpg",
-      },
-      {
-        image: "/service-photos/siding-exterior.jpg",
-      },
-      {
-        image: "/service-photos/homeowner-planning.jpg",
-      },
+      { image: "/project-photos/exteriors/siding/siding-01.jpeg" },
+      { image: "/project-photos/exteriors/siding/siding-04.webp" },
+      { image: "/project-photos/exteriors/siding/siding-05.jpeg" },
+      { image: "/project-photos/exteriors/siding/siding-06.jpeg" },
     ],
     imagePosition: "center center",
     keyword: "siding installation Minneapolis",
     metaDescription:
-      "Premium siding installation in Minneapolis and Buffalo, MN. Fiber cement, engineered wood, and custom trim for lasting curb appeal.",
+      "Siding installation in Buffalo, the Twin Cities, and the Whitefish Chain area, including fiber cement, engineered wood, weather barriers, and trim.",
   },
   {
     slug: "custom-carpentry",
     title: "Custom Carpentry",
-    headline: "ARTISAN DETAIL IN EVERY JOINT.",
+    headline: "CUSTOM WOODWORK BUILT FOR THE SPACE.",
     description:
-      "Built-ins, mantels, wainscoting, and bespoke woodwork crafted by skilled carpenters who treat every detail as a signature element.",
+      "Built-ins, mantels, trim, railings, and custom woodwork planned to fit the room, the property, and the way it will be used.",
     process: [
       "Design consultation and shop drawings",
       "Material sourcing and milling",
@@ -303,28 +324,31 @@ export const SERVICES: ServiceDefinition[] = [
       "Staircase and railing fabrication",
       "Historic restoration carpentry",
     ],
-    heroImage: "/service-photos/carpentry-hero.jpg",
-    galleryImage: "/service-photos/carpentry-detail.jpg",
+    heroImage: "/project-photos/real-projects/home-office-custom-cabinets-shelves.webp",
+    galleryImage: "/project-photos/real-projects/living-room-built-in-bookcase-seating.webp",
     photos: [
       {
-        image: "/service-photos/carpentry-hero.jpg",
+        image: "/project-photos/real-projects/home-office-custom-cabinets-shelves.webp",
+        caption: "Custom office cabinets and shelves",
       },
       {
-        image: "/service-photos/carpentry-detail.jpg",
+        image: "/project-photos/real-projects/living-room-built-in-bookcase-seating.webp",
+        caption: "Built-in bookcase and seating",
       },
       {
-        image: "/service-photos/design-review.jpg",
+        image: "/project-photos/real-projects/living-room-stone-fireplace-builtins.webp",
+        caption: "Stone fireplace with custom built-ins",
       },
     ],
     imagePosition: "center center",
     keyword: "custom carpentry Minnesota",
     metaDescription:
-      "Custom carpentry and millwork in the Twin Cities. Built-ins, mantels, trim packages, and artisan woodwork for luxury homes.",
+      "Custom carpentry and millwork in Minnesota, including built-ins, mantels, trim packages, railings, and restoration work.",
   },
   {
     slug: "additions",
     title: "Home Additions",
-    headline: "EXPAND YOUR FOOTPRINT WITHOUT COMPROMISE.",
+    headline: "MORE ROOM, BUILT TO FIT THE PROPERTY.",
     description:
       "Second-story additions, bump-outs, and full-scale expansions designed to blend seamlessly with your existing architecture.",
     process: [
@@ -339,28 +363,29 @@ export const SERVICES: ServiceDefinition[] = [
       "Seamless exterior matching",
       "Full interior finish integration",
     ],
-    heroImage: "/service-photos/addition-hero.jpg",
-    galleryImage: "/service-photos/addition-interior.jpg",
+    heroImage: "/project-photos/exteriors/additions/additions-01.webp",
+    galleryImage: "/project-photos/exteriors/additions/additions-02.webp",
     photos: [
-      {
-        image: "/service-photos/addition-hero.jpg",
-      },
-      {
-        image: "/service-photos/addition-interior.jpg",
-      },
-      {
-        image: "/service-photos/woodland-cabin.jpg",
-      },
+      { image: "/project-photos/exteriors/additions/additions-03.jpg" },
+      { image: "/project-photos/exteriors/additions/additions-04.jpg" },
+      { image: "/project-photos/exteriors/additions/additions-05.jpeg" },
+      { image: "/project-photos/exteriors/additions/additions-06.jpeg" },
+      { image: "/project-photos/exteriors/additions/additions-07.webp" },
+      { image: "/project-photos/exteriors/additions/additions-08.webp" },
+      { image: "/project-photos/exteriors/additions/additions-09.webp" },
+      { image: "/project-photos/exteriors/additions/additions-10.avif" },
+      { image: "/project-photos/exteriors/additions/additions-11.jpeg" },
+      { image: "/project-photos/exteriors/additions/additions-12.jpeg" },
     ],
     imagePosition: "center center",
     keyword: "home additions Minneapolis",
     metaDescription:
-      "Luxury home additions in Minneapolis and the Twin Cities. Second-story builds, bump-outs, and seamless architectural integration.",
+      "Home additions in Buffalo, the Twin Cities, and the Whitefish Chain area, including bump-outs, second-story additions, and connected living spaces.",
   },
   {
     slug: "garage-builds",
     title: "Garage Builds",
-    headline: "PREMIUM GARAGES BUILT TO YOUR SPEC.",
+    headline: "GARAGES BUILT AROUND HOW YOU USE THEM.",
     description:
       "Detached and attached garages with heated floors, workshop layouts, and EV-ready electrical — built with the same standards as our residential projects.",
     process: [
@@ -375,19 +400,7 @@ export const SERVICES: ServiceDefinition[] = [
       "EV charger pre-wiring",
       "Overhead door and opener install",
     ],
-    heroImage: "/service-photos/garage-hero.jpg",
-    galleryImage: "/service-photos/garage-workshop.jpg",
-    photos: [
-      {
-        image: "/service-photos/garage-hero.jpg",
-      },
-      {
-        image: "/service-photos/garage-workshop.jpg",
-      },
-      {
-        image: "/service-photos/rustic-wood-cabin.jpg",
-      },
-    ],
+    photos: [],
     imagePosition: "center center",
     keyword: "garage builder Minnesota",
     metaDescription:

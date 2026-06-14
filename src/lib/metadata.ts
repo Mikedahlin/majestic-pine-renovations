@@ -51,8 +51,9 @@ export function buildMetadata({
 export const PAGE_META = {
   home: {
     title: "Majestic Pine Renovations",
-    description: "Luxury General Contractor in Minneapolis",
-    keyword: "Twin Cities home renovation",
+    description:
+      "Remodeling and construction for homes, cabins, and commercial spaces across Buffalo, the Twin Cities, and the Whitefish Chain area.",
+    keyword: "Buffalo MN remodeling contractor",
     path: "/",
   },
   about: {
@@ -63,31 +64,24 @@ export const PAGE_META = {
     path: "/about-us",
   },
   commercial: {
-    title: "Commercial Construction & Remodeling Minneapolis, MN",
+    title: "Commercial Construction & Remodeling in Minnesota",
     description:
       "Scalable commercial construction and remodeling for medical, office, retail, and multi-unit projects.",
     keyword: "Commercial contractor Minnesota",
     path: "/commercial-contracting-minnesota",
   },
   services: {
-    title: "Comprehensive Construction Solutions",
+    title: "Remodeling, Exterior Work & Custom Builds",
     description:
-      "Explore luxury remodeling, additions, outdoor living, and specialty construction services.",
+      "Explore remodeling, additions, outdoor living, cabin-focused upgrades, and specialty construction services.",
     keyword: "construction services Minnesota",
     path: "/services",
   },
-  financing: {
-    title: "Luxury Remodeling, Intelligently Financed",
-    description:
-      "Flexible financing options for residential remodels and commercial build-outs.",
-    keyword: "home remodeling financing Minnesota",
-    path: "/financing",
-  },
   contact: {
-    title: "Initiate Your Project",
+    title: "Talk With Majestic Pine Renovations",
     description:
-      "Start your project with Majestic Pine Renovations in Buffalo, Minneapolis, and the Twin Cities.",
-    keyword: "Minneapolis contractor contact",
+      "Start your project with Majestic Pine Renovations in Buffalo, the Twin Cities, and the Whitefish Chain area.",
+    keyword: "Buffalo contractor contact",
     path: "/contact",
   },
 } as const;
