@@ -7,7 +7,7 @@ export const CONTACT = {
   streetAddress: "196 Carling Ave SE",
   serviceArea:
     "Minneapolis, Saint Paul, Twin Cities Metro, Greater Minnesota",
-  phone: "(612) 555-0147",
+  phone: "(612) 363-2614",
   email: "hello@majesticpinerenovations.com",
 } as const;
 
