@@ -129,11 +129,8 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("[API /lead] Error:", error);
     return NextResponse.json(
-      {
-        error:
-          "The online form is not connected yet. Please call (612) 363-2614 or email majesticpinerenovations@gmail.com.",
-      },
-      { status: 503 },
+      { error: "Something went wrong. Please try again or call (612) 363-2614." },
+      { status: 500 },
     );
   }
 }

@@ -31,10 +31,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? "https://majesticpinerenovations.com",
   ),
-  title: {
-    default: SITE_NAME,
-    template: `%s | ${SITE_NAME}`,
-  },
+  title: SITE_NAME,
   description:
     "Remodeling and construction for homes, cabins, and commercial spaces across Buffalo, the Twin Cities, and the Whitefish Chain area.",
   robots: { index: true, follow: true },

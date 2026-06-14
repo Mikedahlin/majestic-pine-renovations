@@ -92,8 +92,7 @@ async function hubSpotRequest(
 }
 
 async function sendToHubSpot(lead: LeadPayload): Promise<boolean> {
-  const token =
-    process.env.HUBSPOT_ACCESS_TOKEN ?? process.env.HUBSPOT_API_KEY;
+  const token = process.env.HUBSPOT_API_KEY ?? process.env.HUBSPOT_ACCESS_TOKEN;
   if (!token) return false;
 
   const properties = hubSpotProperties(lead);
@@ -108,7 +107,6 @@ async function sendToHubSpot(lead: LeadPayload): Promise<boolean> {
 
   if (createResponse.ok) return true;
 
-  // HubSpot rejects duplicate email addresses, so update the existing contact.
   if (createResponse.status === 409) {
     const searchResponse = await hubSpotRequest(
       "/crm/v3/objects/contacts/search",
@@ -216,16 +214,37 @@ async function sendEmailNotification(lead: LeadPayload): Promise<boolean> {
   return true;
 }
 
+async function saveToLocal(lead: LeadPayload): Promise<boolean> {
+  try {
+    const fs = await import("fs/promises");
+    const path = await import("path");
+    const dir = path.join(process.cwd(), "data", "leads");
+    await fs.mkdir(dir, { recursive: true });
+    const filename = `lead_${Date.now()}_${Math.random().toString(36).slice(2, 8)}.json`;
+    await fs.writeFile(path.join(dir, filename), JSON.stringify(lead, null, 2));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export async function processLead(lead: LeadPayload): Promise<LeadResult> {
   const leadId = `lead_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
-  const deliveryResults = await Promise.all([
+
+  const results = await Promise.allSettled([
+    saveToLocal(lead),
     sendToHubSpot(lead),
     sendEmailNotification(lead),
     sendDispatchAlert(lead),
   ]);
 
-  if (!deliveryResults.some(Boolean)) {
-    throw new Error("No lead delivery service is configured");
+  const anySucceeded = results.some(
+    (r) => r.status === "fulfilled" && r.value === true,
+  );
+
+  if (!anySucceeded) {
+    console.warn("[processLead] No delivery method succeeded. Logging lead data:");
+    console.warn(JSON.stringify(lead, null, 2));
   }
 
   return {

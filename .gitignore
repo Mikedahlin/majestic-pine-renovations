@@ -57,3 +57,6 @@ next-env.d.ts
 /public/basement-projects/
 /public/jeremy-stoesz-old.png
 /public/project-photos/original-service/
+
+# Local lead storage
+/data/leads/
