@@ -64,9 +64,6 @@ export async function POST(request: Request) {
     if (budgetRange === CUSTOM_BUDGET_RANGE && !customBudgetRange) {
       errors.push("Custom budget estimate is required");
     }
-    if (!projectDetails || projectDetails.length < 20) {
-      errors.push("Please include a short project description");
-    }
 
     const fileEntries = formData.getAll("files");
     const files: LeadPayload["files"] = [];
@@ -114,7 +111,7 @@ export async function POST(request: Request) {
       smsOptIn,
       email,
       projectCategory,
-      projectDetails,
+      projectDetails: projectDetails ?? "",
       budgetRange:
         budgetRange === CUSTOM_BUDGET_RANGE
           ? `${CUSTOM_BUDGET_RANGE}: ${customBudgetRange}`

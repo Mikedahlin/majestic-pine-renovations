@@ -165,15 +165,13 @@ export function LeadForm({ compact = false }: LeadFormProps) {
 
       <div>
         <label htmlFor="projectDetails" className="mb-1 block text-sm uppercase tracking-wider text-pine-green">
-          Tell Us About the Project *
+          Tell Us About the Project <span className="normal-case tracking-normal text-concrete">(optional)</span>
         </label>
         <textarea
           id="projectDetails"
           name="projectDetails"
-          required
-          minLength={20}
           rows={compact ? 4 : 6}
-          placeholder="What would you like built, repaired, or remodeled? Include your timeline and anything important about the property."
+          placeholder="Optional: what would you like built, repaired, or remodeled? Include your timeline and anything important about the property."
           className={inputClass}
         />
       </div>
