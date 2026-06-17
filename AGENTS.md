@@ -10,5 +10,5 @@ Single product: a Next.js 16 (App Router, Turbopack) marketing site for "Majesti
 
 Non-obvious notes:
 - No secrets are required to run or test. All external integrations degrade gracefully: a lead with no provider configured (HubSpot/Resend/dispatch webhook) is written to `data/leads/*.json` (gitignored), and the chat falls back to a local keyword reply when no AI key (`GEMINI_API_KEY`/`GROQ_API_KEY`/`OPENAI_API_KEY`) is set. Copy `.env.example` to `.env.local` only if you want to exercise real providers.
-- `.github/workflows/webpack.yml` runs `npx webpack`, which is a leftover GitHub starter-template step and is NOT this project's build. The real build is `next build` (`npm run build`); there is no webpack config.
+- The real build is `next build` (`npm run build`); there is no webpack config. (A leftover `.github/workflows/webpack.yml` starter-template workflow that ran `npx webpack` was removed; there is currently no CI build workflow.)
 - The `preview`/`deploy`/`upload` scripts use OpenNext + Cloudflare Workers (`wrangler`) and are for deployment only — use `npm run dev` for local development, not these.
