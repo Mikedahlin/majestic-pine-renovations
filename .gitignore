@@ -60,3 +60,13 @@ next-env.d.ts
 
 # Local lead storage
 /data/leads/
+
+# AI agent config files (not needed for the website)
+/AGENTS.md
+/CLAUDE.md
+
+# GitHub Actions workflow (not needed for local build/deploy)
+.github/
+
+# Documentation (not needed for the website)
+/README.md
