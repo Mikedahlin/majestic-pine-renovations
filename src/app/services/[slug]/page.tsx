@@ -14,7 +14,6 @@ import {
   SERVICES,
 } from "@/lib/services";
 import { galleryForService } from "@/lib/project-gallery";
-import { PhotoCarousel } from "@/components/ui/PhotoCarousel";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -116,34 +115,23 @@ export default async function ServiceSubpage({ params }: Props) {
                 subtitle={`${projectPhotos.length} photos from real Majestic Pine jobs in this category.`}
               />
             </FadeInUp>
-            <div className="mx-auto max-w-4xl">
-              <PhotoCarousel
-                photos={projectPhotos.map((p) => ({
-                  image: p.image,
-                  position: service.imagePosition ?? "center center",
-                }))}
-                title={service.title}
-              />
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {projectPhotos.map((photo, i) => (
+                <FadeInUp key={photo.image} delay={i * 80}>
+                  <article className="overflow-hidden border border-pine-green/10 bg-warm-white">
+                    <div
+                      className="aspect-[4/3] bg-cover bg-center"
+                      style={{
+                        backgroundImage: `url('${photo.image}')`,
+                        backgroundPosition: service.imagePosition ?? "center center",
+                      }}
+                      role="img"
+                      aria-label={`${service.title} project example`}
+                    />
+                  </article>
+                </FadeInUp>
+              ))}
             </div>
-            {projectPhotos.length > 8 && (
-              <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                {projectPhotos.slice(0, 8).map((photo, i) => (
-                  <FadeInUp key={photo.image} delay={i * 60}>
-                    <article className="overflow-hidden border border-pine-green/10 bg-warm-white">
-                      <div
-                        className="aspect-[4/3] bg-cover bg-center"
-                        style={{
-                          backgroundImage: `url('${photo.image}')`,
-                          backgroundPosition: service.imagePosition ?? "center center",
-                        }}
-                        role="img"
-                        aria-label={`${service.title} project example`}
-                      />
-                    </article>
-                  </FadeInUp>
-                ))}
-              </div>
-            )}
           </div>
 
           <div className="mt-20 border-t border-pine-green/10 pt-16">

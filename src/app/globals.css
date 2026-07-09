@@ -54,34 +54,3 @@ body {
   background: var(--bronze);
   color: var(--warm-white);
 }
-
-@keyframes ambient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  25% { background-position: 100% 0%; }
-  50% { background-position: 100% 100%; }
-  75% { background-position: 0% 100%; }
-}
-
-@keyframes ken-burns {
-  0% { transform: scale(1) translate(0, 0); }
-  50% { transform: scale(1.05) translate(-1%, -1%); }
-  100% { transform: scale(1) translate(0, 0); }
-}
-
-@keyframes flag-wave {
-  0% { transform: perspective(400px) rotateY(0deg) skewX(0deg); }
-  25% { transform: perspective(400px) rotateY(4deg) skewX(1deg); }
-  50% { transform: perspective(400px) rotateY(0deg) skewX(0deg); }
-  75% { transform: perspective(400px) rotateY(-4deg) skewX(-1deg); }
-  100% { transform: perspective(400px) rotateY(0deg) skewX(0deg); }
-}
-
-.animate-ambient {
-  animation: ambient-shift 20s ease-in-out infinite;
-  background-size: 200% 200%;
-}
-
-.animate-flag {
-  animation: flag-wave 4s ease-in-out infinite;
-  transform-origin: left center;
-}
