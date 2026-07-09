@@ -44,14 +44,17 @@ export default function AboutPage() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <FadeInUp>
-              <div
-                className="aspect-[4/5] bg-cover bg-center"
-                style={{
-                  backgroundImage: `url('${SITE_IMAGES.aboutStory}')`,
-                }}
-                role="img"
-                aria-label="Majestic Pine Renovations home addition and finish work"
-              />
+              <div className="relative">
+                <img
+                  src="/team/jeremy-stoesz.png"
+                  alt="Jeremy Stoesz — Founder, Majestic Pine Renovations"
+                  className="aspect-[4/5] w-full object-cover"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-charcoal/80 to-transparent p-6">
+                  <p className="font-heading text-lg font-bold text-warm-white">Jeremy Stoesz</p>
+                  <p className="text-sm text-bronze uppercase tracking-widest">Founder</p>
+                </div>
+              </div>
             </FadeInUp>
             <FadeInUp delay={150}>
               <SectionHeading title="Meet Jeremy Stoesz" />

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { HomeHero } from "@/components/home/HomeHero";
 import { RecentProjects } from "@/components/home/RecentProjects";
+import { PhotoCarousel } from "@/components/ui/PhotoCarousel";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ServiceCard } from "@/components/ui/ServiceCard";
@@ -9,6 +10,7 @@ import { AdvantageGrid } from "@/components/ui/AdvantageGrid";
 import { TestimonialCarousel } from "@/components/ui/TestimonialCarousel";
 import { FadeInUp } from "@/components/ui/FadeInUp";
 import { LeadForm } from "@/components/ui/LeadForm";
+import { FEATURED_IMAGES } from "@/lib/project-gallery";
 import { SchemaScript } from "@/components/ui/SchemaScript";
 import { buildMetadata, PAGE_META } from "@/lib/metadata";
 import { faqSchema, reviewSchema } from "@/lib/schema";
@@ -51,6 +53,34 @@ export default function HomePage() {
       <SchemaScript data={[faqSchema(homeFaqs), ...reviewSchema(homeReviews)]} />
 
       <HomeHero />
+
+      {/* Rotating Project Gallery */}
+      <section className="bg-charcoal py-16">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <FadeInUp>
+            <SectionHeading
+              title="Our Work in Motion"
+              subtitle="Real projects from Minnesota homes and businesses."
+              align="center"
+              light
+            />
+          </FadeInUp>
+          <div className="mx-auto max-w-5xl mt-8">
+            <PhotoCarousel
+              photos={[
+                { image: FEATURED_IMAGES.kitchenHero, position: "center center" },
+                { image: FEATURED_IMAGES.bathroomHero, position: "center center" },
+                { image: FEATURED_IMAGES.deckHero, position: "center center" },
+                { image: FEATURED_IMAGES.basementHero, position: "center center" },
+                { image: FEATURED_IMAGES.lakeCabinHero, position: "center center" },
+                { image: FEATURED_IMAGES.roofingHero, position: "center center" },
+                { image: FEATURED_IMAGES.sidingHero, position: "center center" },
+              ]}
+              title="Featured Projects"
+            />
+          </div>
+        </div>
+      </section>
 
       {/* Brand Positioning */}
       <section className="grid lg:grid-cols-2">
