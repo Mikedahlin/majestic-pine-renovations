@@ -30,9 +30,6 @@ export function HomeHero() {
         aria-hidden="true"
       />
 
-      {/* Glassmorphism overlay */}
-      <div className="absolute inset-0 bg-charcoal/30 backdrop-blur-[2px]" />
-
       <div className="relative z-10 mx-auto max-w-5xl px-6 py-32 text-center lg:px-8">
         <h1 className="font-heading text-3xl md:text-5xl lg:text-6xl font-bold uppercase tracking-wide text-warm-white leading-tight">
           We Build Exceptional Spaces With Craftsmanship, Integrity, and Modern Innovation.
