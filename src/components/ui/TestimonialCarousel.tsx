@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FadeInUp } from "./FadeInUp";
 
 const testimonials = [
@@ -37,6 +37,11 @@ const testimonials = [
 export function TestimonialCarousel() {
   const [active, setActive] = useState(0);
   const current = testimonials[active];
+
+  useEffect(() => {
+    const id = setInterval(() => setActive((p) => (p + 1) % testimonials.length), 6000);
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <div className="relative">

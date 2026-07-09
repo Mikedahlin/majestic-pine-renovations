@@ -7,18 +7,28 @@ import { SITE_IMAGES } from "@/lib/site-images";
 export function HomeHero() {
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
-      {/* Cinematic background with parallax effect */}
+      {/* Cinematic video background */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        poster={SITE_IMAGES.homeHero}
+        className="absolute inset-0 h-full w-full object-cover scale-105"
+        aria-hidden="true"
+      >
+        <source src="/hero-bg.mp4" type="video/mp4" />
+      </video>
+
+      {/* Animated gradient overlay over video */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
+        className="absolute inset-0 animate-ambient"
         style={{
-          backgroundImage:
-            `linear-gradient(135deg, rgba(18,18,18,0.85) 0%, rgba(26,54,38,0.7) 50%, rgba(18,18,18,0.9) 100%), url('${SITE_IMAGES.homeHero}')`,
+          backgroundImage: "linear-gradient(135deg, rgba(18,18,18,0.85) 0%, rgba(26,54,38,0.65) 25%, rgba(205,127,50,0.25) 50%, rgba(26,54,38,0.65) 75%, rgba(18,18,18,0.9) 100%)",
         }}
         aria-hidden="true"
       />
-
-      {/* Glassmorphism overlay */}
-      <div className="absolute inset-0 bg-charcoal/30 backdrop-blur-[2px]" />
 
       <div className="relative z-10 mx-auto max-w-5xl px-6 py-32 text-center lg:px-8">
         <h1 className="font-heading text-3xl md:text-5xl lg:text-6xl font-bold uppercase tracking-wide text-warm-white leading-tight">

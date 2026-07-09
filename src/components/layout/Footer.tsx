@@ -113,7 +113,36 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 md:flex-row">
+        <div className="mt-8 flex items-center justify-center gap-3 border-t border-white/10 pt-8">
+          <svg
+            className="animate-flag h-6 w-8"
+            viewBox="0 0 60 40"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <rect width="60" height="40" fill="#DC143C" />
+            <rect width="24" height="20" fill="#002868" />
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((r) => (
+              r % 2 === 0 && Array.from({ length: 6 }).map((_, c) => (
+                <circle key={`${r}-${c}`} cx={2 + c * 4} cy={2 + r * 2} r="0.6" fill="white" />
+              ))
+            ))}
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((r) => (
+              r % 2 === 1 && Array.from({ length: 5 }).map((_, c) => (
+                <circle key={`${r}-${c}`} cx={4 + c * 4} cy={2 + r * 2} r="0.6" fill="white" />
+              ))
+            ))}
+            <rect x="0" y="20" width="60" height="4" fill="white" />
+            <rect x="0" y="28" width="60" height="4" fill="white" />
+            <rect x="0" y="36" width="60" height="4" fill="white" />
+          </svg>
+          <span className="text-xs uppercase tracking-widest text-bronze font-semibold">
+            Proudly Made in America
+          </span>
+        </div>
+
+        <div className="mt-4 flex flex-col items-center justify-between gap-4 pt-4 md:flex-row">
           <p className="text-xs text-warm-white/50">
             © {new Date().getFullYear()} Majestic Pine Renovations. All rights reserved.
           </p>
