@@ -16,7 +16,7 @@ export default function OurWorkPage() {
     <>
       <HeroSection
         title="Our Project Gallery"
-        subtitle={`${count} real photos from Majestic Pine jobs across Minnesota — kitchens, baths, basements, decks, lake homes, roofing, siding, and more.`}
+        subtitle={`${count} photos from Majestic Pine jobs across Minnesota — kitchens, baths, basements, decks, lake homes, roofing, siding, and more.`}
         backgroundClass="bg-cover bg-center"
         style={{ backgroundImage: `url('${FEATURED_IMAGES.kitchenHero}')` }}
         fullScreen={false}
@@ -28,8 +28,8 @@ export default function OurWorkPage() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <FadeInUp>
             <SectionHeading
-              title="Real Work. No Stock Photos."
-              subtitle="Every image below is from an actual Majestic Pine Renovations project. Duplicates have been removed so you see distinct work."
+              title="Work. No Stock Photos."
+              subtitle="Every image below is from a Majestic Pine Renovations project. Duplicates have been removed so you see distinct work."
               align="center"
             />
           </FadeInUp>

@@ -10,10 +10,6 @@ import { FEATURED_IMAGES, galleryFor } from "@/lib/project-gallery";
 export const metadata: Metadata = buildMetadata(PAGE_META.commercial);
 
 const commercialPhotos = [
-  { image: FEATURED_IMAGES.commercialHero },
-  { image: FEATURED_IMAGES.commercialDetail },
-  { image: FEATURED_IMAGES.livingRoomHero },
-  ...galleryFor("interiors").slice(0, 3).map((image) => ({ image })),
   ...galleryFor("windows-doors").map((image) => ({ image })),
 ];
 
