@@ -6,7 +6,6 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { FadeInUp } from "@/components/ui/FadeInUp";
 import { PhotoCarousel } from "@/components/ui/PhotoCarousel";
-import { BeforeAfterSlider } from "@/components/ui/BeforeAfterSlider";
 import { SchemaScript } from "@/components/ui/SchemaScript";
 import { serviceSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/metadata";
@@ -131,29 +130,6 @@ export default async function ServiceSubpage({ params }: Props) {
                 }
               >
                 <PhotoCarousel photos={service.photos} />
-              </div>
-            </div>
-          )}
-
-          {service.beforeAfter && service.beforeAfter.length > 0 && (
-            <div className="mt-20">
-              <FadeInUp>
-                <SectionHeading
-                  title="Before & After"
-                  subtitle="See the transformation for yourself."
-                />
-              </FadeInUp>
-              <div className="grid gap-8 md:grid-cols-2">
-                {service.beforeAfter.map((pair, i) => (
-                  <FadeInUp key={i} delay={i * 100} variant="scale">
-                    <BeforeAfterSlider
-                      before={pair.before}
-                      after={pair.after}
-                      beforeLabel={pair.beforeLabel ?? "Before"}
-                      afterLabel={pair.afterLabel ?? "After"}
-                    />
-                  </FadeInUp>
-                ))}
               </div>
             </div>
           )}

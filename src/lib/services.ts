@@ -144,10 +144,7 @@ export const SERVICES: ServiceDefinition[] = [
     heroImage: FEATURED_IMAGES.basementHero,
     galleryImage: FEATURED_IMAGES.basementHero,
     photos: photoList(galleryForService("basement-finishing")),
-    beforeAfter: [
-      { before: "/before-after/pair1-before.png", after: "/before-after/pair1-after.png" },
-      { before: "/before-after/pair2-before.png", after: "/before-after/pair2-after.png" },
-    ],
+
     imagePosition: "center center",
     keyword: "basement finishing Minnesota",
     metaDescription:
@@ -179,10 +176,7 @@ export const SERVICES: ServiceDefinition[] = [
       ...galleryFor("docks"),
       ...galleryFor("lake-cabin"),
     ]),
-    beforeAfter: [
-      { before: "/before-after/pair3a-before.png", after: "/before-after/pair3a-after.png" },
-      { before: "/before-after/pair3b-before.png", after: "/before-after/pair3b-after.png" },
-    ],
+
     imagePosition: "center center",
     keyword: "deck builder Twin Cities",
     metaDescription:

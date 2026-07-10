@@ -5,11 +5,13 @@ import { SectorCards } from "@/components/ui/SectorCards";
 import { Button } from "@/components/ui/Button";
 import { FadeInUp } from "@/components/ui/FadeInUp";
 import { buildMetadata, PAGE_META } from "@/lib/metadata";
-import { FEATURED_IMAGES, galleryFor } from "@/lib/project-gallery";
+import { galleryFor } from "@/lib/project-gallery";
 
 export const metadata: Metadata = buildMetadata(PAGE_META.commercial);
 
 const commercialPhotos = [
+  { image: "/service-photos/commercial-office.jpg" },
+  { image: "/service-photos/commercial-finished.jpg" },
   ...galleryFor("windows-doors").map((image) => ({ image })),
 ];
 
@@ -21,7 +23,7 @@ export default function CommercialPage() {
         subtitle="Tenant Improvements | Medical Facilities | Retail Build-Outs | Corporate Offices"
         backgroundClass="bg-cover bg-center"
         style={{
-          backgroundImage: `url('${FEATURED_IMAGES.commercialHero}')`,
+          backgroundImage: "url('/service-photos/commercial-office.jpg')",
         }}
         fullScreen={false}
       >

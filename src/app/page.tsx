@@ -10,6 +10,7 @@ import { LeadForm } from "@/components/ui/LeadForm";
 import { SchemaScript } from "@/components/ui/SchemaScript";
 import { CountUp } from "@/components/ui/CountUp";
 import { TestimonialCarousel } from "@/components/ui/TestimonialCarousel";
+import { BeforeAfterSlider } from "@/components/ui/BeforeAfterSlider";
 import { buildMetadata, PAGE_META } from "@/lib/metadata";
 import { faqSchema } from "@/lib/schema";
 import { CORE_SERVICES } from "@/lib/services";
@@ -35,6 +36,28 @@ export default function HomePage() {
       <SchemaScript data={faqSchema(homeFaqs)} />
 
       <HomeHero />
+
+      <section className="py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <FadeInUp>
+            <SectionHeading title="Before & After" subtitle="See the transformation." align="center" />
+          </FadeInUp>
+          <div className="mt-12 grid gap-8 md:grid-cols-2">
+            <FadeInUp variant="scale">
+              <BeforeAfterSlider before="/before-after/pair1-before.png" after="/before-after/pair1-after.png" />
+            </FadeInUp>
+            <FadeInUp variant="scale" delay={100}>
+              <BeforeAfterSlider before="/before-after/pair2-before.png" after="/before-after/pair2-after.png" />
+            </FadeInUp>
+            <FadeInUp variant="scale" delay={200}>
+              <BeforeAfterSlider before="/before-after/pair3a-before.png" after="/before-after/pair3a-after.png" />
+            </FadeInUp>
+            <FadeInUp variant="scale" delay={300}>
+              <BeforeAfterSlider before="/before-after/pair3b-before.png" after="/before-after/pair3b-after.png" />
+            </FadeInUp>
+          </div>
+        </div>
+      </section>
 
       {/* Brand Positioning */}
       <section className="grid lg:grid-cols-2">

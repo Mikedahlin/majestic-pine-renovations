@@ -207,7 +207,7 @@ export const SERVICE_GALLERY_MAP: Record<string, GalleryCategory[]> = {
   "roofing": ["roofing"],
   "siding": ["siding", "windows-doors"],
   "custom-carpentry": ["cabinetry", "interiors"],
-  "additions": ["additions"],
+  "additions": ["additions", "lake-cabin", "windows-doors"],
   "garage-builds": ["additions", "interiors"],
 };
 
