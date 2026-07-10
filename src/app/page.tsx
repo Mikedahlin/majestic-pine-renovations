@@ -9,7 +9,6 @@ import { FadeInUp } from "@/components/ui/FadeInUp";
 import { LeadForm } from "@/components/ui/LeadForm";
 import { SchemaScript } from "@/components/ui/SchemaScript";
 import { CountUp } from "@/components/ui/CountUp";
-import { BeforeAfterSlider } from "@/components/ui/BeforeAfterSlider";
 import { PhotoCarousel } from "@/components/ui/PhotoCarousel";
 import { TestimonialCarousel } from "@/components/ui/TestimonialCarousel";
 import { buildMetadata, PAGE_META } from "@/lib/metadata";
@@ -37,39 +36,6 @@ export default function HomePage() {
       <SchemaScript data={faqSchema(homeFaqs)} />
 
       <HomeHero />
-
-      <section className="bg-pine-green/5 py-20">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <FadeInUp>
-            <div className="max-w-3xl mb-14 text-center mx-auto">
-              <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-wide text-pine-green">
-                Before & After
-              </h2>
-              <p className="mt-4 text-lg leading-relaxed text-concrete">
-                Real transformations from Majestic Pine projects.
-              </p>
-            </div>
-          </FadeInUp>
-          <div className="grid gap-8 md:grid-cols-2 mx-auto max-w-5xl">
-            <BeforeAfterSlider
-              before="/before-after/pair1-before.png"
-              after="/before-after/pair1-after.png"
-            />
-            <BeforeAfterSlider
-              before="/before-after/pair2-before.png"
-              after="/before-after/pair2-after.png"
-            />
-            <BeforeAfterSlider
-              before="/before-after/pair3a-before.png"
-              after="/before-after/pair3a-after.png"
-            />
-            <BeforeAfterSlider
-              before="/before-after/pair3b-before.png"
-              after="/before-after/pair3b-after.png"
-            />
-          </div>
-        </div>
-      </section>
 
       <section className="bg-charcoal py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
