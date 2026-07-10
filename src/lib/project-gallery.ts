@@ -33,7 +33,6 @@ export const PROJECT_GALLERY = {
     "/project-gallery/cabinetry/cabinetry-1.webp",
     "/project-gallery/cabinetry/cabinetry-2.webp",
     "/project-gallery/cabinetry/cabinetry-3.webp",
-    "/project-gallery/cabinetry/cabinetry-4.jpg",
   ],
   "deck": [
     "/project-gallery/deck/newdeckconstruction1.jpg",
@@ -107,12 +106,8 @@ export const PROJECT_GALLERY = {
   ],
   "windows-doors": [
     "/project-gallery/windows-doors/newdoorconstructionpic1.jpg",
-    "/project-gallery/windows-doors/newwindowconstructionpic2.jpg",
-    "/project-gallery/windows-doors/newwindowconstructionpic3.jpg",
-    "/project-gallery/windows-doors/newwindowconstructionpic4.jpg",
     "/project-gallery/windows-doors/newwindowconstructionpics1.jpg",
     "/project-gallery/windows-doors/patiodoorconstructionpic1.jpg",
-    "/project-gallery/windows-doors/patiodoorconstructionpic2.jpg",
   ],
 } as const;
 
@@ -204,7 +199,7 @@ export const FEATURED_IMAGES = {
   commercialHero: "/service-photos/commercial-office.jpg",
   commercialDetail: "/service-photos/commercial-finished.jpg",
   livingRoomHero: PROJECT_GALLERY.interiors?.find((p) => p.includes("livingroom11")) ?? PROJECT_GALLERY.interiors?.[0] ?? "",
-  contactHero: PROJECT_GALLERY.interiors?.find((p) => p.includes("finishingtouches1")) ?? PROJECT_GALLERY.interiors?.[0] ?? "",
+  contactHero: "/project-gallery/interiors/livingroom11.jpg",
   windowDoorFeature: PROJECT_GALLERY["windows-doors"]?.find((p) => p.includes("newwindow")) ?? PROJECT_GALLERY["windows-doors"]?.[0] ?? "",
   basementHero: PROJECT_GALLERY.basement?.[0] ?? PROJECT_GALLERY.interiors?.[0] ?? "",
 } as const;
