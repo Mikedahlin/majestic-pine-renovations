@@ -6,11 +6,13 @@ import { TrustBadges } from "@/components/ui/TrustBadges";
 export function HomeHero() {
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
-      <div
-        className="absolute inset-0 scale-105 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: "url('/homepage-kitchen.jpg')",
-        }}
+      <video
+        className="absolute inset-0 h-full w-full object-cover"
+        src="/hero-bg.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
         aria-hidden="true"
       />
 
