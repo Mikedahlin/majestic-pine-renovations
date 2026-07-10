@@ -122,6 +122,8 @@ export function Footer() {
             aria-hidden="true"
           >
             <rect width="60" height="40" fill="#DC143C" />
+            <rect x="0" y="4" width="60" height="4" fill="white" />
+            <rect x="0" y="12" width="60" height="4" fill="white" />
             <rect width="24" height="20" fill="#002868" />
             {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((r) => (
               r % 2 === 0 && Array.from({ length: 6 }).map((_, c) => (
