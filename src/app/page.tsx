@@ -9,6 +9,7 @@ import { FadeInUp } from "@/components/ui/FadeInUp";
 import { LeadForm } from "@/components/ui/LeadForm";
 import { SchemaScript } from "@/components/ui/SchemaScript";
 import { CountUp } from "@/components/ui/CountUp";
+import { PhotoCarousel } from "@/components/ui/PhotoCarousel";
 import { TestimonialCarousel } from "@/components/ui/TestimonialCarousel";
 import { buildMetadata, PAGE_META } from "@/lib/metadata";
 import { faqSchema } from "@/lib/schema";
@@ -35,6 +36,33 @@ export default function HomePage() {
       <SchemaScript data={faqSchema(homeFaqs)} />
 
       <HomeHero />
+
+      <section className="bg-charcoal py-16">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <FadeInUp>
+            <div className="max-w-3xl mb-12 text-center mx-auto">
+              <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-wide text-warm-white">
+                Our Work in Motion
+              </h2>
+              <p className="mt-4 text-lg leading-relaxed text-warm-white/80">
+                Projects from Minnesota homes and businesses.
+              </p>
+            </div>
+          </FadeInUp>
+          <div className="mx-auto max-w-5xl mt-8">
+            <PhotoCarousel
+              photos={[
+                { image: "/project-gallery/kitchen/kitchen-7.jpg" },
+                { image: "/project-gallery/bathroom/bathroom-5.jpg" },
+                { image: "/project-gallery/deck/newdeckconstruction1.jpg" },
+                { image: "/project-gallery/basement/basement-43e011af.png" },
+                { image: "/project-gallery/roofing/roofing-1.jpg" },
+                { image: "/project-gallery/siding/siding-1.jpg" },
+              ]}
+            />
+          </div>
+        </div>
+      </section>
 
       {/* Brand Positioning */}
       <section className="grid lg:grid-cols-2">
