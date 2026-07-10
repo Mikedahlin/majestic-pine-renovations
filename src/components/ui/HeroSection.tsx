@@ -22,12 +22,31 @@ export function HeroSection({
   style,
 }: HeroSectionProps) {
   const Tag = h1 ? "h1" : "h2";
+  const hasBgImage = style?.backgroundImage;
 
   return (
     <section
-      className={`relative flex items-center justify-center overflow-hidden ${fullScreen ? "min-h-screen" : "min-h-[60vh]"} ${backgroundClass}`}
-      style={style}
+      className={`relative flex items-center justify-center overflow-hidden ${fullScreen ? "min-h-screen" : "min-h-[60vh]"} ${hasBgImage ? "" : backgroundClass}`}
     >
+      {hasBgImage && (
+        <div
+          className="absolute inset-0 bg-cover bg-center animate-ken-burns"
+          style={{
+            backgroundImage: style!.backgroundImage,
+            backgroundPosition: (style as any)?.backgroundPosition ?? "center center",
+          }}
+          aria-hidden="true"
+        />
+      )}
+      <div
+        className={`absolute inset-0 animate-ambient opacity-30 ${hasBgImage ? backgroundClass : ""}`}
+        style={{
+          backgroundImage:
+            "radial-gradient(ellipse at 30% 20%, rgba(184,111,69,0.5) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(79,93,80,0.4) 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, rgba(105,74,54,0.3) 0%, transparent 50%)",
+          backgroundSize: "200% 200%",
+        }}
+        aria-hidden="true"
+      />
       {overlay && (
         <div className="absolute inset-0 bg-gradient-to-b from-charcoal/70 via-charcoal/50 to-charcoal/80" />
       )}

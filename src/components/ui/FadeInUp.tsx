@@ -1,14 +1,23 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useRef, useEffect, useState, type ReactNode } from "react";
 
 type FadeInUpProps = {
   children: ReactNode;
   className?: string;
   delay?: number;
+  variant?: "up" | "scale" | "rotate" | "left" | "right";
 };
 
-export function FadeInUp({ children, className = "", delay = 0 }: FadeInUpProps) {
+const variantClasses: Record<string, string> = {
+  up: "entrance-fade-up",
+  scale: "entrance-fade-scale",
+  rotate: "entrance-fade-rotate",
+  left: "entrance-fade-left",
+  right: "entrance-fade-right",
+};
+
+export function FadeInUp({ children, className = "", delay = 0, variant = "up" }: FadeInUpProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -19,23 +28,21 @@ export function FadeInUp({ children, className = "", delay = 0 }: FadeInUpProps)
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setVisible(true);
+          setTimeout(() => setVisible(true), delay);
           observer.unobserve(el);
         }
       },
-      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" },
+      { threshold: 0.1 }
     );
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [delay]);
 
   return (
     <div
       ref={ref}
-      className={`transition-all duration-700 ease-out ${
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-      } ${className}`}
+      className={`${variantClasses[variant]} ${visible ? "entrance-visible" : ""} ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}

@@ -1,80 +1,59 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { FadeInUp } from "./FadeInUp";
-
-const testimonials = [
-  {
-    author: "Sarah & Michael K.",
-    location: "Minneapolis, MN",
-    text: "Majestic Pine transformed our dated kitchen into a showpiece. Jeremy's team was transparent every step of the way, and the craftsmanship is extraordinary.",
-    project: "Kitchen Remodel",
-    rating: 5,
-  },
-  {
-    author: "Dr. James Whitfield",
-    location: "Buffalo, MN",
-    text: "Our medical office build-out was completed on schedule with zero disruption to patient care. Their commercial project management is truly elite.",
-    project: "Medical Build-Out",
-    rating: 5,
-  },
-  {
-    author: "Lisa & Tom R.",
-    location: "Edina, MN",
-    text: "The deck and outdoor kitchen they built handles Minnesota winters beautifully. We use the space from April through November — it's become our favorite room.",
-    project: "Outdoor Living",
-    rating: 5,
-  },
-  {
-    author: "Northstar Retail Group",
-    location: "Saint Paul, MN",
-    text: "Three retail locations renovated in six months. Consistent quality, clear communication, and budgets held across every site.",
-    project: "Commercial Retail",
-    rating: 5,
-  },
-];
+import { useState, useEffect, useCallback } from "react";
+import { TESTIMONIALS } from "@/lib/testimonials";
 
 export function TestimonialCarousel() {
-  const [active, setActive] = useState(0);
-  const current = testimonials[active];
+  const [current, setCurrent] = useState(0);
 
-  useEffect(() => {
-    const id = setInterval(() => setActive((p) => (p + 1) % testimonials.length), 6000);
-    return () => clearInterval(id);
+  const next = useCallback(() => {
+    setCurrent((c) => (c + 1) % TESTIMONIALS.length);
   }, []);
 
-  return (
-    <div className="relative">
-      <FadeInUp>
-        <div className="border border-pine-green/20 bg-warm-white p-8 md:p-12">
-          <div className="flex gap-1 mb-6" aria-label={`${current.rating} out of 5 stars`}>
-            {Array.from({ length: current.rating }).map((_, i) => (
-              <span key={i} className="text-bronze text-lg" aria-hidden="true">★</span>
-            ))}
-          </div>
-          <blockquote className="text-lg md:text-xl text-charcoal leading-relaxed italic">
-            &ldquo;{current.text}&rdquo;
-          </blockquote>
-          <footer className="mt-6">
-            <cite className="not-italic">
-              <span className="font-semibold text-pine-green">{current.author}</span>
-              <span className="text-concrete"> — {current.location}</span>
-            </cite>
-            <p className="mt-1 text-sm uppercase tracking-wider text-bronze">
-              {current.project}
-            </p>
-          </footer>
-        </div>
-      </FadeInUp>
+  useEffect(() => {
+    const id = setInterval(next, 6000);
+    return () => clearInterval(id);
+  }, [next]);
 
-      <div className="mt-6 flex justify-center gap-3">
-        {testimonials.map((_, i) => (
+  const t = TESTIMONIALS[current];
+
+  return (
+    <div className="mx-auto max-w-3xl px-6 text-center">
+      <div className="relative min-h-[200px]">
+        {TESTIMONIALS.map((testimonial, i) => (
+          <div
+            key={i}
+            className={`absolute inset-0 transition-all duration-700 ${
+              i === current
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-4 pointer-events-none"
+            }`}
+          >
+            <svg className="mx-auto mb-6 h-10 w-10 text-bronze/30" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+            </svg>
+            <blockquote className="text-lg leading-relaxed text-concrete md:text-xl">
+              &ldquo;{testimonial.quote}&rdquo;
+            </blockquote>
+            <div className="mt-6">
+              <p className="font-heading text-sm font-bold uppercase tracking-wider text-pine-green">
+                {testimonial.name}
+              </p>
+              <p className="mt-1 text-xs text-concrete">{testimonial.location}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-8 flex justify-center gap-2">
+        {TESTIMONIALS.map((_, i) => (
           <button
             key={i}
-            type="button"
-            aria-label={`View testimonial ${i + 1}`}
-            className={`h-2 w-8 transition-colors ${i === active ? "bg-bronze" : "bg-concrete/30"}`}
-            onClick={() => setActive(i)}
+            onClick={() => setCurrent(i)}
+            className={`h-2 w-2 rounded-full transition-all ${
+              i === current ? "w-6 bg-bronze" : "bg-pine-green/30"
+            }`}
+            aria-label={`Go to testimonial ${i + 1}`}
           />
         ))}
       </div>

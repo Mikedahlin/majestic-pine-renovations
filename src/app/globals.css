@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --pine-green: #1a3626;
-  --charcoal: #121212;
-  --warm-white: #f9f9f6;
-  --walnut: #4a3728;
-  --bronze: #cd7f32;
-  --concrete: #8c8c8c;
+  --pine-green: #4f5d50;
+  --charcoal: #241d19;
+  --warm-white: #f4efe6;
+  --walnut: #694a36;
+  --bronze: #b86f45;
+  --concrete: #756b63;
 }
 
 @theme inline {
@@ -18,6 +18,11 @@
   --color-concrete: var(--concrete);
   --font-sans: var(--font-inter);
   --font-heading: var(--font-cinzel);
+  --animate-ambient: ambient-shift 20s ease-in-out infinite;
+  --animate-ken-burns: ken-burns 8s ease-out forwards;
+  --animate-flag-wave: flag-wave 4s ease-in-out infinite;
+  --animate-icon-pulse: icon-pulse 3s ease-in-out infinite;
+  --animate-parallax: parallax-drift 20s ease-in-out infinite;
 }
 
 html {
@@ -56,32 +61,97 @@ body {
 }
 
 @keyframes ambient-shift {
-  0%, 100% { background-position: 0% 50%; }
+  0% { background-position: 0% 50%; }
   25% { background-position: 100% 0%; }
-  50% { background-position: 100% 100%; }
-  75% { background-position: 0% 100%; }
+  50% { background-position: 50% 100%; }
+  75% { background-position: 0% 0%; }
+  100% { background-position: 0% 50%; }
 }
 
 @keyframes ken-burns {
-  0% { transform: scale(1) translate(0, 0); }
-  50% { transform: scale(1.05) translate(-1%, -1%); }
-  100% { transform: scale(1) translate(0, 0); }
+  0% { transform: scale(1); }
+  100% { transform: scale(1.08); }
+}
+
+@keyframes ken-burns-out {
+  0% { transform: scale(1.08); }
+  100% { transform: scale(1); }
 }
 
 @keyframes flag-wave {
-  0% { transform: perspective(400px) rotateY(0deg) skewX(0deg); }
-  25% { transform: perspective(400px) rotateY(4deg) skewX(1deg); }
-  50% { transform: perspective(400px) rotateY(0deg) skewX(0deg); }
-  75% { transform: perspective(400px) rotateY(-4deg) skewX(-1deg); }
-  100% { transform: perspective(400px) rotateY(0deg) skewX(0deg); }
+  0% { transform: perspective(400px) rotateY(0deg) rotateX(0deg); }
+  25% { transform: perspective(400px) rotateY(3deg) rotateX(1deg); }
+  50% { transform: perspective(400px) rotateY(0deg) rotateX(0deg); }
+  75% { transform: perspective(400px) rotateY(-3deg) rotateX(-1deg); }
+  100% { transform: perspective(400px) rotateY(0deg) rotateX(0deg); }
 }
 
-.animate-ambient {
-  animation: ambient-shift 20s ease-in-out infinite;
-  background-size: 200% 200%;
+@keyframes icon-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+  100% { transform: scale(1); }
 }
 
-.animate-flag {
-  animation: flag-wave 4s ease-in-out infinite;
-  transform-origin: left center;
+@keyframes parallax-drift {
+  0% { background-position: 50% 0%; }
+  50% { background-position: 50% 100%; }
+  100% { background-position: 50% 0%; }
+}
+
+.entrance-fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.entrance-fade-up.entrance-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.entrance-fade-scale {
+  opacity: 0;
+  transform: scale(0.92);
+}
+
+.entrance-fade-scale.entrance-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.entrance-fade-rotate {
+  opacity: 0;
+  transform: rotate(-2deg) translateY(16px);
+}
+
+.entrance-fade-rotate.entrance-visible {
+  opacity: 1;
+  transform: rotate(0deg) translateY(0);
+}
+
+.entrance-fade-left {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.entrance-fade-left.entrance-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.entrance-fade-right {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.entrance-fade-right.entrance-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.entrance-fade-up,
+.entrance-fade-scale,
+.entrance-fade-rotate,
+.entrance-fade-left,
+.entrance-fade-right {
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
 }

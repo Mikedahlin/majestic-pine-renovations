@@ -18,6 +18,12 @@ export type ServiceDefinition = {
     image: string;
     position?: string;
   }[];
+  beforeAfter?: {
+    before: string;
+    after: string;
+    beforeLabel?: string;
+    afterLabel?: string;
+  }[];
   imagePosition?: string;
   keyword: string;
   metaDescription: string;

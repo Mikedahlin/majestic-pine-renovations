@@ -5,6 +5,8 @@ import { HeroSection } from "@/components/ui/HeroSection";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { FadeInUp } from "@/components/ui/FadeInUp";
+import { PhotoCarousel } from "@/components/ui/PhotoCarousel";
+import { BeforeAfterSlider } from "@/components/ui/BeforeAfterSlider";
 import { SchemaScript } from "@/components/ui/SchemaScript";
 import { serviceSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/metadata";
@@ -13,8 +15,6 @@ import {
   getServiceBySlug,
   SERVICES,
 } from "@/lib/services";
-import { galleryForService } from "@/lib/project-gallery";
-import { PhotoCarousel } from "@/components/ui/PhotoCarousel";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -44,7 +44,7 @@ export default async function ServiceSubpage({ params }: Props) {
   if (!service) notFound();
 
   const related = SERVICES.filter((s) => s.slug !== slug).slice(0, 3);
-  const projectPhotos = galleryForService(slug).map((image) => ({ image }));
+  const premiumGallery = service.galleryVariant === "premium";
 
   return (
     <>
@@ -59,11 +59,15 @@ export default async function ServiceSubpage({ params }: Props) {
       <HeroSection
         title={service.headline}
         subtitle={service.description}
-        backgroundClass="bg-cover bg-center"
-        style={{
-          backgroundImage: `url('${service.heroImage}')`,
-          backgroundPosition: service.imagePosition ?? "center center",
-        }}
+        backgroundClass={service.heroImage ? "bg-cover bg-center" : "bg-walnut"}
+        style={
+          service.heroImage
+            ? {
+                backgroundImage: `url('${service.heroImage}')`,
+                backgroundPosition: service.imagePosition ?? "center center",
+              }
+            : undefined
+        }
         fullScreen={false}
       >
         <Button href="/contact">Request a Consultation</Button>
@@ -97,63 +101,48 @@ export default async function ServiceSubpage({ params }: Props) {
                 ))}
               </ul>
 
-              <div
-                className="mt-10 aspect-video bg-cover bg-center"
-                style={{
-                  backgroundImage: `url('${service.galleryImage}')`,
-                  backgroundPosition: service.imagePosition ?? "center center",
-                }}
-                role="img"
-                aria-label={`${service.title} project example`}
-              />
+              {service.galleryImage && (
+                <div
+                  className="mt-10 aspect-video bg-cover bg-center"
+                  style={{
+                    backgroundImage: `url('${service.galleryImage}')`,
+                    backgroundPosition: service.imagePosition ?? "center center",
+                  }}
+                  role="img"
+                  aria-label={`${service.title} photo`}
+                />
+              )}
             </FadeInUp>
           </div>
 
-          <div className="mt-20">
-            <FadeInUp>
-              <SectionHeading
-                title="Project Examples"
-                subtitle={`${projectPhotos.length} photos from real Majestic Pine jobs in this category.`}
-              />
-            </FadeInUp>
-            <div className="mx-auto max-w-4xl">
-              <PhotoCarousel
-                photos={projectPhotos.map((p) => ({
-                  image: p.image,
-                  position: service.imagePosition ?? "center center",
-                }))}
-                title={service.title}
-              />
-            </div>
-            {projectPhotos.length > 8 && (
-              <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                {projectPhotos.slice(0, 8).map((photo, i) => (
-                  <FadeInUp key={photo.image} delay={i * 60}>
-                    <article className="overflow-hidden border border-pine-green/10 bg-warm-white">
-                      <div
-                        className="aspect-[4/3] bg-cover bg-center"
-                        style={{
-                          backgroundImage: `url('${photo.image}')`,
-                          backgroundPosition: service.imagePosition ?? "center center",
-                        }}
-                        role="img"
-                        aria-label={`${service.title} project example`}
-                      />
-                    </article>
-                  </FadeInUp>
-                ))}
+          {service.photos.length > 0 && (
+            <div className="mt-20">
+              <FadeInUp>
+                <SectionHeading
+                  title={service.galleryTitle ?? `${service.title} Gallery`}
+                  subtitle={service.gallerySubtitle}
+                />
+              </FadeInUp>
+              <div
+                className={
+                  premiumGallery
+                    ? "border-y border-bronze/40 bg-charcoal px-6 py-10 shadow-2xl lg:px-10"
+                    : ""
+                }
+              >
+                <PhotoCarousel photos={service.photos} />
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
           <div className="mt-20 border-t border-pine-green/10 pt-16">
             <FadeInUp>
               <SectionHeading title="Trust Indicators" />
               <div className="grid gap-6 md:grid-cols-3">
                 {[
-                  "Fully Licensed & Insured in Minnesota",
-                  "5-Star Google Rated Contractor",
-                  "Transparent Pricing & Staged Draws",
+                  "Clear Project Scope and Planning",
+                  "Materials Selected for Minnesota Conditions",
+                  "Direct Communication From Start to Finish",
                 ].map((indicator) => (
                   <div
                     key={indicator}

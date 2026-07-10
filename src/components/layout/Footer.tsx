@@ -1,162 +1,137 @@
 import Link from "next/link";
-import { CONTACT, FACEBOOK_URL, NAV_ITEMS } from "@/lib/constants";
-import { SERVICES } from "@/lib/services";
-import { Button } from "@/components/ui/Button";
 
 export function Footer() {
-  const featuredServices = SERVICES.filter((s) => s.featured).slice(0, 4);
-
   return (
-    <footer className="bg-charcoal text-warm-white">
-      <div className="border-b border-white/10 bg-pine-green py-16">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold uppercase tracking-wide">
-            Ready to Build With Confidence?
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-warm-white/80">
-            Secure your spot on our production calendar. Connect with our team
-            for an instant estimate.
-          </p>
-          <div className="mt-8">
-            <Button href="/contact">Request Your Free Consultation</Button>
-          </div>
+    <footer className="bg-charcoal">
+      <div className="border-b border-white/10 bg-[#1a1a2e] py-6">
+        <div className="mx-auto flex max-w-7xl items-center justify-center gap-5 px-6 lg:px-8">
+          <span
+            className="animate-flag-wave relative h-12 w-[72px] flex-shrink-0 overflow-hidden rounded-sm border border-white/40 bg-[repeating-linear-gradient(to_bottom,#b22234_0,#b22234_2px,#fff_2px,#fff_4px)]"
+            aria-hidden="true"
+          >
+            <span className="absolute left-0 top-0 h-[54%] w-[42%] bg-[#3c3b6e]" />
+          </span>
+          <span className="text-sm font-semibold uppercase tracking-widest text-warm-white">
+            Proudly Made in America
+          </span>
+          <span
+            className="animate-flag-wave relative h-12 w-[72px] flex-shrink-0 overflow-hidden rounded-sm border border-white/40 bg-[repeating-linear-gradient(to_bottom,#b22234_0,#b22234_2px,#fff_2px,#fff_4px)]"
+            style={{ animationDelay: "0.5s" }}
+            aria-hidden="true"
+          >
+            <span className="absolute left-0 top-0 h-[54%] w-[42%] bg-[#3c3b6e]" />
+          </span>
         </div>
       </div>
 
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 md:grid-cols-4">
           <div>
-            <p className="font-heading text-lg font-bold uppercase tracking-widest">
-              Majestic Pine
-            </p>
-            <p className="mt-1 text-xs uppercase tracking-[0.3em] text-bronze">
-              Renovations
-            </p>
-            <p className="mt-4 text-sm text-warm-white/70 leading-relaxed">
-              Premier residential and commercial general contracting for
-              Minneapolis, Buffalo, and the Twin Cities Metro.
+            <Link href="/" className="group inline-block">
+              <span className="font-heading text-lg font-bold uppercase tracking-widest text-warm-white">
+                Majestic Pine
+              </span>
+              <span className="block text-[10px] uppercase tracking-[0.3em] text-bronze">
+                Renovations
+              </span>
+            </Link>
+            <p className="mt-4 text-sm leading-relaxed text-warm-white/60">
+              Remodeling and construction for homes, cabins, and commercial
+              spaces across Minnesota.
             </p>
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-widest text-bronze">
-              Quick Links
-            </h3>
-            <ul className="mt-4 space-y-2">
-              {NAV_ITEMS.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-sm text-warm-white/70 hover:text-bronze transition-colors"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-widest text-bronze">
+            <h4 className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-bronze">
               Services
-            </h3>
-            <ul className="mt-4 space-y-2">
-              {featuredServices.map((service) => (
-                <li key={service.slug}>
+            </h4>
+            <ul className="space-y-2">
+              {[
+                ["Kitchen Remodeling", "/services/kitchen-remodeling"],
+                ["Bathroom Remodeling", "/services/bathroom-remodeling"],
+                ["Basement Finishing", "/services/basement-finishing"],
+                ["Decks & Outdoor", "/services/decks-outdoor-living"],
+                ["Roofing", "/services/roofing"],
+                ["Siding", "/services/siding"],
+                ["Home Additions", "/services/additions"],
+                ["Garage Builds", "/services/garage-builds"],
+              ].map(([label, href]) => (
+                <li key={href}>
                   <Link
-                    href={`/services/${service.slug}`}
-                    className="text-sm text-warm-white/70 hover:text-bronze transition-colors"
+                    href={href}
+                    className="text-sm text-warm-white/60 transition-colors hover:text-bronze"
                   >
-                    {service.title}
+                    {label}
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link
-                  href="/services"
-                  className="text-sm text-bronze hover:text-warm-white transition-colors"
-                >
-                  View All Services →
-                </Link>
-              </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-widest text-bronze">
+            <h4 className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-bronze">
+              Company
+            </h4>
+            <ul className="space-y-2">
+              {[
+                ["Home", "/"],
+                ["About Us", "/about-us"],
+                ["Commercial", "/commercial-contracting-minnesota"],
+                ["Services", "/services"],
+                ["Contact", "/contact"],
+              ].map(([label, href]) => (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className="text-sm text-warm-white/60 transition-colors hover:text-bronze"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-bronze">
               Contact
-            </h3>
-            <address className="mt-4 space-y-2 not-italic text-sm text-warm-white/70">
-              <p>Headquarters: {CONTACT.headquarters}</p>
-              <p>Service Area: {CONTACT.serviceArea}</p>
-              <p>
-                <a href={`tel:${CONTACT.phone.replace(/\D/g, "")}`} className="hover:text-bronze">
-                  {CONTACT.phone}
-                </a>
-              </p>
-              <p>
-                <a href={`mailto:${CONTACT.email}`} className="hover:text-bronze">
-                  {CONTACT.email}
-                </a>
-              </p>
-              <p>
+            </h4>
+            <ul className="space-y-2 text-sm text-warm-white/60">
+              <li>(612) 363-2614</li>
+              <li>
                 <a
-                  href={FACEBOOK_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-bronze"
+                  href="mailto:majesticpinerenovations@gmail.com"
+                  className="transition-colors hover:text-bronze"
                 >
-                  Facebook
+                  majesticpinerenovations@gmail.com
                 </a>
-              </p>
-            </address>
+              </li>
+              <li>196 Carling Ave SE, Buffalo, MN 55313</li>
+            </ul>
           </div>
         </div>
+      </div>
 
-        <div className="mt-8 flex items-center justify-center gap-3 border-t border-white/10 pt-8">
-          <svg
-            className="animate-flag h-6 w-8"
-            viewBox="0 0 60 40"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <rect width="60" height="40" fill="#DC143C" />
-            <rect width="24" height="20" fill="#002868" />
-            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((r) => (
-              r % 2 === 0 && Array.from({ length: 6 }).map((_, c) => (
-                <circle key={`${r}-${c}`} cx={2 + c * 4} cy={2 + r * 2} r="0.6" fill="white" />
-              ))
-            ))}
-            {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((r) => (
-              r % 2 === 1 && Array.from({ length: 5 }).map((_, c) => (
-                <circle key={`${r}-${c}`} cx={4 + c * 4} cy={2 + r * 2} r="0.6" fill="white" />
-              ))
-            ))}
-            <rect x="0" y="20" width="60" height="4" fill="white" />
-            <rect x="0" y="28" width="60" height="4" fill="white" />
-            <rect x="0" y="36" width="60" height="4" fill="white" />
-          </svg>
-          <span className="text-xs uppercase tracking-widest text-bronze font-semibold">
-            Proudly Made in America
-          </span>
-        </div>
+      <div className="mt-8 border-t border-white/10 pt-8 text-center">
+        <p className="text-xs text-warm-white/40">
+          Built with modern web standards. Need a site like this for your business?
+        </p>
+        <a
+          href="/contact"
+          className="mt-1 inline-block text-xs text-bronze transition-colors hover:text-warm-white"
+        >
+          Talk to us about your next website project
+        </a>
+      </div>
 
-        <div className="mt-4 flex flex-col items-center justify-between gap-4 pt-4 md:flex-row">
-          <p className="text-xs text-warm-white/50">
-            © {new Date().getFullYear()} Majestic Pine Renovations. All rights reserved.
-          </p>
-          <div className="flex gap-6 text-xs text-warm-white/50">
-            <Link href="/privacy" className="hover:text-bronze transition-colors">
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="hover:text-bronze transition-colors">
-              Terms of Service
-            </Link>
-            <Link href="/licensing" className="hover:text-bronze transition-colors">
-              Licensing
-            </Link>
-          </div>
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 border-t border-white/10 px-6 pb-8 pt-8 md:flex-row lg:px-8">
+        <p className="text-xs text-warm-white/50">
+          Copyright {new Date().getFullYear()} Majestic Pine Renovations. All rights reserved.
+        </p>
+        <div className="flex gap-6">
+          <Link href="/privacy-policy" className="text-xs text-warm-white/50 hover:text-bronze transition-colors">
+            Privacy Policy
+          </Link>
         </div>
       </div>
     </footer>

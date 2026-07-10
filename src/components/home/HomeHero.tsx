@@ -2,41 +2,37 @@
 
 import { Button } from "@/components/ui/Button";
 import { TrustBadges } from "@/components/ui/TrustBadges";
-import { SITE_IMAGES } from "@/lib/site-images";
 
 export function HomeHero() {
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
-      {/* Cinematic video background */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        poster={SITE_IMAGES.homeHero}
-        className="absolute inset-0 h-full w-full object-cover scale-105"
-        aria-hidden="true"
-      >
-        <source src="/hero-bg.mp4" type="video/mp4" />
-      </video>
-
-      {/* Animated gradient overlay over video */}
       <div
-        className="absolute inset-0 animate-ambient"
+        className="absolute inset-0 scale-105 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "linear-gradient(135deg, rgba(18,18,18,0.85) 0%, rgba(26,54,38,0.65) 25%, rgba(205,127,50,0.25) 50%, rgba(26,54,38,0.65) 75%, rgba(18,18,18,0.9) 100%)",
+          backgroundImage: "url('/homepage-kitchen.jpg')",
         }}
         aria-hidden="true"
       />
 
+      <div
+        className="absolute inset-0 animate-ambient"
+        style={{
+          backgroundImage:
+            "radial-gradient(ellipse at 20% 50%, rgba(105,74,54,0.7) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(79,93,80,0.65) 0%, transparent 50%), radial-gradient(ellipse at 50% 80%, rgba(184,111,69,0.4) 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, rgba(36,29,25,0.85) 0%, transparent 50%)",
+          backgroundSize: "250% 250%",
+        }}
+        aria-hidden="true"
+      />
+
+      <div className="absolute inset-0 bg-charcoal/30 backdrop-blur-[2px]" />
+
       <div className="relative z-10 mx-auto max-w-5xl px-6 py-32 text-center lg:px-8">
-        <h1 className="font-heading text-3xl md:text-5xl lg:text-6xl font-bold uppercase tracking-wide text-warm-white leading-tight">
-          We Build Exceptional Spaces With Craftsmanship, Integrity, and Modern Innovation.
+        <h1 className="font-heading text-3xl font-bold uppercase leading-tight tracking-wide text-warm-white md:text-5xl lg:text-6xl">
+          30+ Years of Experience You Can Trust.
         </h1>
-        <p className="mx-auto mt-6 max-w-3xl text-lg md:text-xl text-warm-white/85 leading-relaxed">
-          Premier Residential &amp; Commercial General Contracting for Minneapolis,
-          Buffalo, and the Twin Cities Metro.
+        <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-warm-white/85 md:text-xl">
+          Honest craftsmanship for homes, cabins, shops, and lake properties
+          across Buffalo, the Twin Cities, and the Whitefish Chain area.
         </p>
 
         <div className="mt-10 flex flex-wrap justify-center gap-4">
@@ -46,7 +42,7 @@ export function HomeHero() {
           </Button>
         </div>
 
-        <div className="mt-16 rounded-none border border-white/10 bg-white/5 p-6 backdrop-blur-md">
+        <div className="mt-16 border border-white/10 bg-white/5 p-6 backdrop-blur-md">
           <TrustBadges />
         </div>
       </div>
