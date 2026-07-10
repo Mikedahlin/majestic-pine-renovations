@@ -36,17 +36,32 @@ const testimonials = [
 
 export function TestimonialCarousel() {
   const [active, setActive] = useState(0);
+  const [visible, setVisible] = useState(true);
   const current = testimonials[active];
 
+  const goTo = (index: number) => {
+    setVisible(false);
+    setTimeout(() => {
+      setActive(index);
+      setVisible(true);
+    }, 300);
+  };
+
   useEffect(() => {
-    const id = setInterval(() => setActive((p) => (p + 1) % testimonials.length), 6000);
+    const id = setInterval(() => {
+      goTo((active + 1) % testimonials.length);
+    }, 6000);
     return () => clearInterval(id);
-  }, []);
+  }, [active]);
 
   return (
     <div className="relative">
       <FadeInUp>
-        <div className="border border-pine-green/20 bg-warm-white p-8 md:p-12">
+        <div
+          className={`border border-pine-green/20 bg-warm-white p-8 md:p-12 transition-opacity duration-300 ${
+            visible ? "opacity-100" : "opacity-0"
+          }`}
+        >
           <div className="flex gap-1 mb-6" aria-label={`${current.rating} out of 5 stars`}>
             {Array.from({ length: current.rating }).map((_, i) => (
               <span key={i} className="text-bronze text-lg" aria-hidden="true">★</span>
@@ -74,7 +89,7 @@ export function TestimonialCarousel() {
             type="button"
             aria-label={`View testimonial ${i + 1}`}
             className={`h-2 w-8 transition-colors ${i === active ? "bg-bronze" : "bg-concrete/30"}`}
-            onClick={() => setActive(i)}
+            onClick={() => goTo(i)}
           />
         ))}
       </div>

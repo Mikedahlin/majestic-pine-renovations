@@ -1,10 +1,9 @@
-/** Auto-synced from public/project-gallery — 172 unique photos (deduped) */
+/** Auto-synced from public/project-gallery — 164 unique photos (deduped) */
 export const PROJECT_GALLERY = {
   "additions": [
     "/project-gallery/additions/addition-1.webp",
     "/project-gallery/additions/addition-2.webp",
     "/project-gallery/additions/addition-3.jpg",
-    "/project-gallery/additions/addition-4.jpg",
   ],
   "basement": [
     "/project-gallery/basement/basement-43e011af.png",
@@ -84,15 +83,12 @@ export const PROJECT_GALLERY = {
     "/project-gallery/interiors/real-project-3e3b5bf5.webp",
     "/project-gallery/interiors/real-project-5bc630ac.jpg",
     "/project-gallery/interiors/real-project-5f1c725a.jpg",
-    "/project-gallery/interiors/real-project-5fd94657.jpg",
     "/project-gallery/interiors/real-project-6f64a073.webp",
     "/project-gallery/interiors/real-project-6fbc5a89.jpg",
     "/project-gallery/interiors/real-project-7afd24d6.webp",
     "/project-gallery/interiors/real-project-7d9d6889.webp",
     "/project-gallery/interiors/real-project-8c8fdb5a.jpg",
     "/project-gallery/interiors/real-project-8db4f682.webp",
-    "/project-gallery/interiors/real-project-8f8901b4.jpg",
-    "/project-gallery/interiors/real-project-9afe57b7.jpg",
     "/project-gallery/interiors/real-project-9bc880d2.jpg",
     "/project-gallery/interiors/real-project-9c3296bd.webp",
     "/project-gallery/interiors/real-project-22a9256d.jpg",
@@ -104,7 +100,6 @@ export const PROJECT_GALLERY = {
     "/project-gallery/interiors/real-project-169aa879.webp",
     "/project-gallery/interiors/real-project-247d470b.webp",
     "/project-gallery/interiors/real-project-302e0dde.webp",
-    "/project-gallery/interiors/real-project-437c5d7b.png",
     "/project-gallery/interiors/real-project-449f42b1.jpg",
     "/project-gallery/interiors/real-project-490f20e8.webp",
     "/project-gallery/interiors/real-project-789df465.webp",
@@ -120,7 +115,6 @@ export const PROJECT_GALLERY = {
     "/project-gallery/interiors/real-project-88736ac0.webp",
     "/project-gallery/interiors/real-project-397612ff.webp",
     "/project-gallery/interiors/real-project-846612b3.jpg",
-    "/project-gallery/interiors/real-project-3101075d.jpg",
     "/project-gallery/interiors/real-project-4298812d.jpg",
     "/project-gallery/interiors/real-project-a25d0c05.webp",
     "/project-gallery/interiors/real-project-afc5b826.webp",
@@ -133,7 +127,6 @@ export const PROJECT_GALLERY = {
     "/project-gallery/interiors/real-project-ce7def21.webp",
     "/project-gallery/interiors/real-project-d66da7e2.jpg",
     "/project-gallery/interiors/real-project-db61535d.jpg",
-    "/project-gallery/interiors/real-project-dcada417.jpg",
     "/project-gallery/interiors/real-project-dd44146b.webp",
     "/project-gallery/interiors/real-project-dda22b90.jpg",
     "/project-gallery/interiors/real-project-e9bde9ca.webp",
@@ -143,7 +136,6 @@ export const PROJECT_GALLERY = {
     "/project-gallery/interiors/real-project-ea945690.webp",
     "/project-gallery/interiors/real-project-ee6d7f05.webp",
     "/project-gallery/interiors/real-project-f0e0ae24.jpg",
-    "/project-gallery/interiors/real-project-f4f592de.jpg",
     "/project-gallery/interiors/real-project-f664cd98.webp",
   ],
   "kitchen": [
@@ -174,17 +166,12 @@ export const PROJECT_GALLERY = {
   "roofing": [
     "/project-gallery/roofing/roofing-1.jpg",
     "/project-gallery/roofing/roofing-2.jpg",
-    "/project-gallery/roofing/roofing-3.jpg",
-    "/project-gallery/roofing/roofing-4.jpg",
     "/project-gallery/roofing/roofing-5.jpg",
   ],
   "siding": [
     "/project-gallery/siding/siding-1.jpg",
     "/project-gallery/siding/siding-2.jpg",
     "/project-gallery/siding/siding-3.jpg",
-    "/project-gallery/siding/siding-4.jpg",
-    "/project-gallery/siding/siding-5.webp",
-    "/project-gallery/siding/siding-6.webp",
   ],
   "windows-doors": [
     "/project-gallery/windows-doors/newdoorconstructionpic1.jpg",
@@ -214,6 +201,18 @@ export const SERVICE_GALLERY_MAP: Record<string, GalleryCategory[]> = {
 const CATEGORY_ALIASES: Record<string, GalleryCategory> = {
   lake_cabin: "lake-cabin",
   windows_doors: "windows-doors",
+};
+
+/** Cropped before/after pairs for the interactive comparison slider, keyed by service slug. */
+export const BEFORE_AFTER: Record<string, { before: string; after: string }[]> = {
+  roofing: [
+    { before: "/project-gallery/roofing/roofing-1-before.jpg", after: "/project-gallery/roofing/roofing-1-after.jpg" },
+    { before: "/project-gallery/roofing/roofing-5-before.jpg", after: "/project-gallery/roofing/roofing-5-after.jpg" },
+  ],
+  siding: [
+    { before: "/project-gallery/siding/siding-1-before.jpg", after: "/project-gallery/siding/siding-1-after.jpg" },
+    { before: "/project-gallery/siding/siding-2-before.jpg", after: "/project-gallery/siding/siding-2-after.jpg" },
+  ],
 };
 
 /** All unique images in a category (no duplicate bytes). */
@@ -274,10 +273,10 @@ export const FEATURED_IMAGES = {
   dockFeature: PROJECT_GALLERY.docks?.[1] ?? firstInCategory("docks", ""),
   lakeCabinHero: PROJECT_GALLERY["lake-cabin"]?.[0] ?? "",
   lakeCabinDetail: PROJECT_GALLERY["lake-cabin"]?.[1] ?? PROJECT_GALLERY["lake-cabin"]?.[0] ?? "",
-  roofingHero: PROJECT_GALLERY.roofing?.[0] ?? "",
-  roofingDetail: PROJECT_GALLERY.roofing?.[1] ?? PROJECT_GALLERY.roofing?.[0] ?? "",
-  sidingHero: PROJECT_GALLERY.siding?.find((p) => p.includes("beforeandafter2")) ?? PROJECT_GALLERY.siding?.[0] ?? "",
-  sidingDetail: PROJECT_GALLERY.siding?.find((p) => p.includes("beforeandafter1")) ?? PROJECT_GALLERY.siding?.[0] ?? "",
+  roofingHero: "/project-gallery/roofing/roofing-1-after.jpg",
+  roofingDetail: "/project-gallery/roofing/roofing-5-after.jpg",
+  sidingHero: "/project-gallery/siding/siding-1-after.jpg",
+  sidingDetail: "/project-gallery/siding/siding-2-after.jpg",
   cabinetryHero: PROJECT_GALLERY.cabinetry?.find((p) => p.includes("custom")) ?? PROJECT_GALLERY.cabinetry?.[0] ?? "",
   cabinetryDetail: PROJECT_GALLERY.cabinetry?.[PROJECT_GALLERY.cabinetry.length - 1] ?? "",
   additionHero: PROJECT_GALLERY.additions?.[PROJECT_GALLERY.additions.length - 1] ?? firstInCategory("additions", ""),

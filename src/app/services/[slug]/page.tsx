@@ -13,8 +13,9 @@ import {
   getServiceBySlug,
   SERVICES,
 } from "@/lib/services";
-import { galleryForService } from "@/lib/project-gallery";
+import { galleryForService, BEFORE_AFTER } from "@/lib/project-gallery";
 import { PhotoCarousel } from "@/components/ui/PhotoCarousel";
+import { BeforeAfterSlider } from "@/components/ui/BeforeAfterSlider";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -45,6 +46,7 @@ export default async function ServiceSubpage({ params }: Props) {
 
   const related = SERVICES.filter((s) => s.slug !== slug).slice(0, 3);
   const projectPhotos = galleryForService(slug).map((image) => ({ image }));
+  const beforeAfterPairs = BEFORE_AFTER[slug] ?? [];
 
   return (
     <>
@@ -108,6 +110,24 @@ export default async function ServiceSubpage({ params }: Props) {
               />
             </FadeInUp>
           </div>
+
+          {beforeAfterPairs.length > 0 && (
+            <div className="mt-20">
+              <FadeInUp>
+                <SectionHeading
+                  title="See The Transformation"
+                  subtitle="Drag the handle to compare before and after."
+                />
+              </FadeInUp>
+              <div className={`mt-8 grid gap-8 ${beforeAfterPairs.length > 1 ? "md:grid-cols-2" : "mx-auto max-w-3xl"}`}>
+                {beforeAfterPairs.map((pair, i) => (
+                  <FadeInUp key={pair.before} delay={i * 100}>
+                    <BeforeAfterSlider before={pair.before} after={pair.after} alt={service.title} />
+                  </FadeInUp>
+                ))}
+              </div>
+            </div>
+          )}
 
           <div className="mt-20">
             <FadeInUp>
