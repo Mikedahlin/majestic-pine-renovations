@@ -5,9 +5,6 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
   },
   output: "standalone",
-  turbopack: {
-    root: ".",
-  },
 };
 
 export default nextConfig;
