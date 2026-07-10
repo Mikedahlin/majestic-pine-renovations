@@ -135,6 +135,29 @@ export default async function ServiceSubpage({ params }: Props) {
             </div>
           )}
 
+          {service.beforeAfter && service.beforeAfter.length > 0 && (
+            <div className="mt-20">
+              <FadeInUp>
+                <SectionHeading
+                  title="Before & After"
+                  subtitle="See the transformation for yourself."
+                />
+              </FadeInUp>
+              <div className="grid gap-8 md:grid-cols-2">
+                {service.beforeAfter.map((pair, i) => (
+                  <FadeInUp key={i} delay={i * 100} variant="scale">
+                    <BeforeAfterSlider
+                      before={pair.before}
+                      after={pair.after}
+                      beforeLabel={pair.beforeLabel ?? "Before"}
+                      afterLabel={pair.afterLabel ?? "After"}
+                    />
+                  </FadeInUp>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="mt-20 border-t border-pine-green/10 pt-16">
             <FadeInUp>
               <SectionHeading title="Trust Indicators" />
