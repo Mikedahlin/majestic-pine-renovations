@@ -91,17 +91,12 @@ export const PROJECT_GALLERY = {
   "roofing": [
     "/project-gallery/roofing/roofing-1.jpg",
     "/project-gallery/roofing/roofing-2.jpg",
-    "/project-gallery/roofing/roofing-3.jpg",
-    "/project-gallery/roofing/roofing-4.jpg",
     "/project-gallery/roofing/roofing-5.jpg",
   ],
   "siding": [
     "/project-gallery/siding/siding-1.jpg",
     "/project-gallery/siding/siding-2.jpg",
     "/project-gallery/siding/siding-3.jpg",
-    "/project-gallery/siding/siding-4.jpg",
-    "/project-gallery/siding/siding-5.webp",
-    "/project-gallery/siding/siding-6.webp",
   ],
   "windows-doors": [
     "/project-gallery/windows-doors/newdoorconstructionpic1.jpg",
@@ -189,8 +184,8 @@ export const FEATURED_IMAGES = {
   lakeCabinDetail: PROJECT_GALLERY["lake-cabin"]?.[1] ?? PROJECT_GALLERY["lake-cabin"]?.[0] ?? "",
   roofingHero: PROJECT_GALLERY.roofing?.[0] ?? "",
   roofingDetail: PROJECT_GALLERY.roofing?.[1] ?? PROJECT_GALLERY.roofing?.[0] ?? "",
-  sidingHero: PROJECT_GALLERY.siding?.find((p) => p.includes("beforeandafter2")) ?? PROJECT_GALLERY.siding?.[0] ?? "",
-  sidingDetail: PROJECT_GALLERY.siding?.find((p) => p.includes("beforeandafter1")) ?? PROJECT_GALLERY.siding?.[0] ?? "",
+  sidingHero: PROJECT_GALLERY.siding?.[0] ?? "",
+  sidingDetail: PROJECT_GALLERY.siding?.[1] ?? PROJECT_GALLERY.siding?.[0] ?? "",
   cabinetryHero: PROJECT_GALLERY.cabinetry?.find((p) => p.includes("custom")) ?? PROJECT_GALLERY.cabinetry?.[0] ?? "",
   cabinetryDetail: PROJECT_GALLERY.cabinetry?.[PROJECT_GALLERY.cabinetry.length - 1] ?? "",
   additionHero: "/project-gallery/additions/addition-1-after.jpg",
