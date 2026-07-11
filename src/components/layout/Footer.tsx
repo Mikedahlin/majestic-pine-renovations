@@ -1,26 +1,19 @@
 import Link from "next/link";
+import { UsFlagIcon } from "@/components/ui/UsFlagIcon";
 
 export function Footer() {
   return (
     <footer className="bg-charcoal">
       <div className="border-b border-white/10 bg-[#1a1a2e] py-6">
         <div className="mx-auto flex max-w-7xl items-center justify-center gap-5 px-6 lg:px-8">
-          <span
-            className="animate-flag-wave relative h-12 w-[72px] flex-shrink-0 overflow-hidden rounded-sm border border-white/40 bg-[repeating-linear-gradient(to_bottom,#b22234_0,#b22234_2px,#fff_2px,#fff_4px)]"
-            aria-hidden="true"
-          >
-            <span className="absolute left-0 top-0 h-[54%] w-[42%] bg-[#3c3b6e]" />
-          </span>
+          <UsFlagIcon className="animate-flag-wave h-12 w-[72px] flex-shrink-0 rounded-sm border border-white/40" />
           <span className="text-sm font-semibold uppercase tracking-widest text-warm-white">
             Proudly Made in America
           </span>
-          <span
-            className="animate-flag-wave relative h-12 w-[72px] flex-shrink-0 overflow-hidden rounded-sm border border-white/40 bg-[repeating-linear-gradient(to_bottom,#b22234_0,#b22234_2px,#fff_2px,#fff_4px)]"
+          <UsFlagIcon
+            className="animate-flag-wave h-12 w-[72px] flex-shrink-0 rounded-sm border border-white/40"
             style={{ animationDelay: "0.5s" }}
-            aria-hidden="true"
-          >
-            <span className="absolute left-0 top-0 h-[54%] w-[42%] bg-[#3c3b6e]" />
-          </span>
+          />
         </div>
       </div>
 
