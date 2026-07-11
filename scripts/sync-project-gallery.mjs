@@ -1,6 +1,15 @@
 /**
- * Scans public/project-gallery, dedupes byte-identical files, optionally
- * imports new images from ~/Downloads, and regenerates src/lib/project-gallery.ts
+ * Scans public/project-gallery, dedupes byte-identical files, and
+ * regenerates src/lib/project-gallery.ts.
+ *
+ * This script does NOT import files from anywhere automatically. Every
+ * photo under public/project-gallery must be placed there deliberately,
+ * by a human or an agent that has actually looked at the image, and
+ * verified it's a real Majestic Pine project photo. A previous version of
+ * this script auto-imported anything from ~/Downloads whose filename
+ * loosely matched a category pattern (e.g. "Basement*.*"), with no check
+ * on the actual image content — that's how unrelated and inappropriate
+ * images ended up in the gallery. Do not reintroduce that.
  */
 import crypto from "node:crypto";
 import fs from "node:fs";
@@ -11,23 +20,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
 const GALLERY_DIR = path.join(ROOT, "public", "project-gallery");
 const OUT_FILE = path.join(ROOT, "src", "lib", "project-gallery.ts");
-const DOWNLOADS = path.join(process.env.USERPROFILE ?? "", "Downloads");
 
 const EXT = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif"]);
-const IMPORT_PATTERNS = [
-  { patterns: ["Kitchen*.jpg", "Kitchen*.jpeg"], folder: "kitchen", prefix: "kitchen" },
-  { patterns: ["Bathroom*.jpg", "Bathroom*.jpeg"], folder: "bathroom", prefix: "bathroom" },
-  { patterns: ["Newdeckconstruction*.*"], folder: "deck", prefix: "deck-import" },
-  { patterns: ["Roofing*.*", "Roffing*.*"], folder: "roofing", prefix: "roofing-import" },
-  { patterns: ["Siding*.*"], folder: "siding", prefix: "siding-import" },
-  { patterns: ["Home_add*.*", "Home_additions*.*"], folder: "additions", prefix: "addition-import" },
-  { patterns: ["Lakefront*.*", "Lakecabin*.*", "Logcabin*.*", "Lake_*.jpg"], folder: "lake-cabin", prefix: "lake-import" },
-  { patterns: ["Custom_cabinet*.*", "Customcabinet*.*"], folder: "cabinetry", prefix: "cabinet-import" },
-  { patterns: ["Customdock*.*"], folder: "docks", prefix: "dock-import" },
-  { patterns: ["Newwindow*.*", "Newdoor*.*", "Patiodoor*.*"], folder: "windows-doors", prefix: "window-import" },
-  { patterns: ["livingroom*.*", "Livingroom*.*", "diningroom*.*", "Diningroom*.*", "bedroom*.*", "Bedroom*.*", "interior*.*", "Interior*.*", "finishing*.*", "homeoffice*.*", "Homeoffice*.*"], folder: "interiors", prefix: "interior-import" },
-  { patterns: ["basement*.*", "Basement*.*"], folder: "basement", prefix: "basement" },
-];
 
 function hashFile(filePath) {
   const buf = fs.readFileSync(filePath);
@@ -66,58 +60,6 @@ function walkImages(dir) {
     else if (EXT.has(normExt(path.extname(entry.name)))) out.push(full);
   }
   return out;
-}
-
-function importFromDownloads(existingHashes) {
-  let imported = 0;
-  const extraDirs = [
-    path.join(DOWNLOADS, "Projects", "majestic-pine-renovations", "repo", "public", "project-photos", "real-projects"),
-    path.join(DOWNLOADS, "Projects", "majestic-pine-renovations", "repo", "public", "basement-projects"),
-    path.join(DOWNLOADS, "Projects", "majestic-pine-renovations", "repo", "public", "project-photos", "basement"),
-    path.join(DOWNLOADS, "Photos"),
-  ];
-
-  function tryImport(filePath, folder, prefix) {
-    const hash = hashFile(filePath);
-    if (existingHashes.has(hash)) return;
-    const dir = path.join(GALLERY_DIR, folder);
-    fs.mkdirSync(dir, { recursive: true });
-    const ext = normExt(path.extname(filePath));
-    const name = `${prefix}-${hash.slice(0, 8)}${ext}`;
-    const dest = path.join(dir, name);
-    if (!fs.existsSync(dest)) {
-      fs.copyFileSync(filePath, dest);
-      existingHashes.add(hash);
-      imported++;
-    }
-  }
-
-  if (fs.existsSync(DOWNLOADS)) {
-    for (const group of IMPORT_PATTERNS) {
-      for (const pattern of group.patterns) {
-        const globBase = pattern.replace(/\*.*$/, "");
-        const suffix = pattern.includes("*") ? pattern.split("*")[1] : "";
-        for (const file of fs.readdirSync(DOWNLOADS, { withFileTypes: true })) {
-          if (!file.isFile()) continue;
-          const name = file.name;
-          if (!name.toLowerCase().startsWith(globBase.toLowerCase())) continue;
-          if (suffix && !name.toLowerCase().endsWith(suffix.toLowerCase())) continue;
-          tryImport(path.join(DOWNLOADS, name), group.folder, group.prefix);
-        }
-      }
-    }
-  }
-
-  for (const dir of extraDirs) {
-    if (!fs.existsSync(dir)) continue;
-    const folder = dir.includes("basement") ? "basement" : "interiors";
-    const prefix = dir.includes("basement") ? "basement" : "real-project";
-    for (const file of walkImages(dir)) {
-      tryImport(file, folder, prefix);
-    }
-  }
-
-  return imported;
 }
 
 function buildManifest() {
@@ -276,13 +218,9 @@ export function totalUniquePhotos(): number {
 
 function main() {
   fs.mkdirSync(GALLERY_DIR, { recursive: true });
-  const existing = walkImages(GALLERY_DIR);
-  const hashes = new Set(existing.map(hashFile));
-  const imported = importFromDownloads(hashes);
   const byCategory = buildManifest();
   const unique = emitTs(byCategory);
   const raw = walkImages(GALLERY_DIR).length;
-  console.log(`Imported ${imported} new unique file(s) from Downloads.`);
   console.log(`${raw} files on disk → ${unique} unique photos in manifest.`);
   console.log(`Wrote ${OUT_FILE}`);
   for (const cat of Object.keys(byCategory).sort()) {
