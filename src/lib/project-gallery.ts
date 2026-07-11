@@ -4,7 +4,6 @@ export const PROJECT_GALLERY = {
     "/project-gallery/additions/addition-1.webp",
     "/project-gallery/additions/addition-2.webp",
     "/project-gallery/additions/addition-3.jpg",
-    "/project-gallery/additions/addition-4.jpg",
   ],
   "basement": [
     "/project-gallery/basement/basement-43e011af.png",
@@ -194,8 +193,8 @@ export const FEATURED_IMAGES = {
   sidingDetail: PROJECT_GALLERY.siding?.find((p) => p.includes("beforeandafter1")) ?? PROJECT_GALLERY.siding?.[0] ?? "",
   cabinetryHero: PROJECT_GALLERY.cabinetry?.find((p) => p.includes("custom")) ?? PROJECT_GALLERY.cabinetry?.[0] ?? "",
   cabinetryDetail: PROJECT_GALLERY.cabinetry?.[PROJECT_GALLERY.cabinetry.length - 1] ?? "",
-  additionHero: PROJECT_GALLERY.additions?.[PROJECT_GALLERY.additions.length - 1] ?? firstInCategory("additions", ""),
-  additionDetail: PROJECT_GALLERY.additions?.find((p) => p.includes("home-additions")) ?? PROJECT_GALLERY.additions?.[0] ?? "",
+  additionHero: "/project-gallery/additions/addition-1-after.jpg",
+  additionDetail: "/project-gallery/additions/addition-1-before.jpg",
   commercialHero: "/service-photos/commercial-office.jpg",
   commercialDetail: "/service-photos/commercial-finished.jpg",
   livingRoomHero: PROJECT_GALLERY.interiors?.find((p) => p.includes("livingroom11")) ?? PROJECT_GALLERY.interiors?.[0] ?? "",
