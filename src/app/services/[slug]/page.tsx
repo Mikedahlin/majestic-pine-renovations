@@ -6,6 +6,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { FadeInUp } from "@/components/ui/FadeInUp";
 import { PhotoCarousel } from "@/components/ui/PhotoCarousel";
+import { BeforeAfterSlider } from "@/components/ui/BeforeAfterSlider";
 import { SchemaScript } from "@/components/ui/SchemaScript";
 import { serviceSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/metadata";
@@ -113,6 +114,29 @@ export default async function ServiceSubpage({ params }: Props) {
               )}
             </FadeInUp>
           </div>
+
+          {service.beforeAfter && service.beforeAfter.length > 0 && (
+            <div className="mt-20">
+              <FadeInUp>
+                <SectionHeading
+                  title="Before & After"
+                  subtitle="Watch the transformation — before softens out of focus as the finished work comes into focus."
+                />
+              </FadeInUp>
+              <div className="mt-8 grid gap-8 md:grid-cols-2">
+                {service.beforeAfter.map((pair) => (
+                  <FadeInUp key={`${pair.before}-${pair.after}`}>
+                    <BeforeAfterSlider
+                      before={pair.before}
+                      after={pair.after}
+                      beforeLabel={pair.beforeLabel}
+                      afterLabel={pair.afterLabel}
+                    />
+                  </FadeInUp>
+                ))}
+              </div>
+            </div>
+          )}
 
           {service.photos.length > 0 && (
             <div className="mt-20">
