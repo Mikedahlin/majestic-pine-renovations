@@ -39,13 +39,13 @@ const FEATURED = [
     title: "Roofing",
     href: "/services/roofing",
     image: FEATURED_IMAGES.roofingHero,
-    alt: "Roofing before and after project",
+    alt: "Completed roofing project",
   },
   {
     title: "Siding",
     href: "/services/siding",
     image: FEATURED_IMAGES.sidingHero,
-    alt: "Siding before and after transformation",
+    alt: "Completed siding project",
   },
   {
     title: "Cabinetry",

@@ -90,6 +90,12 @@ export const SERVICES: ServiceDefinition[] = [
     heroImage: FEATURED_IMAGES.kitchenHero,
     galleryImage: FEATURED_IMAGES.kitchenDetail,
     photos: photoList(galleryForService("kitchen-remodeling")),
+    beforeAfter: [
+      {
+        before: "/before-after/pairs/kitchen-before-p1-b4a76be70454.jpg",
+        after: "/before-after/pairs/kitchen-after-p1-4e135005e950.jpg",
+      },
+    ],
     imagePosition: "center center",
     keyword: "kitchen remodeling Minneapolis",
     metaDescription:
@@ -117,6 +123,12 @@ export const SERVICES: ServiceDefinition[] = [
     heroImage: FEATURED_IMAGES.bathroomHero,
     galleryImage: FEATURED_IMAGES.bathroomDetail,
     photos: photoList(galleryFor("bathroom")),
+    beforeAfter: [
+      {
+        before: "/before-after/pairs/bathroom-before-p1-1028c1699135.jpg",
+        after: "/before-after/pairs/bathroom-after-p1-90f0ebe666c1.jpg",
+      },
+    ],
     imagePosition: "center center",
     keyword: "bathroom remodeling Twin Cities",
     metaDescription:
@@ -144,6 +156,12 @@ export const SERVICES: ServiceDefinition[] = [
     heroImage: FEATURED_IMAGES.basementHero,
     galleryImage: FEATURED_IMAGES.basementHero,
     photos: photoList(galleryForService("basement-finishing")),
+    beforeAfter: [
+      {
+        before: "/before-after/pairs/basement-before-p3a-cad77f2a9d50.jpg",
+        after: "/before-after/pairs/basement-after-p3a-129de8d4df55.jpg",
+      },
+    ],
     imagePosition: "center center",
     keyword: "basement finishing Minnesota",
     metaDescription:
@@ -175,6 +193,12 @@ export const SERVICES: ServiceDefinition[] = [
       ...galleryFor("docks"),
       ...galleryFor("lake-cabin"),
     ]),
+    beforeAfter: [
+      {
+        before: "/before-after/pairs/deck-before-p1-49c9dbc67c31.jpg",
+        after: "/before-after/pairs/deck-after-p1-4c57bb6bf365.jpg",
+      },
+    ],
     imagePosition: "center center",
     keyword: "deck builder Twin Cities",
     metaDescription:
@@ -202,6 +226,12 @@ export const SERVICES: ServiceDefinition[] = [
     heroImage: FEATURED_IMAGES.roofingHero,
     galleryImage: FEATURED_IMAGES.roofingDetail,
     photos: photoList(galleryFor("roofing")),
+    beforeAfter: [
+      {
+        before: "/before-after/pairs/roofing-before-p2-526fa9107630.jpg",
+        after: "/before-after/pairs/roofing-after-p2-774111b7019b.jpg",
+      },
+    ],
     imagePosition: "center center",
     keyword: "roofing contractor Minnesota",
     metaDescription:
@@ -228,6 +258,12 @@ export const SERVICES: ServiceDefinition[] = [
     heroImage: FEATURED_IMAGES.sidingHero,
     galleryImage: FEATURED_IMAGES.sidingDetail,
     photos: photoList(galleryFor("siding")),
+    beforeAfter: [
+      {
+        before: "/before-after/pairs/siding-before-p3a-3517b71a90ad.jpg",
+        after: "/before-after/pairs/siding-after-p3a-c1a5b0f35eda.jpg",
+      },
+    ],
     imagePosition: "center center",
     keyword: "siding installation Minneapolis",
     metaDescription:

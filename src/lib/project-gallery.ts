@@ -188,8 +188,9 @@ export const FEATURED_IMAGES = {
   sidingDetail: PROJECT_GALLERY.siding?.[1] ?? PROJECT_GALLERY.siding?.[0] ?? "",
   cabinetryHero: PROJECT_GALLERY.cabinetry?.find((p) => p.includes("custom")) ?? PROJECT_GALLERY.cabinetry?.[0] ?? "",
   cabinetryDetail: PROJECT_GALLERY.cabinetry?.[PROJECT_GALLERY.cabinetry.length - 1] ?? "",
-  additionHero: "/project-gallery/additions/addition-1-after.jpg",
-  additionDetail: "/project-gallery/additions/addition-1-before.jpg",
+  // Real addition gallery shots (do NOT pair before/after — those files are different houses)
+  additionHero: "/project-gallery/additions/addition-1.webp",
+  additionDetail: "/project-gallery/additions/addition-2.webp",
   commercialHero: "/service-photos/commercial-office.jpg",
   commercialDetail: "/service-photos/commercial-finished.jpg",
   livingRoomHero: PROJECT_GALLERY.interiors?.find((p) => p.includes("livingroom11")) ?? PROJECT_GALLERY.interiors?.[0] ?? "",
