@@ -312,8 +312,9 @@ export function LeadForm({ compact = false }: LeadFormProps) {
         })}
       </ol>
 
-      {/* Step: Project */}
-      <div key={`project-${step === 0}`} className={step === 0 ? "animate-step-in" : "hidden"}>
+      {/* Step: Project — no dynamic key: remounting the step wrappers wipes the
+          uncontrolled inputs, so hide inactive steps with CSS only */}
+      <div className={step === 0 ? "animate-step-in" : "hidden"}>
         <div>
           <p className="mb-3 text-sm uppercase tracking-wider text-pine-green">
             Project Category *
@@ -406,7 +407,7 @@ export function LeadForm({ compact = false }: LeadFormProps) {
       </div>
 
       {/* Step: Contact */}
-      <div key={`contact-${step === 1}`} className={step === 1 ? "animate-step-in" : "hidden"}>
+      <div className={step === 1 ? "animate-step-in" : "hidden"}>
         <div className="grid gap-5 sm:grid-cols-2">
           <div>
             <label htmlFor="firstName" className="mb-1 block text-sm uppercase tracking-wider text-pine-green">
@@ -460,7 +461,7 @@ export function LeadForm({ compact = false }: LeadFormProps) {
 
       {/* Step: Photos (full form only) */}
       {!compact && (
-        <div key={`photos-${step === 2}`} className={step === 2 ? "animate-step-in" : "hidden"}>
+        <div className={step === 2 ? "animate-step-in" : "hidden"}>
           <p className="mb-1 text-sm uppercase tracking-wider text-pine-green">Upload Files</p>
           <p className="mb-4 text-xs text-concrete">
             Blueprints, inspiration photos, or current space images (optional, max 10MB each, up to 5 files)
