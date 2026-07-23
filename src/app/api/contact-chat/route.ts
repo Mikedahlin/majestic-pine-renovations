@@ -56,7 +56,10 @@ function getBackupReply(input: string): string {
 }
 
 async function askGemini(messages: ChatMessage[]): Promise<string> {
-  const apiKey = process.env.GOOGLE_GEMINI_API_KEY;
+  // Vercel uses GOOGLE_GEMINI_API_KEY; accept plain GEMINI_API_KEY too so
+  // either name works locally and in any future env setup.
+  const apiKey =
+    process.env.GOOGLE_GEMINI_API_KEY ?? process.env.GEMINI_API_KEY;
   if (!apiKey) {
     throw new Error("Gemini API key is not configured");
   }
