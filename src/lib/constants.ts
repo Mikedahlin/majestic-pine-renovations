@@ -8,7 +8,7 @@ export const CONTACT = {
   serviceArea:
     "Minneapolis, Saint Paul, Twin Cities Metro, Greater Minnesota",
   phone: "(612) 363-2614",
-  email: "hello@majesticpinerenovations.com",
+  email: "majesticpinerenovations@gmail.com",
 } as const;
 
 /** Official Facebook Page (Majestic Pine Renovations llc) */
