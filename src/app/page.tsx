@@ -136,7 +136,7 @@ export default function HomePage() {
           <FadeInUp variant="scale">
             <SectionHeading
               title="What Our Customers Say"
-              subtitle="Real feedback from real projects across Minnesota."
+              subtitle="Jeremy was on time and under budget."
               align="center"
             />
           </FadeInUp>
