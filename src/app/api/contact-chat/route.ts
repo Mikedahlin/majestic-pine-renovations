@@ -17,7 +17,7 @@ Service area: ${CONTACT.serviceArea}.`;
 
 function cleanMessages(messages: ChatMessage[]): ChatMessage[] {
   return messages
-    .filter((message) => message.text.trim())
+    .filter((message) => typeof message.text === "string" && message.text.trim())
     .slice(-8)
     .map((message) => ({
       role: message.role,
@@ -61,9 +61,17 @@ async function askGemini(messages: ChatMessage[]): Promise<string> {
     throw new Error("Gemini API key is not configured");
   }
 
-  const configuredModel = process.env.GEMINI_MODEL ?? "gemini-2.5-flash-lite";
+  // "gemini-flash-lite-latest" / "gemini-flash-latest" are evergreen aliases that
+  // survive Google's model retirements (gemini-2.0-flash-lite was shut down and
+  // started returning 404, which silently killed the chat).
+  const configuredModel = process.env.GEMINI_MODEL ?? "gemini-flash-lite-latest";
   const models = Array.from(
-    new Set([configuredModel, "gemini-2.5-flash-lite", "gemini-2.0-flash-lite"]),
+    new Set([
+      configuredModel,
+      "gemini-flash-lite-latest",
+      "gemini-flash-latest",
+      "gemini-2.5-flash",
+    ]),
   );
 
   const contents = messages.map((message) => ({
@@ -93,7 +101,9 @@ async function askGemini(messages: ChatMessage[]): Promise<string> {
     );
 
     if (!response.ok) {
-      lastError = `Gemini request failed with ${response.status}`;
+      const detail = await response.text().catch(() => "");
+      lastError = `Gemini model ${model} failed with ${response.status}: ${detail.slice(0, 300)}`;
+      console.warn(`[API /contact-chat] ${lastError}`);
       continue;
     }
 

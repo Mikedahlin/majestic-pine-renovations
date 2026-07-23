@@ -20,7 +20,9 @@ export function buildMetadata({
     path === "/" ? title : `${title} | ${SITE_NAME}`;
 
   return {
-    title: fullTitle,
+    // absolute: the root layout already has a `%s | SITE_NAME` template, which
+    // was double-appending the brand ("… | Majestic Pine | Majestic Pine")
+    title: { absolute: fullTitle },
     description,
     keywords: [keyword, "Minnesota contractor", "Twin Cities remodeling"],
     alternates: { canonical: url },
